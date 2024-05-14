@@ -1,18 +1,43 @@
-﻿
+﻿@rendermode InteractiveAuto
+<section class="footer" >
 
-
-<section class="footer">
-    <div class="container">
-        <div class="social-media">
-            <a class="btn-socialmedia" href="#"><i class="fa-brands fa-facebook"></i></a>
-            <a class="btn-socialmedia" href="#"><i class="fa-brands fa-twitter"></i></a>
-            <a class="btn-socialmedia" href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a class="btn-socialmedia" href="#"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-        <p class="copyright">
-            &copy; @DateTime.Now.Year Silicon by Createx Studio. All rights reserved. <span>Pulvinar urna condimentum amet tempor, ornare integer. Lorem odio justo malesuada suspendisse viverra aliquet quisque turpis non. Feugiat in odio non nunc ornare consectetur.</span>
-        </p>
+    <div class="nav-item">
+        <NavLink href="/" Match="NavLinkMatch.All">
+                <i class="fa-regular fa-home"></i>
+            </NavLink>
     </div>
+
+    <div class="nav-item not-active">
+        <NavLink href="search">
+            <i class="fa-regular fa-search"></i>
+            </NavLink>
+    </div>
+
+    <div class="nav-item not-active">
+
+        <NavLink >
+            <i class="fa-regular fa-shopping-bag">
+
+            </i>
+            </NavLink>
+    </div>
+    <div class="nav-item not-active">
+
+        <NavLink href="favorites">
+            <i class="fa-regular fa-heart">
+
+            </i>
+            </NavLink>
+    </div>
+    <div class="nav-item">
+
+    <NavLink href="account" >
+            <i class="fa-regular fa-user"></i>
+            </NavLink>
+    </div>
+   
+        
+
 </section>
 
 @code {

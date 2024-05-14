@@ -1,8 +1,12 @@
-﻿.header{
-
-    margin: 2rem 0;
-    .container{
-        
-        
+﻿.header {
+    border-bottom: 1px solid var(--color-secondary-text);
+    .container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 24px;
+        i{
+            color: var(--color-text);
+        }
     }
 }

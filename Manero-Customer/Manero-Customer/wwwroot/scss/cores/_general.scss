@@ -1,1 +1,11 @@
-﻿
+﻿body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+}
+
+.not-active {
+    display: none;
+}
