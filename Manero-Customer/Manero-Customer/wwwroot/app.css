@@ -19,11 +19,19 @@
 }
 
 .container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-right: auto;
+  padding: 0 15px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+.not-active {
+  display: none;
 }
 
 :root {
@@ -72,5 +80,37 @@ h1:focus {
 }
 
 .header {
-  margin: 2rem 0;
+  border-bottom: 1px solid var(--color-secondary-text);
+}
+.header .container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 24px;
+}
+.header .container i {
+  color: var(--color-text);
+}
+
+.footer {
+  border-top: 1px solid var(--color-secondary-text);
+  display: flex;
+  justify-content: space-around;
+  padding-top: 21px;
+  padding-bottom: 21px;
+}
+.footer a {
+  color: var(--color-text);
+  font-size: 24px;
+  text-decoration: none;
+}
+.footer .nav-item a {
+  padding: 15px;
+  border-radius: 50%;
+}
+.footer .nav-item a.active {
+  background-color: var(--color-secondary-text);
+  border-radius: 50%;
+  padding: 15px;
+  color: black;
 }
