@@ -1,0 +1,46 @@
+﻿@using Manero_Customer.Data.Models
+@inject HttpClient Http
+@inject NavigationManager Navigation
+<h3>CategorySlider</h3>
+
+@foreach (var cat in category)
+{
+    
+        <NavLink href=@($"/subCategories/{cat}")>@cat</NavLink>
+    
+    <br />
+}
+
+@code {
+    private List<ProductModel> products = new List<ProductModel>();
+    private List<string> category = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await Http.GetFromJsonAsync<List<ProductModel>>("https://maneroproductsfunction.azurewebsites.net/api/GetAllProducts?code=006xKHFr-cdRL_Km-7dSq_giwxeV3xxeM8EA1MqjCcZzAzFuic6r3Q==");
+
+            foreach (var product in products)
+            {
+                if (category.Contains(product.Category!))
+                {
+                    continue;
+                }
+                else
+                {
+                    if (product.Category != null)
+                    {
+                        category.Add(product.Category!);
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            // Logga felet eller visa ett felmeddelande
+            Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,55 @@
+﻿@page "/subCategories/{categorie}"
+@using Manero_Customer.Data.Models
+@inject HttpClient Http
+
+<h3>Subcategories for @Categorie</h3>
+
+@if (subcategories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var subcategory in subcategories)
+        {
+            <li>@subcategory</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public string? Categorie { get; set; }
+
+    private List<string> subcategories = new List<string>();
+    private List<ProductModel> products = new List<ProductModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await Http.GetFromJsonAsync<List<ProductModel>>("https://maneroproductsfunction.azurewebsites.net/api/GetAllProducts?code=006xKHFr-cdRL_Km-7dSq_giwxeV3xxeM8EA1MqjCcZzAzFuic6r3Q==");
+
+            foreach (var product in products)
+            {
+                if (product.Category == Categorie)
+                {
+                    if (subcategories.Contains(product.SubCategory))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        subcategories.Add(product.SubCategory);
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            // Logga felet eller visa ett felmeddelande
+            Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
+        }
+    }
+}
