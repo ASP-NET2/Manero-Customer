@@ -3,23 +3,32 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject ProductService productService
+@inject CategoryService categoryService
+
 <h3>CategorySlider</h3>
 
-@foreach (var cat in category)
-{
-    
-        <NavLink href=@($"/subCategories/{cat}")>@cat</NavLink>
-    
-    <br />
-}
+<div class="categorySlider">
+
+
+    @foreach (var model in models)
+    {
+        <div class="categoryItem">
+        <NavLink href=@($"/subCategories/{model.CategoryName}")>
+            <div class="categoryImg">
+                <img src="@model.ImageLink" />
+            </div>
+            @model.CategoryName</NavLink>
+        </div>
+    }
+</div>
 
 @code {
-
-    private List<string> category = new List<string>();    
+    public List<string> category = new();
+    public List<CategoryModel> models = new();
 
     protected override async Task OnInitializedAsync()
     {
-            List<ProductCategoryModel> products = new();
+        List<ProductCategoryModel> products = new();
         try
         {
             products = await productService.GetProducts();
@@ -38,7 +47,7 @@
                     }
                 }
             }
-
+            models = await categoryService.SortCategoryAsync(category);
         }
         catch (Exception ex)
         {

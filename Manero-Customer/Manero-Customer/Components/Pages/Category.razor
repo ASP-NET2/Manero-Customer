@@ -4,6 +4,8 @@
 @inject HttpClient Http
 @inject ProductService productService
 
+<div class="container">
+
 <h3>Subcategories for @Categorie</h3>
 
 @if (subcategories == null)
@@ -19,11 +21,11 @@ else
         }
     </ul>
 }
+</div>
 
 @code {
     [Parameter]
     public string? Categorie { get; set; }
-
     private List<string> subcategories = new List<string>();
     private List<ProductCategoryModel> products = new ();
     protected override async Task OnInitializedAsync()

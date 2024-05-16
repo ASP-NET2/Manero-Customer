@@ -11,7 +11,7 @@ namespace Manero_Customer.Services
         {
             try
             {
-                var url = _configuration.GetValue<string>("ProductAPIs:GetAllProducts");
+                var url = _configuration.GetValue<string>("AzureFunctions:GetAllProducts");
                 var result = await _httpClient.GetFromJsonAsync<List<ProductCategoryModel>>(url);
                 return result ?? [];
             }
