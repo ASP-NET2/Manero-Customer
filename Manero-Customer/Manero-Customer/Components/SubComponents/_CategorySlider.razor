@@ -13,12 +13,13 @@
 
 @code {
     private List<ProductModel> products = new List<ProductModel>();
-    private List<string> category = new List<string>();
+    private List<string> category = new List<string>();    
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+           
             products = await Http.GetFromJsonAsync<List<ProductModel>>("https://maneroproductsfunction.azurewebsites.net/api/GetAllProducts?code=006xKHFr-cdRL_Km-7dSq_giwxeV3xxeM8EA1MqjCcZzAzFuic6r3Q==");
 
             foreach (var product in products)
