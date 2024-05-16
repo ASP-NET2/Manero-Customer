@@ -1,6 +1,6 @@
 ﻿namespace Manero_Customer.Data.Models
 {
-    public class ProductModel
+    public class ProductCategoryModel
     {
         public string? Title { get; set; }
         public string? Category { get; set; }

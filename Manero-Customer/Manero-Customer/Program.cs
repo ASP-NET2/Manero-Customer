@@ -1,6 +1,7 @@
 using Manero_Customer.Components;
 using Manero_Customer.Components.Account;
 using Manero_Customer.Data;
+using Manero_Customer.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<ProductService> ();
 
 builder.Services.AddAuthentication(options =>
     {

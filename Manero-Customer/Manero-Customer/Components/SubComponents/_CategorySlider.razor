@@ -1,6 +1,8 @@
 ﻿@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
 @inject HttpClient Http
 @inject NavigationManager Navigation
+@inject ProductService productService
 <h3>CategorySlider</h3>
 
 @foreach (var cat in category)
@@ -12,15 +14,15 @@
 }
 
 @code {
-    private List<ProductModel> products = new List<ProductModel>();
+
     private List<string> category = new List<string>();    
 
     protected override async Task OnInitializedAsync()
     {
+            List<ProductCategoryModel> products = new();
         try
         {
-           
-            products = await Http.GetFromJsonAsync<List<ProductModel>>("https://maneroproductsfunction.azurewebsites.net/api/GetAllProducts?code=006xKHFr-cdRL_Km-7dSq_giwxeV3xxeM8EA1MqjCcZzAzFuic6r3Q==");
+            products = await productService.GetProducts();
 
             foreach (var product in products)
             {

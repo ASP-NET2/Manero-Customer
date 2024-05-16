@@ -1,6 +1,8 @@
 ﻿@page "/subCategories/{categorie}"
 @using Manero_Customer.Data.Models
+@using Manero_Customer.Services
 @inject HttpClient Http
+@inject ProductService productService
 
 <h3>Subcategories for @Categorie</h3>
 
@@ -23,24 +25,24 @@ else
     public string? Categorie { get; set; }
 
     private List<string> subcategories = new List<string>();
-    private List<ProductModel> products = new List<ProductModel>();
+    private List<ProductCategoryModel> products = new ();
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            products = await Http.GetFromJsonAsync<List<ProductModel>>("https://maneroproductsfunction.azurewebsites.net/api/GetAllProducts?code=006xKHFr-cdRL_Km-7dSq_giwxeV3xxeM8EA1MqjCcZzAzFuic6r3Q==");
+            products = await productService.GetProducts();
 
             foreach (var product in products)
             {
                 if (product.Category == Categorie)
                 {
-                    if (subcategories.Contains(product.SubCategory))
+                    if (subcategories.Contains(product.SubCategory!))
                     {
                         continue;
                     }
                     else
                     {
-                        subcategories.Add(product.SubCategory);
+                        subcategories.Add(product.SubCategory!);
                     }
                 }
             }
