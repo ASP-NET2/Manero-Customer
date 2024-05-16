@@ -19,10 +19,13 @@ else
         @foreach (var model in models)
         {
             <div class="subCategoryItem">
+                <NavLink href=@($"/products/{model.SubCategoryName}")>
+
                 <p>@model.SubCategoryName</p>
                 <div class="imgContainer">
                     <img src="@model.ImageLink"/>
                 </div>
+                </NavLink>
             </div>
         }
     </div>
