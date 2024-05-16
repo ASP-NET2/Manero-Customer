@@ -15,13 +15,18 @@
 }
 else
 {
-    <ul>
+    <div class="subContainer">
         @foreach (var model in models)
         {
-            <li>@model.SubCategoryName</li>
-            <p>@model.ImageLink</p>
+            <div class="subCategoryItem">
+                <p>@model.SubCategoryName</p>
+                <div class="imgContainer">
+                    <img src="@model.ImageLink"/>
+                </div>
+            </div>
         }
-    </ul>
+    </div>
+  
 }
 </div>
 
