@@ -15,44 +15,44 @@ using Xunit;
 
 namespace ManeroCustomerTest
 {
-    public class ProductServiceTests
+    public class SubCategoryServiceTests
     {
         private readonly Mock<IConfiguration> _mockConfiguration;
         private readonly Mock<IConfigurationSection> _mockConfigurationSection;
         private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler;
-        private readonly Mock<ILogger<ProductService>> _mockLogger;
+        private readonly Mock<ILogger<SubCategoryService>> _mockLogger;
         private readonly HttpClient _httpClient;
-        private readonly ProductService _productService;
+        private readonly SubCategoryService _subCategoryService;
 
-        public ProductServiceTests()
+        public SubCategoryServiceTests()
         {
             // Mock IConfigurationSection
             _mockConfigurationSection = new Mock<IConfigurationSection>();
-            _mockConfigurationSection.Setup(x => x.Value).Returns("https://fakeurl.com/api/products");
+            _mockConfigurationSection.Setup(x => x.Value).Returns("https://fakeurl.com/api/subcategory");
 
             // Mock IConfiguration
             _mockConfiguration = new Mock<IConfiguration>();
-            _mockConfiguration.Setup(x => x.GetSection("AzureFunctions:GetAllProducts")).Returns(_mockConfigurationSection.Object);
+            _mockConfiguration.Setup(x => x.GetSection("AzureFunctions:GetSubCategory")).Returns(_mockConfigurationSection.Object);
 
             // Mock HttpMessageHandler for HttpClient
             _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
             _httpClient = new HttpClient(_mockHttpMessageHandler.Object);
 
             // Mock ILogger
-            _mockLogger = new Mock<ILogger<ProductService>>();
+            _mockLogger = new Mock<ILogger<SubCategoryService>>();
 
             // Create instance of the service with mocked dependencies
-            _productService = new ProductService(_httpClient, _mockConfiguration.Object, _mockLogger.Object);
+            _subCategoryService = new SubCategoryService(_mockConfiguration.Object, _httpClient, _mockLogger.Object);
         }
 
         [Fact]
-        public async Task GetProducts_ReturnsProductList_WhenApiCallIsSuccessful()
+        public async Task GetSubCategoryAsync_ReturnsSubCategoryList_WhenApiCallIsSuccessful()
         {
             // Arrange
-            var expectedProducts = new List<ProductCategoryModel>
+            var expectedSubCategories = new List<SubCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = "20.00" }
+                new SubCategoryModel { SubCategoryName = "SubCat1", ImageLink = "link1" },
+                new SubCategoryModel { SubCategoryName = "SubCat2", ImageLink = "link2" }
             };
 
             _mockHttpMessageHandler.Protected()
@@ -64,21 +64,23 @@ namespace ManeroCustomerTest
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = JsonContent.Create(expectedProducts)
+                    Content = JsonContent.Create(expectedSubCategories)
                 });
 
             // Act
-            var result = await _productService.GetProducts();
+            var result = await _subCategoryService.GetSubCategoryAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(expectedProducts.Count, result.Count);
-            Assert.Equal(expectedProducts[0].Title, result[0].Title);
-            Assert.Equal(expectedProducts[1].Title, result[1].Title);
+            Assert.Equal(expectedSubCategories.Count, result.Count);
+            Assert.Equal(expectedSubCategories[0].SubCategoryName, result[0].SubCategoryName);
+            Assert.Equal(expectedSubCategories[0].ImageLink, result[0].ImageLink);
+            Assert.Equal(expectedSubCategories[1].SubCategoryName, result[1].SubCategoryName);
+            Assert.Equal(expectedSubCategories[1].ImageLink, result[1].ImageLink);
         }
 
         [Fact]
-        public async Task GetProducts_ReturnsEmptyList_WhenApiCallFails()
+        public async Task GetSubCategoryAsync_ReturnsEmptyList_WhenApiCallFails()
         {
             // Arrange
             _mockHttpMessageHandler.Protected()
@@ -93,7 +95,7 @@ namespace ManeroCustomerTest
                 });
 
             // Act
-            var result = await _productService.GetProducts();
+            var result = await _subCategoryService.GetSubCategoryAsync();
 
             // Assert
             Assert.NotNull(result);
@@ -101,20 +103,20 @@ namespace ManeroCustomerTest
         }
 
         [Fact]
-        public async Task FilterProduct_ReturnsFilteredProducts()
+        public async Task SortSubCategoryAsync_ReturnsSortedSubCategories()
         {
             // Arrange
-            var allProducts = new List<ProductCategoryModel>
+            var allSubCategories = new List<SubCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = "20.00" },
-                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = "30.00" }
+                new SubCategoryModel { SubCategoryName = "SubCat1", ImageLink = "link1" },
+                new SubCategoryModel { SubCategoryName = "SubCat2", ImageLink = "link2" },
+                new SubCategoryModel { SubCategoryName = "SubCat3", ImageLink = "link3" }
             };
-
-            var filteredProducts = new List<ProductCategoryModel>
+            var unsorted = new List<string> { "SubCat3", "SubCat1" };
+            var expected = new List<SubCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = "30.00" }
+                new SubCategoryModel { SubCategoryName = "SubCat1", ImageLink = "link1" },
+                new SubCategoryModel { SubCategoryName = "SubCat3", ImageLink = "link3" }
             };
 
             _mockHttpMessageHandler.Protected()
@@ -126,23 +128,27 @@ namespace ManeroCustomerTest
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = JsonContent.Create(filteredProducts)
+                    Content = JsonContent.Create(allSubCategories)
                 });
 
             // Act
-            var result = await _productService.FilterProduct("Category1");
+            var result = await _subCategoryService.SortSubCategoryAsync(unsorted);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(filteredProducts.Count, result.Count);
-            Assert.Equal(filteredProducts[0].Title, result[0].Title);
-            Assert.Equal(filteredProducts[1].Title, result[1].Title);
+            Assert.Equal(expected.Count, result.Count);
+            Assert.Equal(expected[0].SubCategoryName, result[0].SubCategoryName);
+            Assert.Equal(expected[0].ImageLink, result[0].ImageLink);
+            Assert.Equal(expected[1].SubCategoryName, result[1].SubCategoryName);
+            Assert.Equal(expected[1].ImageLink, result[1].ImageLink);
         }
 
         [Fact]
-        public async Task FilterProduct_ReturnsEmptyList_WhenApiCallFails()
+        public async Task SortSubCategoryAsync_ReturnsEmptyList_WhenApiCallFails()
         {
             // Arrange
+            var unsorted = new List<string> { "SubCat3", "SubCat1" };
+
             _mockHttpMessageHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -155,7 +161,7 @@ namespace ManeroCustomerTest
                 });
 
             // Act
-            var result = await _productService.FilterProduct("Category1");
+            var result = await _subCategoryService.SortSubCategoryAsync(unsorted);
 
             // Assert
             Assert.NotNull(result);
