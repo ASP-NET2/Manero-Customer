@@ -1,12 +1,26 @@
-﻿using Manero_Customer.Data.Models;
-using Microsoft.Identity.Client;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using Manero_Customer.Data.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Manero_Customer.Services
 {
-    public class SubCategoryService(IConfiguration configuration, HttpClient httpClient)
+    public class SubCategoryService
     {
-        private readonly IConfiguration _configuration = configuration;
-        private readonly HttpClient _httpClient = httpClient;
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
+        private readonly ILogger<SubCategoryService> _logger;
+
+        public SubCategoryService(IConfiguration configuration, HttpClient httpClient, ILogger<SubCategoryService> logger)
+        {
+            _configuration = configuration;
+            _httpClient = httpClient;
+            _logger = logger;
+        }
 
         public async Task<List<SubCategoryModel>> GetSubCategoryAsync()
         {
@@ -14,16 +28,16 @@ namespace Manero_Customer.Services
             {
                 var url = _configuration.GetValue<string>("AzureFunctions:GetSubCategory");
                 var result = await _httpClient.GetFromJsonAsync<List<SubCategoryModel>>(url);
-                return result ?? [];
+                return result ?? new List<SubCategoryModel>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return [];
+                _logger.LogError(ex, "Error fetching subcategories.");
+                return new List<SubCategoryModel>();
             }
         }
 
-        public async Task<List<SubCategoryModel>> SortSubCategoryAsync(List<string> Unsorted)
+        public async Task<List<SubCategoryModel>> SortSubCategoryAsync(List<string> unsorted)
         {
             try
             {
@@ -32,9 +46,9 @@ namespace Manero_Customer.Services
 
                 foreach (var subcategory in allSubCategories)
                 {
-                    foreach (var unsortedItem in Unsorted)
+                    foreach (var unsortedItem in unsorted)
                     {
-                        if (subcategory.SubCategoryName.Equals(unsortedItem))
+                        if (subcategory.SubCategoryName.Equals(unsortedItem, StringComparison.OrdinalIgnoreCase))
                         {
                             sortedSubCategories.Add(subcategory);
                             break; // Break inner loop if match is found
@@ -46,10 +60,9 @@ namespace Manero_Customer.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, "Error sorting subcategories.");
                 return new List<SubCategoryModel>(); // Return an empty list in case of an error
             }
-
         }
     }
 }

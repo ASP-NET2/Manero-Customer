@@ -22,7 +22,6 @@ namespace Manero_Customer.Services
             }
         }
 
-
         public async Task<List<CategoryModel>> SortCategoryAsync(List<string> Unsorted)
         {
             try
@@ -49,11 +48,6 @@ namespace Manero_Customer.Services
                 Console.WriteLine(ex.Message);
                 return new List<CategoryModel>(); // Return an empty list in case of an error
             }
-
         }
-            
-
-
-
     }
 }
