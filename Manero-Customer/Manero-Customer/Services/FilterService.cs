@@ -26,9 +26,12 @@ namespace Manero_Customer.Services
 
             foreach (var model in models) 
             {
-                if (!categories.Contains(model.Category!))
+                if (model.Category != null && model.Category != "")
                 {
-                    categories.Add(model.Category!);
+                    if (!categories.Contains(model.Category!))
+                    {
+                        categories.Add(model.Category!);
+                    }
                 }
             }
             return categories;
