@@ -21,5 +21,12 @@ namespace Manero_Customer.Services
                 return [];
             }
         }
+
+        public async Task <List<ProductCategoryModel>> FilterProduct(string filter)
+        {
+            var url = $"http://localhost:7287/api/SortProduct?Category={filter}";
+            var result = await _httpClient.GetFromJsonAsync<List<ProductCategoryModel>>(url);
+            return result ?? [];
+        }
     }
 }

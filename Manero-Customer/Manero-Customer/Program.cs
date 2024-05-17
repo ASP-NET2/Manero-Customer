@@ -21,6 +21,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ProductService> ();
 builder.Services.AddScoped<CategoryService> ();
 builder.Services.AddScoped<SubCategoryService> ();
+builder.Services.AddScoped<FilterService> ();
 
 
 builder.Services.AddAuthentication(options =>

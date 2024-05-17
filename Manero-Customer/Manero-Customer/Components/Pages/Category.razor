@@ -4,6 +4,7 @@
 @inject HttpClient Http
 @inject ProductService productService
 @inject SubCategoryService subCategoryService
+@inject FilterService filterservice
 
 <div class="container">
 
@@ -44,23 +45,8 @@ else
     {
         try
         {
-            products = await productService.GetProducts();
-
-            foreach (var product in products)
-            {
-                if (product.Category == Categorie)
-                {
-                    if (subcategories.Contains(product.SubCategory!))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        subcategories.Add(product.SubCategory!);
-                    }
-                }
-            }
-
+            products = await productService.FilterProduct(Categorie!);
+            subcategories = filterservice.FilterSubCategory(products);
             models = await subCategoryService.SortSubCategoryAsync(subcategories);
 
         }
