@@ -1,0 +1,58 @@
+﻿@inject ProductService productService
+@inject HttpClient Http;
+
+@page "/products/{subcategory}"
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+
+<div>
+    <h3>Products</h3>
+
+<div>
+        @foreach (var item in ProductItems)
+        {
+            <div>
+                <p>@item.Title</p>
+                <p>@item.Author</p>
+                <p>@item.Price</p>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? SubCategory { get; set; }
+
+    List<ProductCategoryModel> ProductItems = new();
+    protected override async Task OnInitializedAsync()
+    {
+        List<ProductCategoryModel> products = new();
+        try
+        {
+            products = await productService.GetProducts();
+
+            foreach (var product in products)
+            {
+                if (product.SubCategory == SubCategory)
+                {
+                    ProductItems.Add(product);
+                }
+                else
+                {
+                    if (product.SubCategory != null)
+                    {
+                        continue;
+                    }
+                }
+            }
+            
+        }
+        catch (Exception ex)
+        {
+            // Logga felet eller visa ett felmeddelande
+            Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
+        }
+    }
+}

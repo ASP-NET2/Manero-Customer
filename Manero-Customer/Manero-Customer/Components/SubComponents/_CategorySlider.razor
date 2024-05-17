@@ -1,0 +1,41 @@
+﻿@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@inject HttpClient Http
+@inject ProductService productService
+@inject CategoryService categoryService
+@inject FilterService filterService
+<div class="categorySlider">
+    @foreach (var model in models)
+    {
+        <div class="categoryItem">
+        <NavLink href=@($"/subCategories/{model.CategoryName}")>
+            <div class="categoryImg">
+                <img src="@model.ImageLink" />
+            </div>
+            @model.CategoryName</NavLink>
+        </div>
+    }
+</div>
+
+@code {
+    public List<string> category = new();
+    public List<CategoryModel> models = new();
+
+    public List<string> test = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        List<ProductCategoryModel> products = new();
+        try
+        {
+            products = await productService.GetProducts();
+            category = filterService.FilterCategory(products);
+            models = await categoryService.SortCategoryAsync(category);
+        }
+        catch (Exception ex)
+        {
+            // Logga felet eller visa ett felmeddelande
+            Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
+        }
+    }
+}
