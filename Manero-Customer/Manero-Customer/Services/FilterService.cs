@@ -1,6 +1,5 @@
 ﻿using Manero_Customer.Data.Models;
-using Manero_Customer.Services;
-
+using System.Collections.Generic;
 
 namespace Manero_Customer.Services
 {
@@ -8,35 +7,40 @@ namespace Manero_Customer.Services
     {
         public List<string> FilterSubCategory(List<ProductCategoryModel> models)
         {
-            List<string> subcategories = new();
-
-            foreach (var model in models) 
+            if (models == null)
             {
-                if (!subcategories.Contains(model.SubCategory!))
+                return new List<string>();
+            }
+
+            HashSet<string> subcategories = new();
+            foreach (var model in models)
+            {
+                if (!string.IsNullOrWhiteSpace(model.SubCategory))
                 {
-                    subcategories.Add(model.SubCategory!);
+                    subcategories.Add(model.SubCategory);
                 }
             }
-            return subcategories;
-        } 
-        
-        public List<string> FilterCategory(List<ProductCategoryModel> models)
-        {
-            List<string> categories = new();
 
-            foreach (var model in models) 
-            {
-                if (model.Category != null && model.Category != "")
-                {
-                    if (!categories.Contains(model.Category!))
-                    {
-                        categories.Add(model.Category!);
-                    }
-                }
-            }
-            return categories;
+            return new List<string>(subcategories);
         }
 
-        
+        public List<string> FilterCategory(List<ProductCategoryModel> models)
+        {
+            if (models == null)
+            {
+                return new List<string>();
+            }
+
+            HashSet<string> categories = new();
+            foreach (var model in models)
+            {
+                if (!string.IsNullOrWhiteSpace(model.Category))
+                {
+                    categories.Add(model.Category);
+                }
+            }
+
+            return new List<string>(categories);
+        }
     }
 }

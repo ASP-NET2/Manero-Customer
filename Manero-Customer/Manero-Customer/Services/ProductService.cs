@@ -39,4 +39,3 @@ namespace Manero_Customer.Services
 
     }
 }
-
