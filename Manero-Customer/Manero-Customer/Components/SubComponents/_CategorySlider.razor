@@ -4,14 +4,13 @@
 @inject ProductService productService
 @inject CategoryService categoryService
 @inject FilterService filterService
-<div class="categorySlider">
+
+<div class="media-scroller snaps-inline">
     @foreach (var model in models)
     {
-        <div class="categoryItem">
+        <div class="media-element">
         <NavLink href=@($"/subCategories/{model.CategoryName}")>
-            <div class="categoryImg">
-                <img src="@model.ImageLink" />
-            </div>
+            <img src="@model.ImageLink" />
             @model.CategoryName</NavLink>
         </div>
     }
