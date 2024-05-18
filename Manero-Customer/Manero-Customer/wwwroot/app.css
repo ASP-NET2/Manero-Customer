@@ -38,6 +38,7 @@
   padding: 10px;
   border-radius: 8px;
   scroll-snap-align: start;
+  scroll-snap-align: end;
   text-align: center;
 }
 .media-scroller .media-element img {
