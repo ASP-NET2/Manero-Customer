@@ -1,28 +1,29 @@
-﻿.categorySlider{
-    display: flex;
-    gap: 0.5em;
-    .categoryItem{
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        .categoryImg{
-            height: 5em;
-            width: 5em;
-            overflow:hidden;
+﻿.media-scroller{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 22%;
+    gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+
+    .media-element{
+        display: grid;
+        grid-template-rows: min-content;
+        gap:10px;
+        padding: 10px;
+        border-radius: 8px;
+    scroll-snap-align: start;
+    text-align: center;
+        img{
+            inline-size:100%;
+            aspect-ratio: 16/16;
+            object-fit:cover;
             border-radius: 50%;
-            margin: 6px;
-            
-            img{
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-
-            }
         }
-
         a{
+            color: black;
             text-decoration: none;
-            color: var(--color-main);
         }
     }
 }
