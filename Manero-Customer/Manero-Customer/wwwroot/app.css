@@ -135,6 +135,10 @@ h1:focus {
   align-items: center;
   font-size: 24px;
 }
+.header .container a {
+  text-decoration: none;
+  color: black;
+}
 .header .container i {
   color: var(--color-text);
 }
@@ -160,4 +164,9 @@ h1:focus {
   border-radius: 50%;
   padding: 15px;
   color: black;
+}
+
+.container .content {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
 }
