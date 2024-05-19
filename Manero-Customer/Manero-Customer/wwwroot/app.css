@@ -18,10 +18,6 @@
   display: grid;
 }
 
-.container {
-  padding: 0 15px;
-}
-
 .media-scroller {
   display: grid;
   grid-auto-flow: column;
@@ -169,4 +165,5 @@ h1:focus {
 .container .content {
   display: grid;
   grid-template-rows: auto auto auto auto;
+  padding: 0 10px;
 }
