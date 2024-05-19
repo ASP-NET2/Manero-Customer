@@ -5,14 +5,14 @@ namespace Manero_Customer.Services
 {
     public class FilterService
     {
-        public List<string> FilterSubCategory(List<ProductCategoryModel> models)
+        public List<string> FilterSubCategory(List<ProductModel> models)
         {
             if (models == null)
             {
-                return new List<string>();
+                return [];
             }
 
-            HashSet<string> subcategories = new();
+            HashSet<string> subcategories = [];
             foreach (var model in models)
             {
                 if (!string.IsNullOrWhiteSpace(model.SubCategory))
@@ -24,14 +24,14 @@ namespace Manero_Customer.Services
             return new List<string>(subcategories);
         }
 
-        public List<string> FilterCategory(List<ProductCategoryModel> models)
+        public List<string> FilterCategory(List<ProductModel> models)
         {
             if (models == null)
             {
-                return new List<string>();
+                return [];
             }
 
-            HashSet<string> categories = new();
+            HashSet<string> categories = [];
             foreach (var model in models)
             {
                 if (!string.IsNullOrWhiteSpace(model.Category))

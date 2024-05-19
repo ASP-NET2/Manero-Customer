@@ -24,7 +24,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        List<ProductCategoryModel> products = new();
+        List<ProductModel> products = new();
         try
         {
             products = await productService.GetProducts();

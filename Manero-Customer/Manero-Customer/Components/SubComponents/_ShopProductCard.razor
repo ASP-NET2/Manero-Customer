@@ -1,0 +1,16 @@
+﻿
+<div class="shopProductCard">
+    <img src="@ImageUrl"/>
+    <p>@Title</p>
+    <div class="priceContainer">
+        <p>@Price</p>
+        <p>@DiscountPrice</p>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Price { get; set; }
+    [Parameter] public string? ImageUrl { get; set; }
+    [Parameter] public string? DiscountPrice { get; set; }
+}

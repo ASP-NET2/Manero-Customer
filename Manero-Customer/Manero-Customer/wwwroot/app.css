@@ -67,6 +67,29 @@
   border-radius: 10px;
 }
 
+.shopProductCard {
+  height: 248px;
+  width: 160px;
+}
+.shopProductCard img {
+  max-width: 100%;
+  height: auto;
+}
+.shopProductCard p {
+  font: 14px;
+  color: var(--color-text);
+}
+.shopProductCard .priceContainer {
+  display: flex;
+}
+.shopProductCard h3 {
+  color: green;
+}
+
+.productContainer {
+  display: flex;
+}
+
 body {
   margin: 0;
   padding: 0;

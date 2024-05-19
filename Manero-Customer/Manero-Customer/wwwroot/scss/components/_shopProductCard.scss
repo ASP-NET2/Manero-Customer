@@ -1,0 +1,22 @@
+﻿.shopProductCard {
+    height: 248px;
+    width: 160px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    p {
+        font: 14px;
+        color: var(--color-text);
+    }
+
+    .priceContainer {
+        display: flex;
+    }
+
+    h3 {
+        color: green;
+    }
+}
