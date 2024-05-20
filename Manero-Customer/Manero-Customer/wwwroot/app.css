@@ -167,3 +167,160 @@ h1:focus {
   grid-template-rows: auto auto auto auto;
   padding: 0 10px;
 }
+
+.signup {
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+.signup .container .signup-content {
+  display: grid;
+  justify-content: center;
+}
+.signup .container .signup-content .input-group {
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.signup .container .signup-content .input-group label {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  padding: 0 5px;
+  background-color: white;
+  z-index: 1;
+  font-size: 14px;
+  color: var(--color-text);
+}
+.signup .container .signup-content .input-group .input-box {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border-radius: 8px;
+  border: var(--color-text) 1px solid;
+  box-sizing: border-box;
+  position: relative;
+}
+.signup .container .signup-content .checkbox-group {
+  margin: 15px 0;
+}
+.signup .container .signup-content .btn-theme {
+  width: 100%;
+}
+.signup .container .signup-content p {
+  margin-top: 20px;
+}
+
+.verify {
+  padding: 30px;
+}
+.verify .container {
+  display: grid;
+  justify-items: center;
+}
+.verify .container .verify-image {
+  position: relative;
+}
+.verify .container .verify-image .image-avatar {
+  position: relative;
+  border-radius: 50%;
+  height: 140px;
+  width: 140px;
+  object-fit: cover;
+  border: 1px solid var(--color-theme);
+}
+.verify .container h2 {
+  margin-bottom: 20px;
+}
+.verify .container .verify-content {
+  display: grid;
+  justify-items: center;
+}
+.verify .container .verify-content p {
+  color: var(--color-text);
+}
+.verify .container .btn-theme {
+  margin-top: 25px;
+}
+
+.code-input .container {
+  display: grid;
+  justify-items: center;
+  margin-top: 50px;
+}
+.code-input .container .input-content {
+  display: grid;
+  margin-top: 10px;
+  justify-items: center;
+}
+.code-input .container .input-content p {
+  margin: 10px 0;
+  color: var(--color-text);
+}
+.code-input .container .input-content .verification-code .verify-code {
+  display: flex;
+  margin-bottom: 15px;
+}
+.code-input .container .input-content .verification-code input {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid var(--color-text);
+  padding: 18px;
+}
+.code-input .container .input-content .verification-code input:not(:last-child) {
+  margin-right: 10px;
+}
+.code-input .container .input-content .verification-code .placement-btn {
+  display: flex;
+  justify-content: center;
+}
+.signin .container {
+  display: grid;
+  justify-items: center;
+}
+.signin .container h4 {
+  color: var(--color-text);
+}
+.signin .container .input-group {
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.signin .container .input-group label {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  padding: 0 5px;
+  background-color: white;
+  z-index: 1;
+  font-size: 14px;
+  color: var(--color-text);
+}
+.signin .container .input-group .input-box {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border-radius: 8px;
+  border: var(--color-text) 1px solid;
+  box-sizing: border-box;
+  position: relative;
+}
+.signin .container .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--color-text);
+}
+.signin .container .checkbox-group a {
+  color: black;
+  text-decoration: none;
+}
+.signin .container .placement-btn {
+  display: grid;
+  margin-top: 10px;
+}
+.signin .container p {
+  display: flex;
+  justify-content: center;
+  color: black;
+}
