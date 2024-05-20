@@ -1,3 +1,11 @@
-.productContainer{
-    display: flex;
+.shop{
+    h3{
+    text-align: center;
+    }
+
+    .productContainer{
+        display: flex;
+        gap: 10px;
+
+    }
 }

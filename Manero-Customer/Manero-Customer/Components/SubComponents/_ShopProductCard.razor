@@ -3,8 +3,14 @@
     <img src="@ImageUrl"/>
     <p>@Title</p>
     <div class="priceContainer">
-        <p>@Price</p>
-        <p>@DiscountPrice</p>
+        @if (@DiscountPrice == "0" || DiscountPrice == null)
+        {
+        <p class="price">@Price :-</p>
+        } 
+        else {
+            <p class="regPrice">@Price :-</p>
+            <p class="discPrice">@DiscountPrice :-</p>
+        }
     </div>
 </div>
 

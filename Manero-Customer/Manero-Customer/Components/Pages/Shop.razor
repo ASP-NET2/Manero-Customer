@@ -7,20 +7,22 @@
 @using Manero_Customer.Components.SubComponents
 
 
-<div>
-    <h3>Products</h3>
+<div class="container">
+    <div class="shop">
+        <h3>@SubCategory</h3>
 
-    <div class="productContainer">
-        @foreach (var item in ProductItems)
-        {
-            <_ShopProductCard 
-                ImageUrl="@item.ImageUrl"
-                Title="@item.Title"
-                Price="@item.Price"
-                DiscountPrice="@item.DiscountPrice"
-                />
+        <div class="productContainer">
+            @foreach (var item in ProductItems)
+            {
+                <_ShopProductCard 
+                    ImageUrl="@item.ImageUrl"
+                    Title="@item.Title"
+                    Price="@item.Price"
+                    DiscountPrice="@item.DiscountPrice"
+                    />
             
-        }
+            }
+        </div>
     </div>
 </div>
 
