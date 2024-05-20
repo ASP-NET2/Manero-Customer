@@ -5,16 +5,10 @@ using Newtonsoft.Json;
 
 namespace Manero_Customer.Services;
 
-public class VerifyAccountService
+public class VerifyAccountService(ServiceBusSender sender, NavigationManager navigationManager)
 {
-    private readonly ServiceBusSender _sender;
-    private readonly NavigationManager? _navigationManager;
-
-    public VerifyAccountService(ServiceBusSender sender, NavigationManager? navigationManager = null)
-    {
-        _sender = sender ?? throw new ArgumentNullException(nameof(sender));
-        _navigationManager = navigationManager;
-    }
+    private readonly ServiceBusSender _sender = sender;
+    private readonly NavigationManager _navigationManager = navigationManager;
 
     public async Task SendVerificationCodeAsync(string email)
     {
@@ -28,8 +22,8 @@ public class VerifyAccountService
             };
 
             await _sender.SendMessageAsync(servicebusMessage);
+            _navigationManager.NavigateTo($"/Account/ConfirmAccount?email={email}");
 
-            _navigationManager?.NavigateTo($"/Account/ConfirmAccount?email={email}");
         }
         catch (Exception ex)
         {

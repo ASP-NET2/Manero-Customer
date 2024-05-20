@@ -24,7 +24,7 @@ public class ConfirmAccountServiceTests
         var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
         _userManagerMock = new Mock<UserManager<ApplicationUser>>(
             userStoreMock.Object,
-            null, null, null, null, null, null, null, null);
+            null!, null!, null!, null!, null!, null!, null!, null!);
 
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
