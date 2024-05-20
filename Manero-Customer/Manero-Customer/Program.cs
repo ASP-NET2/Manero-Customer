@@ -22,6 +22,7 @@ builder.Services.AddScoped<ProductService> ();
 builder.Services.AddScoped<CategoryService> ();
 builder.Services.AddScoped<SubCategoryService> ();
 builder.Services.AddScoped<FilterService> ();
+builder.Services.AddSingleton<SharesDataService> ();
 
 
 builder.Services.AddAuthentication(options =>

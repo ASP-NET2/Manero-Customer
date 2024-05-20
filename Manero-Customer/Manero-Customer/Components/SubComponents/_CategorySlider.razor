@@ -4,6 +4,7 @@
 @inject ProductService productService
 @inject CategoryService categoryService
 @inject FilterService filterService
+@inject SharesDataService sharedDataService
 
 <div class="media-scroller snaps-inline">
     @foreach (var model in models)
@@ -27,9 +28,14 @@
         List<ProductModel> products = new();
         try
         {
+            // Hämtar alla produkter från databasen
             products = await productService.GetProducts();
+            // 
             category = filterService.FilterCategory(products);
+            //
             models = await categoryService.SortCategoryAsync(category);
+
+            sharedDataService.SetCategorie(models);
         }
         catch (Exception ex)
         {

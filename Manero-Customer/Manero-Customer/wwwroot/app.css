@@ -54,6 +54,16 @@
   text-decoration: none;
 }
 
+.categoryDisplay {
+  display: inline-block;
+  color: green;
+  border: 1px solid var(--color-main);
+  border-radius: 50%;
+}
+.categoryDisplay p {
+  padding: 10px;
+}
+
 .subContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -107,9 +117,6 @@
 .shopProductCard .priceContainer .discPrice {
   color: var(--color-accent);
   font-weight: 600;
-}
-.shopProductCard h3 {
-  color: green;
 }
 
 .shop h3 {
