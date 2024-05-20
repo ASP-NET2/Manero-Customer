@@ -1,0 +1,55 @@
+﻿.signup {
+    margin-bottom: 30px;
+    margin-top: 50px;
+
+    .container {
+
+
+        .signup-content {
+            display: grid;
+            justify-content: center;
+
+            h1 {
+            }
+
+            .input-group {
+                position: relative;
+                margin-bottom: 20px;
+                margin-top: 25px;
+
+                label {
+                    position: absolute;
+                    top: -10px;
+                    left: -10px;
+                    padding: 0 5px;
+                    background-color: white;
+                    z-index: 1;
+                    font-size: 14px;
+                    color: var(--color-text);
+                }
+
+                .input-box {
+                    width: 100%;
+                    padding: 10px;
+                    height: 40px;
+                    border-radius: 8px;
+                    border: var(--color-text) 1px solid;
+                    box-sizing: border-box;
+                    position: relative;
+                }
+            }
+
+            .checkbox-group {
+                margin: 15px 0;
+            }
+
+            .btn-theme {
+                width: 100%;
+            }
+
+            p {
+                margin-top: 20px;
+            }
+        }
+    }
+}

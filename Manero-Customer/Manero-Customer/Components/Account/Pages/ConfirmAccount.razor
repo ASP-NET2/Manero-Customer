@@ -1,0 +1,91 @@
+﻿@page "/Account/ConfirmAccount"
+@rendermode InteractiveServer
+
+
+@using System.Text
+@using Azure.Messaging.ServiceBus
+@using Manero_Customer.Data
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using Newtonsoft.Json
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IdentityRedirectManager RedirectManager
+@inject NavigationManager Navigation
+@inject ApplicationDbContext DbContext
+@inject ServiceBusSender _sender
+@inject NavigationManager NavigationManager
+@inject ConfirmAccountService ConfirmAccountService
+@inject VerifyAccountService VerifyAccountService
+
+<PageTitle>Confirm email</PageTitle>
+
+
+<section class="code-input">
+    <div class="container">
+        <h1>Confirm email </h1>
+        <div class="input-content">
+            <p>Enter your OTP code here.</p>
+            <p>@Email</p>
+            <div class="verification-code">
+                <EditForm EditContext="editContext" Model="ConfirmForm" Method="post" OnValidSubmit="VerifyCode" FormName="VerifyCode">
+                    <InputText hidden @bind-Value="ConfirmForm.Email">@Email</InputText>
+                    <div class="verify-code">
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[0]"></InputText>
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[1]"></InputText>
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[2]"></InputText>
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[3]"></InputText>
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[4]"></InputText>
+                        <InputText class="input-box" @bind-Value="ConfirmForm.CodeDigits[5]"></InputText>
+                    </div>
+                    <div class="placement-btn">
+                        <button type="submit" class="btn-theme">Submit</button>
+                    </div>
+                </EditForm>
+            </div>
+            <p>Didn't recieve the OTP? <a @onclick="ResendOtp">Resend.</a></p>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    private string? statusMessage;
+
+    [SupplyParameterFromQuery]
+    public string? Email { get; set; }
+
+    public VerificationRequest verificationRequest { get; set; } = new VerificationRequest();
+
+    public EditContext? editContext;
+
+    [SupplyParameterFromForm]
+    public ConfirmEmailModel ConfirmForm { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+
+        if (ConfirmForm == null)
+        {
+            ConfirmForm = new ConfirmEmailModel();
+        }
+        ConfirmForm.Email = Email;
+        verificationRequest.Email = Email!;
+    }
+
+    public async Task VerifyCode()
+    {
+        statusMessage = await ConfirmAccountService.VerifyCodeAsync(ConfirmForm.Email, ConfirmForm.CodeDigits);
+    }
+
+    public async Task ResendOtp()
+    {
+        if (!string.IsNullOrEmpty(Email))
+        {
+            await VerifyAccountService.SendVerificationCodeAsync(Email);
+            statusMessage = "Resent OTP";
+        }
+    }
+}
