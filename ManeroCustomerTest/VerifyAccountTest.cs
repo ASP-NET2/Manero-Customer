@@ -19,7 +19,7 @@ public class VerifyAccountTests
     public VerifyAccountTests()
     {
         _serviceBusSenderMock = new Mock<ServiceBusSender>();
-        _verifyAccountService = new VerifyAccountService(_serviceBusSenderMock.Object, null); 
+        _verifyAccountService = new VerifyAccountService(_serviceBusSenderMock.Object, null);
     }
 
     [Fact]

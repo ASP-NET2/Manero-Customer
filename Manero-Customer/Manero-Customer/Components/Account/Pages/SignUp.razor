@@ -3,6 +3,7 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
+@using Manero_Customer.Data.Entity
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
 @using Microsoft.AspNetCore.Identity
@@ -16,6 +17,7 @@
 @inject ILogger<SignUp> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject ApplicationDbContext DbContext
 
 
 
@@ -95,16 +97,36 @@
     {
         var user = new ApplicationUser
             {
-                FirstName = Form.FirstName,
-                LastName = Form.LastName,
                 UserName = Form.Email,
                 Email = Form.Email,
-
             };
 
         var result = await UserManager.CreateAsync(user, Form.Password);
 
-        if (!result.Succeeded)
+        if (result.Succeeded)
+        {
+            // Skapa AccountUserEntity och spara till databasen
+            var accountUser = new AccountUserEntity
+                {
+                    UserId = user.Id,
+                    FirstName = Form.FirstName,
+                    LastName = Form.LastName
+                };
+
+            DbContext.AccountUser.Add(accountUser);
+            await DbContext.SaveChangesAsync();
+
+            if (UserManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                NavigationManager.NavigateTo($"/Account/VerifyAccount?email={user.Email}");
+            }
+            else
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false);
+                NavigationManager.NavigateTo(ReturnUrl ?? "/");
+            }
+        }
+        else
         {
             var userAlreadyExistsError = result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName");
             if (userAlreadyExistsError != null)
@@ -114,7 +136,7 @@
                 new IdentityError
                 {
                     Code = userAlreadyExistsError.Code,
-                    Description = "Användaren finns redan."
+                    Description = "User already exists."
                 }
             };
             }
@@ -122,19 +144,7 @@
             {
                 identityErrors = result.Errors;
             }
-
-            return;
         }
-
-
-        if (UserManager.Options.SignIn.RequireConfirmedAccount)
-        {
-            NavigationManager.NavigateTo($"/Account/VerifyAccount?email={user.Email}");
-        }
-
-        await SignInManager.SignInAsync(user, isPersistent: false);
-        NavigationManager.NavigateTo(ReturnUrl ?? "/");
-
     }
 
 
