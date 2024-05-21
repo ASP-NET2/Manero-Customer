@@ -15,9 +15,9 @@ namespace Manero_Customer.Services
             HashSet<string> subcategories = [];
             foreach (var model in models)
             {
-                if (!string.IsNullOrWhiteSpace(model.SubCategory))
+                if (!string.IsNullOrWhiteSpace(model.SubCategoryName))
                 {
-                    subcategories.Add(model.SubCategory);
+                    subcategories.Add(model.SubCategoryName);
                 }
             }
 
@@ -34,9 +34,9 @@ namespace Manero_Customer.Services
             HashSet<string> categories = [];
             foreach (var model in models)
             {
-                if (!string.IsNullOrWhiteSpace(model.Category))
+                if (!string.IsNullOrWhiteSpace(model.CategoryName))
                 {
-                    categories.Add(model.Category);
+                    categories.Add(model.CategoryName);
                 }
             }
 

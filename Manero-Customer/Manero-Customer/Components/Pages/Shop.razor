@@ -40,13 +40,13 @@
 
             foreach (var product in products)
             {
-                if (product.SubCategory == SubCategory)
+                if (product.SubCategoryName == SubCategory)
                 {
                     ProductItems.Add(product);
                 }
                 else
                 {
-                    if (product.SubCategory != null)
+                    if (product.SubCategoryName != null)
                     {
                         continue;
                     }
