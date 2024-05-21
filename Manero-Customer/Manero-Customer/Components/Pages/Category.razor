@@ -8,14 +8,14 @@
 @inject SharesDataService sharedDataService
 
 <div class="container">
-
-<h3>Subcategories for @Categorie</h3>
-    @foreach (var category in categories)
-    {      
-        <div class="categoryDisplay">
-            <p>@category.CategoryName</p>
-        </div>
-    }
+    <div class="containerCategoryDisplay">
+        @foreach (var category in categories)
+        {      
+            <div class="categoryDisplay">
+                <NavLink href=@($"/subCategories/{category.CategoryName}")>@category.CategoryName</NavLink>
+            </div>
+        }
+    </div>
 
 @if (subcategories == null)
 {
