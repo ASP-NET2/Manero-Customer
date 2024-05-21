@@ -1,0 +1,36 @@
+﻿.ProductPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-content {
+            margin-top: 20px;
+
+            p {
+                margin: 5px 0;
+            }
+
+            h3 {
+                margin: 5px 0;
+            }
+        }
+
+        .btn-theme {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px 20px;
+        }
+    }
+}

@@ -326,3 +326,34 @@ h1:focus {
   justify-content: center;
   color: black;
 }
+
+.ProductPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+.ProductPage .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ProductPage .container .product-image {
+  max-width: 100%;
+  height: auto;
+}
+.ProductPage .container .product-content {
+  margin-top: 20px;
+}
+.ProductPage .container .product-content p {
+  margin: 5px 0;
+}
+.ProductPage .container .product-content h3 {
+  margin: 5px 0;
+}
+.ProductPage .container .btn-theme {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 20px;
+}
