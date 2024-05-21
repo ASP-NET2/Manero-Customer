@@ -23,9 +23,11 @@ builder.Services.AddScoped<ProductService> ();
 builder.Services.AddScoped<CategoryService> ();
 builder.Services.AddScoped<SubCategoryService> ();
 builder.Services.AddScoped<FilterService> ();
+builder.Services.AddSingleton<SharesDataService> ();
 builder.Services.AddScoped<ConfirmAccountService> ();
 builder.Services.AddScoped<SignInService>();
 builder.Services.AddScoped<VerifyAccountService> ();
+
 
 
 builder.Services.AddAuthentication(options =>

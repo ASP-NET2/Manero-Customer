@@ -1,4 +1,13 @@
 
+.categoryDisplay{
+    display: inline-block;
+    color: green;
+    border: 1px solid var(--color-main);
+    border-radius: 50%;
+    p{
+        padding: 10px;
+    }
+}
 .subContainer{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8,6 +17,10 @@
             color: var(--color-text);
             font-size: 2em;
             margin: 0;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
         }
         .imgContainer{
 
