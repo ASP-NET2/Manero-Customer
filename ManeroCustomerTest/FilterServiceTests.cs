@@ -13,10 +13,10 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { Category = "Cat1" },
-                new ProductModel { Category = "Cat2" },
-                new ProductModel { Category = "Cat1" }, // Duplicate
-                new ProductModel { Category = "Cat3" }
+                new ProductModel { CategoryName = "Cat1" },
+                new ProductModel { CategoryName = "Cat2" },
+                new ProductModel { CategoryName = "Cat1" }, // Duplicate
+                new ProductModel { CategoryName = "Cat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "Cat1", "Cat2", "Cat3" };
@@ -51,9 +51,9 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { Category = "Cat1" },
-                new ProductModel { Category = "Cat2" },
-                new ProductModel { Category = "Cat3" }
+                new ProductModel { CategoryName = "Cat1" },
+                new ProductModel { CategoryName = "Cat2" },
+                new ProductModel { CategoryName = "Cat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "Cat1", "Cat2", "Cat3" };
@@ -73,11 +73,11 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { Category = "Cat1" },
-                new ProductModel { Category = null },   // Null Category
-                new ProductModel { Category = "" },     // Empty Category
-                new ProductModel { Category = "Cat2" },
-                new ProductModel { Category = "Cat3" }
+                new ProductModel { CategoryName = "Cat1" },
+                new ProductModel { CategoryName = null },   // Null Category
+                new ProductModel { CategoryName = "" },     // Empty Category
+                new ProductModel { CategoryName = "Cat2" },
+                new ProductModel { CategoryName = "Cat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "Cat1", "Cat2", "Cat3" };
@@ -112,10 +112,10 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { SubCategory = "SubCat1" },
-                new ProductModel { SubCategory = "SubCat2" },
-                new ProductModel { SubCategory = "SubCat1" }, // Duplicate
-                new ProductModel { SubCategory = "SubCat3" }
+                new ProductModel { SubCategoryName = "SubCat1" },
+                new ProductModel { SubCategoryName = "SubCat2" },
+                new ProductModel { SubCategoryName = "SubCat1" }, // Duplicate
+                new ProductModel { SubCategoryName = "SubCat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "SubCat1", "SubCat2", "SubCat3" };
@@ -150,9 +150,9 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { SubCategory = "SubCat1" },
-                new ProductModel { SubCategory = "SubCat2" },
-                new ProductModel { SubCategory = "SubCat3" }
+                new ProductModel { SubCategoryName = "SubCat1" },
+                new ProductModel { SubCategoryName = "SubCat2" },
+                new ProductModel { SubCategoryName = "SubCat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "SubCat1", "SubCat2", "SubCat3" };
@@ -172,11 +172,11 @@ namespace ManeroCustomerTest
             // Arrange
             var models = new List<ProductModel>
             {
-                new ProductModel { SubCategory = "SubCat1" },
-                new ProductModel { SubCategory = null },   // Null SubCategory
-                new ProductModel { SubCategory = "" },     // Empty SubCategory
-                new ProductModel { SubCategory = "SubCat2" },
-                new ProductModel { SubCategory = "SubCat3" }
+                new ProductModel { SubCategoryName = "SubCat1" },
+                new ProductModel { SubCategoryName = null },   // Null SubCategory
+                new ProductModel { SubCategoryName = "" },     // Empty SubCategory
+                new ProductModel { SubCategoryName = "SubCat2" },
+                new ProductModel { SubCategoryName = "SubCat3" }
             };
             var service = new FilterService();
             var expected = new List<string> { "SubCat1", "SubCat2", "SubCat3" };
