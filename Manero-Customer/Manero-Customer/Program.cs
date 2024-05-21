@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using Manero_Customer.Components;
 using Manero_Customer.Components.Account;
 using Manero_Customer.Data;
@@ -23,6 +24,10 @@ builder.Services.AddScoped<CategoryService> ();
 builder.Services.AddScoped<SubCategoryService> ();
 builder.Services.AddScoped<FilterService> ();
 builder.Services.AddSingleton<SharesDataService> ();
+builder.Services.AddScoped<ConfirmAccountService> ();
+builder.Services.AddScoped<SignInService>();
+builder.Services.AddScoped<VerifyAccountService> ();
+
 
 
 builder.Services.AddAuthentication(options =>
@@ -37,12 +42,25 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<ApplicationUser>(options => {
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequiredLength = 8;
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+builder.Services.AddSingleton<ServiceBusSender>(sp =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("ServiceBus");
+    var queueName = builder.Configuration["ServiceBus:SenderQueue"];
+    var client = new ServiceBusClient(connectionString);
+    return client.CreateSender(queueName);
+
+});
 
 var app = builder.Build();
 
@@ -51,6 +69,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {

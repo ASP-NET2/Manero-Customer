@@ -1,0 +1,87 @@
+﻿@page "/Account/VerifyAccount"
+@rendermode InteractiveServer
+
+@using System.Text
+@using Azure
+@using Azure.Messaging.ServiceBus
+
+@using Manero_Customer.Data
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using Newtonsoft.Json
+@using System.Diagnostics
+
+
+@inject VerifyAccountService VerifyAccountService
+
+<PageTitle>Register confirmation</PageTitle>
+
+<section class="verify">
+    <div class="container">
+        <h2>Manero</h2>
+        <div class="verify-image">
+          <img class="image-avatar" src="/scss/images/user.jpg"/>  
+        </div>
+        <div class="verify-content">
+            <h3>Account Created!</h3>
+            <p> Your account had beed created successfully. </p>
+            <p>Before you login you need to verify your email address</p>
+        </div>
+        <EditForm FormName="VerificationModel" Model="VerificationModel" class="verifyform" Method="post" OnValidSubmit="SendVerificationCodeAsync">
+            <InputText  @bind-Value="VerificationModel.Email">@Email</InputText>
+            <button type="submit" class="btn-theme">SEND CODE</button>
+        </EditForm>
+    </div>
+</section>
+
+
+
+@code{
+    private string? statusMessage;
+
+    [SupplyParameterFromQuery]
+    public string? Email { get; set; }
+
+    public VerificationRequest VerificationModel { get; set; } = new VerificationRequest();
+
+    protected override void OnInitialized()
+    {
+
+        if (!string.IsNullOrEmpty(Email))
+        {
+            VerificationModel.Email = Email;
+            Debug.WriteLine($"OnInitialized: Set VerificationModel.Email to: {VerificationModel.Email}");
+        }
+        else
+        {
+            Debug.WriteLine("OnInitialized: Email parameter is null or empty");
+        }
+        // VerificationModel.Email = Email!;
+    }
+
+    public async Task SendVerificationCodeAsync()
+    {
+        try
+        {
+            await VerifyAccountService.SendVerificationCodeAsync(VerificationModel.Email);
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending verification code: {ex.Message}");
+            statusMessage = "Error sending verification code";
+
+            if (ex is ServiceBusException)
+            {
+                statusMessage = "Error sending verification code.";
+            }
+            else if (ex is NavigationException)
+            {
+                statusMessage = "Navigation failed.";
+            }
+        }
+    }
+ }
+ 

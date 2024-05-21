@@ -1,0 +1,41 @@
+﻿.verify {
+    padding: 30px;
+
+    .container {
+        display: grid;
+        justify-items: center;
+
+        .verify-image {
+            position: relative;
+
+            .image-avatar {
+                position: relative;
+                border-radius: 50%;
+                height: 140px;
+                width: 140px;
+                object-fit: cover;
+                border: 1px solid var(--color-theme);
+            }
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .verify-content {
+            display: grid;
+            justify-items: center;
+
+            h3 {
+            }
+
+            p {
+                color: var(--color-text);
+            }
+        }
+
+        .btn-theme {
+            margin-top: 25px;
+        }
+    }
+}

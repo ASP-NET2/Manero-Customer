@@ -1,0 +1,47 @@
+﻿.code-input {
+    .container {
+        display: grid;
+        justify-items: center;
+        margin-top: 50px;
+
+        .input-content {
+            display: grid;
+            margin-top: 10px;
+            justify-items: center;
+
+
+            p {
+                margin: 10px 0;
+                color: var(--color-text);
+            }
+
+            .verification-code {
+
+                .verify-code {
+                    display: flex;
+                    margin-bottom: 15px;
+                }
+
+                input {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 100%;
+                    border: 1px solid var(--color-text);
+                    padding: 18px;
+                }
+
+                input:not(:last-child) {
+                    margin-right: 10px;
+                }
+
+                .placement-btn {
+                    display: flex;
+                    justify-content: center;
+                }
+            }
+
+            .btn-theme {
+            }
+        }
+    }
+}

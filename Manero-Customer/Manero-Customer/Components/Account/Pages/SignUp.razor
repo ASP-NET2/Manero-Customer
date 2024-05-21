@@ -1,0 +1,151 @@
+﻿@page "/Account/SignUp"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Manero_Customer.Data.Entity
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using Manero_Customer.Data
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject ILogger<SignUp> Logger
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+@inject ApplicationDbContext DbContext
+
+
+
+<PageTitle>Sign Up</PageTitle>
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <h1>Sign up</h1>
+
+            <EditForm Model="Form" EditContext="editContext" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="SignUp">
+                <DataAnnotationsValidator />
+
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="input-group">
+                    <label>FIRST NAME</label>
+                    <InputText id="Input-box" class="input-box" @bind-Value="Form.FirstName" placeholder="Enter your first name"></InputText>
+                    <ValidationMessage For="() => Form.FirstName" class="text-danger"></ValidationMessage>
+                </div>
+
+                <div class="input-group">
+                    <label> LAST NAME</label>
+                    <InputText class="input-box" @bind-Value="Form.LastName" placeholder="Enter your last name"></InputText>
+                    <ValidationMessage For="() => Form.LastName" class="text-danger"></ValidationMessage>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">EMAIL</label>
+                    <InputText class="input-box" @bind-Value="Form.Email" aria-required="true" placeholder="name@example.com" />
+                    <ValidationMessage For="() => Form.Email" class="text-danger" />
+                </div>
+
+                <div class="input-group">
+                    <label>PASSWORD</label>
+                    <InputText class="input-box" type="password" @bind-Value="Form.Password" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <ValidationMessage For="() => Form.Password" class="text-danger" />
+                </div>
+
+                <div class="input-group">
+                    <label>CONFIRM PASSWORD</label>
+                    <InputText class="input-box" type="password" @bind-Value="Form.ConfirmPassword" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <ValidationMessage For="() => Form.ConfirmPassword" class="text-danger" />
+                </div>
+
+
+                <div id="terms" class="checkbox-group">
+                    <div class="input-check">
+                        <InputCheckbox class="checkbox" @bind-Value="Form.TermsAndConditions"></InputCheckbox>
+                        <label>I accept the <NavLink href="/terms">Terms and Conditions</NavLink></label>
+                        <ValidationMessage For="() => Form.TermsAndConditions" class="text-danger"></ValidationMessage>
+                    </div>
+                </div>
+                <button type="submit" class="btn-theme">SIGN UP</button>
+            </EditForm>
+            <p>Already have an account? <a href="/signin">Sign in here</a></p>
+        </div>
+    </div>
+
+</section>
+
+
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+
+    [SupplyParameterFromForm]
+    public SignUpModel Form { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private EditContext? editContext;
+
+    //private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+
+    public async Task RegisterUser(EditContext editContext)
+    {
+        var user = new ApplicationUser
+            {
+                UserName = Form.Email,
+                Email = Form.Email,
+            };
+
+        var result = await UserManager.CreateAsync(user, Form.Password);
+
+        if (result.Succeeded)
+        {
+            // Skapa AccountUserEntity och spara till databasen
+            var accountUser = new AccountUserEntity
+                {
+                    UserId = user.Id,
+                    FirstName = Form.FirstName,
+                    LastName = Form.LastName
+                };
+
+            DbContext.AccountUser.Add(accountUser);
+            await DbContext.SaveChangesAsync();
+
+            if (UserManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                NavigationManager.NavigateTo($"/Account/VerifyAccount?email={user.Email}");
+            }
+            else
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false);
+                NavigationManager.NavigateTo(ReturnUrl ?? "/");
+            }
+        }
+        else
+        {
+            var userAlreadyExistsError = result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName");
+            if (userAlreadyExistsError != null)
+            {
+                identityErrors = new List<IdentityError>
+            {
+                new IdentityError
+                {
+                    Code = userAlreadyExistsError.Code,
+                    Description = "User already exists."
+                }
+            };
+            }
+            else
+            {
+                identityErrors = result.Errors;
+            }
+        }
+    }
+
+
+}
