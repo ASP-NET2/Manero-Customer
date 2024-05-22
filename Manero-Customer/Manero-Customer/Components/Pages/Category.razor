@@ -54,7 +54,11 @@ else
         try
         {
             categories = sharedDataService.GetCategorie();
-            products = await productService.FilterProduct(Categorie!);
+            var filters = new Dictionary<string, string>
+            {
+                {"Category", Categorie! }
+            };
+            products = await productService.FilterProduct(filters);
             subcategories = filterservice.FilterSubCategory(products);
             models = await subCategoryService.SortSubCategoryAsync(subcategories);
 

@@ -12,14 +12,16 @@
         <h3>@SubCategory</h3>
 
         <div class="productContainer">
-            @foreach (var item in ProductItems)
+            @foreach (var item in products)
             {
+                <NavLink href=@($"/products/{item.Title}")>                  
                 <_ShopProductCard 
                     ImageUrl="@item.ImageUrl"
                     Title="@item.Title"
                     Price="@item.Price"
                     DiscountPrice="@item.DiscountPrice"
                     />
+                </NavLink>
             }
         </div>
     </div>
@@ -29,30 +31,16 @@
 @code {
     [Parameter]
     public string? SubCategory { get; set; }
-
-    List<ProductModel> ProductItems = new();
+    List<ProductModel> products = new();
     protected override async Task OnInitializedAsync()
     {
-        List<ProductModel> products = new();
         try
         {
-            products = await productService.GetProducts();
-
-            foreach (var product in products)
+            var test = new Dictionary<string, string>
             {
-                if (product.SubCategoryName == SubCategory)
-                {
-                    ProductItems.Add(product);
-                }
-                else
-                {
-                    if (product.SubCategoryName != null)
-                    {
-                        continue;
-                    }
-                }
-            }
-            
+                { "Subcategory",  SubCategory! }
+            };
+            products = await productService.FilterProduct(test);            
         }
         catch (Exception ex)
         {
