@@ -1,0 +1,22 @@
+﻿
+<div class="shopProductCard">
+    <img src="@ImageUrl"/>
+    <p>@Title</p>
+    <div class="priceContainer">
+        @if (@DiscountPrice == "0" || DiscountPrice == null)
+        {
+        <p class="price">@Price :-</p>
+        } 
+        else {
+            <p class="regPrice">@Price :-</p>
+            <p class="discPrice">@DiscountPrice :-</p>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Price { get; set; }
+    [Parameter] public string? ImageUrl { get; set; }
+    [Parameter] public string? DiscountPrice { get; set; }
+}

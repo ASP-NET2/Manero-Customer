@@ -1,0 +1,40 @@
+﻿.shopProductCard {
+    height: 248px;
+    width: 160px;
+    display: grid;
+    gap: 10px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 9/12;
+        object-fit: contain;
+    }
+
+    p {
+        font: 14px;
+        color: var(--color-text);
+        margin: 0;
+        padding-left: 10px; 
+
+    }
+
+    .priceContainer {
+        display: flex;
+        gap: 10px;
+
+        .price{
+            font-weight: 600;
+            color: var(--color-main);
+        }
+
+        .regPrice{
+            text-decoration: line-through;
+        }
+
+        .discPrice{
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+    }
+}

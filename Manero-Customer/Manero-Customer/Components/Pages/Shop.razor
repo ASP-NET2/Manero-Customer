@@ -4,19 +4,24 @@
 @page "/products/{subcategory}"
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
+@using Manero_Customer.Components.SubComponents
 
-<div>
-    <h3>Products</h3>
 
-<div>
-        @foreach (var item in ProductItems)
-        {
-            <div>
-                <p>@item.Title</p>
-                <p>@item.Author</p>
-                <p>@item.Price</p>
-            </div>
-        }
+<div class="container">
+    <div class="shop">
+        <h3>@SubCategory</h3>
+
+        <div class="productContainer">
+            @foreach (var item in ProductItems)
+            {
+                <_ShopProductCard 
+                    ImageUrl="@item.ImageUrl"
+                    Title="@item.Title"
+                    Price="@item.Price"
+                    DiscountPrice="@item.DiscountPrice"
+                    />
+            }
+        </div>
     </div>
 </div>
 
@@ -25,23 +30,23 @@
     [Parameter]
     public string? SubCategory { get; set; }
 
-    List<ProductCategoryModel> ProductItems = new();
+    List<ProductModel> ProductItems = new();
     protected override async Task OnInitializedAsync()
     {
-        List<ProductCategoryModel> products = new();
+        List<ProductModel> products = new();
         try
         {
             products = await productService.GetProducts();
 
             foreach (var product in products)
             {
-                if (product.SubCategory == SubCategory)
+                if (product.SubCategoryName == SubCategory)
                 {
                     ProductItems.Add(product);
                 }
                 else
                 {
-                    if (product.SubCategory != null)
+                    if (product.SubCategoryName != null)
                     {
                         continue;
                     }

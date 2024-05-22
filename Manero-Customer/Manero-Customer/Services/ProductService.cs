@@ -9,35 +9,28 @@ using Microsoft.Extensions.Logging;
 
 namespace Manero_Customer.Services
 {
-    public class ProductService
+    public class ProductService(HttpClient httpClient, IConfiguration configuration, ILogger<ProductService> logger)
     {
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
-        private readonly ILogger<ProductService> _logger;
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly IConfiguration _configuration = configuration;
+        private readonly ILogger<ProductService> _logger = logger;
 
-        public ProductService(HttpClient httpClient, IConfiguration configuration, ILogger<ProductService> logger)
-        {
-            _httpClient = httpClient;
-            _configuration = configuration;
-            _logger = logger;
-        }
-
-        public async Task<List<ProductCategoryModel>> GetProducts()
+        public async Task<List<ProductModel>> GetProducts()
         {
             try
             {
                 var url = _configuration.GetValue<string>("AzureFunctions:GetAllProducts");
-                var result = await _httpClient.GetFromJsonAsync<List<ProductCategoryModel>>(url);
-                return result ?? new List<ProductCategoryModel>();
+                var result = await _httpClient.GetFromJsonAsync<List<ProductModel>>(url);
+                return result ?? [];
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error fetching products.");
-                return new List<ProductCategoryModel>();
+                return [];
             }
         }
 
-        public async Task<List<ProductCategoryModel>> FilterProduct(string filter)
+        public async Task<List<ProductModel>> FilterProduct(string filter)
         {
             try
             {
@@ -50,13 +43,13 @@ namespace Manero_Customer.Services
                 };
 
                 var url = builder.ToString();
-                var result = await _httpClient.GetFromJsonAsync<List<ProductCategoryModel>>(url);
-                return result ?? new List<ProductCategoryModel>();
+                var result = await _httpClient.GetFromJsonAsync<List<ProductModel>>(url);
+                return result ?? [];
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error filtering products.");
-                return new List<ProductCategoryModel>();
+                return [];
             }
         }
     }

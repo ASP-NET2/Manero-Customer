@@ -18,6 +18,10 @@
   display: grid;
 }
 
+.container {
+  padding: 0 15px;
+}
+
 .media-scroller {
   display: grid;
   grid-auto-flow: column;
@@ -50,6 +54,27 @@
   text-decoration: none;
 }
 
+.containerCategoryDisplay {
+  display: flex;
+  padding: 30px 0 20px 0;
+  gap: 12px;
+}
+.containerCategoryDisplay .categoryDisplay {
+  display: inline-block;
+}
+.containerCategoryDisplay .categoryDisplay a {
+  border: 2px solid var(--color-secondary-text);
+  padding: 5px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--color-main);
+  font-weight: 600;
+}
+.containerCategoryDisplay .categoryDisplay a.active {
+  padding: 5px 20px;
+  background: var(--color-secondary-text);
+}
+
 .subContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -59,12 +84,58 @@
   color: var(--color-text);
   font-size: 2em;
   margin: 0;
+  text-align: center;
+}
+.subContainer .subCategoryItem a {
+  text-decoration: none;
 }
 .subContainer .subCategoryItem .imgContainer img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   border-radius: 10px;
+}
+
+.shopProductCard {
+  height: 248px;
+  width: 160px;
+  display: grid;
+  gap: 10px;
+}
+.shopProductCard img {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 9/12;
+  object-fit: contain;
+}
+.shopProductCard p {
+  font: 14px;
+  color: var(--color-text);
+  margin: 0;
+  padding-left: 10px;
+}
+.shopProductCard .priceContainer {
+  display: flex;
+  gap: 10px;
+}
+.shopProductCard .priceContainer .price {
+  font-weight: 600;
+  color: var(--color-main);
+}
+.shopProductCard .priceContainer .regPrice {
+  text-decoration: line-through;
+}
+.shopProductCard .priceContainer .discPrice {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.shop h3 {
+  text-align: center;
+}
+.shop .productContainer {
+  display: flex;
+  gap: 10px;
 }
 
 body {

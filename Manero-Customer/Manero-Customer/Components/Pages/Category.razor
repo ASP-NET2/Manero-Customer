@@ -5,10 +5,17 @@
 @inject ProductService productService
 @inject SubCategoryService subCategoryService
 @inject FilterService filterservice
+@inject SharesDataService sharedDataService
 
 <div class="container">
-
-<h3>Subcategories for @Categorie</h3>
+    <div class="containerCategoryDisplay">
+        @foreach (var category in categories)
+        {      
+            <div class="categoryDisplay">
+                <NavLink href=@($"/subCategories/{category.CategoryName}")>@category.CategoryName</NavLink>
+            </div>
+        }
+    </div>
 
 @if (subcategories == null)
 {
@@ -38,13 +45,15 @@ else
     [Parameter]
     public string? Categorie { get; set; }
     private List<string> subcategories = new ();
-    private List<ProductCategoryModel> products = new ();
+    private List<ProductModel> products = new ();
     public List<SubCategoryModel> models = new();
+    public List<CategoryModel> categories = new();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            categories = sharedDataService.GetCategorie();
             products = await productService.FilterProduct(Categorie!);
             subcategories = filterservice.FilterSubCategory(products);
             models = await subCategoryService.SortSubCategoryAsync(subcategories);

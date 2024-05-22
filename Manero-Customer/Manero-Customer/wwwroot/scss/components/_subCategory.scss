@@ -1,4 +1,26 @@
+.containerCategoryDisplay {
+    display: flex;
+    padding: 30px 0 20px 0;
+    gap: 12px;
 
+    .categoryDisplay {
+        display: inline-block;
+
+        a {
+            border: 2px solid var(--color-secondary-text);
+            padding: 5px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--color-main);
+            font-weight: 600;
+        }
+    }
+
+    .categoryDisplay a.active {
+        padding: 5px 20px;
+        background: var(--color-secondary-text);
+    }
+}
 .subContainer{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8,6 +30,10 @@
             color: var(--color-text);
             font-size: 2em;
             margin: 0;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
         }
         .imgContainer{
 
