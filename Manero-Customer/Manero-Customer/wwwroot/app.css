@@ -169,7 +169,6 @@
 .shop .productContainer {
   display: flex;
   gap: 10px;
-  height: 30em;
 }
 .shop .productContainer a {
   text-decoration: none;
