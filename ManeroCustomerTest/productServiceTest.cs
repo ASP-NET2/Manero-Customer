@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Manero_Customer.Components.Pages;
 using Manero_Customer.Data.Models;
 using Manero_Customer.Services;
 using Microsoft.Extensions.Configuration;
@@ -129,8 +130,14 @@ namespace ManeroCustomerTest
                     Content = JsonContent.Create(filteredProducts)
                 });
 
+            var SubCategory = new Dictionary<string, string>
+            {
+                { "Subcategory",  "SubCategory" }
+            };
+           
             // Act
-            var result = await _productService.FilterProduct("Category1");
+
+            var result = await _productService.FilterProduct(SubCategory);
 
             // Assert
             Assert.NotNull(result);
@@ -153,9 +160,13 @@ namespace ManeroCustomerTest
                 {
                     StatusCode = HttpStatusCode.InternalServerError
                 });
+            var SubCategory = new Dictionary<string, string>
+            {
+                { "Subcategory",  "SubCategory" }
+            };
 
             // Act
-            var result = await _productService.FilterProduct("Category1");
+            var result = await _productService.FilterProduct(SubCategory);
 
             // Assert
             Assert.NotNull(result);
