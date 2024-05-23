@@ -21,5 +21,6 @@
         public bool FeaturedProduct { get; set; } = false;
         public bool BestSeller { get; set; } = false;
         public bool IsFavorite { get; set; } = false;
+        public string? Rating { get; set; }
     }
 }
