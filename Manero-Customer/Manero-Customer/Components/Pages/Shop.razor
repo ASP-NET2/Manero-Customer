@@ -14,7 +14,7 @@
         <div class="productContainer">
             @foreach (var item in products)
             {
-                <NavLink href=@($"/products/{item.Title}")>                  
+                <NavLink href=@($"/product/{item.Title}")>                  
                 <_ShopProductCard 
                     ImageUrl="@item.ImageUrl"
                     Title="@item.Title"

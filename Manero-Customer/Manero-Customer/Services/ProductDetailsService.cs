@@ -19,8 +19,9 @@ namespace Manero_Customer.Services
         {
             try
             {
+                
                 var baseUrl = "https://maneroproductsfunction.azurewebsites.net/api/SortProduct";
-                var url = $"{baseUrl}?title={Uri.EscapeDataString(title)}";
+                var url = $"{baseUrl}?title={Uri.EscapeDataString(title)}&code=DDouJB2A89tIcTmyQLA60nUafk_PqQDmkWjWA8d_ZAH0AzFueERmlQ%3D%3D";
 
                 _logger.LogInformation("Requesting URL: {Url}", url);
                 var result = await _httpClient.GetFromJsonAsync<List<ProductDetailsModel>>(url);
