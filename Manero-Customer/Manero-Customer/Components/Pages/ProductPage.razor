@@ -1,24 +1,58 @@
-﻿@page "/product"
+﻿@page "/product/{title}"
+@using Manero_Customer.Services
+@using Manero_Customer.Data.Models
+@inject NavigationManager Navigation
+@inject ProductDetailsService productDetailsService
+@inject ILogger<ProductPage> Logger
 
-<h3>ProductPage</h3>
+<div class="container">
+    <section class="ProductPage">
+        <div class="container">
+            @if (product != null)
+            {
+                <img class="product-image" src="@product.ImageUrl" alt="produktbild" />
 
-<section class="ProductPage">
-    <div class="container">
-        
-        <img class="product-image" src="scss/images/testproduct.jpg" alt="book image" />
-        
-        <div class="product-content">
-        <h3>Title:</h3>
-        <p>Author:</p>
-        <p>Price:</p>
-        <h5>Description</h5>
-            <p>Amet amet Lorem eu consectetur in deserunt nostrud dolor culpa ad sint amet. Nostrud deserunt consectetur culpa minim mollit veniam aliquip pariatur exercitation ullamco ea voluptate et. Pariatur ipsum mollit magna proident nisi ipsum.</p>
+                <div class="product-content">
+                    <h3>Titel: @product.Title</h3>
+                    <p>Författare: @product.Author</p>
+                    <p>Pris: @product.Price</p>
+                    <h5>Beskrivning</h5>
+                    <p>@product.LongDescription</p>
+                    
+                </div>
+
+                <button class="btn-theme">+ LÄGG TILL I KUNDVAGNEN</button>
+            }
+            else
+            {
+                <p>Produkten kunde inte hittas.</p>
+            }
         </div>
-
-        <button class="btn-theme">+ ADD TO CART</button>
-    </div>
-</section>
+    </section>
+</div>
 
 @code {
-    
+    [Parameter]
+    public string? Title { get; set; }
+
+    private ProductDetailsModel? product;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(Title))
+        {
+            try
+            {
+                Logger.LogInformation("Loading product details for title: {Title}", Title);
+                var products = await productDetailsService.MatchProductsByTitleAsync(Title);
+                product = products.FirstOrDefault();
+                Logger.LogInformation("Product loaded: {Product}", product?.Title);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error loading product details for title: {Title}", Title);
+                product = null;
+            }
+        }
+    }
 }
