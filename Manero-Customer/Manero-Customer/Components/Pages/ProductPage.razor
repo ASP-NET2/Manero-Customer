@@ -7,27 +7,31 @@
 
 <div class="container">
     <section class="ProductPage">
-        <div class="container">
+        <div class="product-container">
             @if (product != null)
             {
-                <img class="product-image" src="@product.ImageUrl" alt="produktbild" />
-
-                <div class="product-content">
-                    <h3>Titel: @product.Title</h3>
-                    <p>Författare: @product.Author</p>
-                    <p>Pris: @product.Price</p>
-                    <h5>Beskrivning</h5>
-                    <p>@product.LongDescription</p>
-                    
+                <div class="image-container">
+                    <img class="product-image" src="@product.ImageUrl" alt="produktbild" />
                 </div>
-
-                <button class="btn-theme">+ LÄGG TILL I KUNDVAGNEN</button>
+                <div class="product-content">
+                    <h3>@product.Title</h3>
+                    <p>Författare: @product.Author</p>
+                    <p>Format: @product.FormatName</p>
+                    <p class="price">@product.Price kr</p>
+                    <h5>Beskrivning</h5>
+                    <p>@product.ShortDescription</p>
+                    <p>@product.LongDescription</p>
+                </div>
             }
             else
             {
                 <p>Produkten kunde inte hittas.</p>
             }
         </div>
+        @if (product != null)
+        {
+            <button class="btn-theme">+ LÄGG TILL I KUNDVAGNEN</button>
+        }
     </section>
 </div>
 
