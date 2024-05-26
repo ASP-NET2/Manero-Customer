@@ -1,53 +1,51 @@
 ﻿@inject CartService cartService
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
+
 <section class="header">
     <div class="container">
         <div class="not-active">
-
-        <i class="fa-duotone fa-bars "></i>
+            <i class="fa-duotone fa-bars "></i>
         </div>
         <NavLink href="/">
-
-        <h1>MANERO</h1>
+            <h1>MANERO</h1>
         </NavLink>
         <div>
-
-            @if (cart == null)
+            @if (@totalItems > 0)
             {
-                <i class="fa-duotone fa-bars "></i>
+                <div class="shoppingCart">
+                    <div class="circle">@totalItems :-</div>    
+                    <i class="fa-regular fa-shopping-bag"></i>                
+                </div>
             }
             else
             {
                 <i class="fa-regular fa-shopping-bag"></i>
-                <p>@cart.Products.Count</p>
-                @foreach (var prod in cart.Products)
-                {
-                    <p>@prod.ProductName</p>
-                    <p>@prod.Quantity</p>
-                }
             }
         </div>
     </div>
 </section>
 @code {
     private Cart? cart;
-
+    private int totalItems;
 
     protected override async Task OnInitializedAsync()
     {
-        var product = new Product
-            {
-                ProductName = "Opel",
-                ProductId = "1cb942eb-d4b3-49c4-9fb6-a41590cc501d",
-                Quantity = 2,
-                Price = 99
-            };
-
-        var test3 = "4f063da4-b64a-4478-ae76-3159858eb86c";
-        //cart = await cartService.GetCartList(test3);
-        var test = await cartService.AddToCart(product);
-        var deq = await cartService.DeqraeasproductQuantity(test3, product.ProductId);
-        cart = await cartService.GetCartList(test3);
+        await GetList();      
     }
+
+    public async Task GetList()
+    {
+        var UserId = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
+        var cart = await cartService.GetCartList(UserId);
+            if (cart != null)
+            {
+                totalItems = 0;
+                foreach (var prod in cart.Products)
+                {
+                    totalItems += prod.Price * prod.Quantity;
+                }
+            }
+    }
+
 }

@@ -1,4 +1,5 @@
 ﻿using Manero_Customer.Data.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
@@ -51,12 +52,12 @@ namespace Manero_Customer.Services
             
         }
 
-        public async Task <Cart> AddToCart(Product prod)
+        public async Task <Cart> AddToCart(ProductModel prod)
         {
             try
             {
                 var userCart = new Cart();
-                var test3 = "4f063da4-b64a-4478-ae76-3159858eb86c";
+                var test3 = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
                 var prodList = await GetCartList(test3);
                 if (prodList == null)
                 {
@@ -66,9 +67,9 @@ namespace Manero_Customer.Services
                 var userId = prodList!.Id ?? userCart.Id;
                 var payLoad = new Product
                 {
-                    ProductName = prod.ProductName,
-                    ProductId = prod.ProductId,
-                    Quantity = prod.Quantity,
+                    ProductName = prod.Title,
+                    ProductId = prod.Id,
+                    Quantity = 1,
                     Price = prod.Price,
                 };
                 var url = $"https://maneroproductsfunction.azurewebsites.net/api/AddProdToCart/{userId}?code=hPdhi5Dyr3U8Il5Lh9c6QSNfTG_8AlPeedbYRVUbV4joAzFuWsspUg%3D%3D";
@@ -102,5 +103,18 @@ namespace Manero_Customer.Services
             }
             return null!;
         }
+
+        public async Task <Cart> DeleteProductFromCart(string cartId, string productId)
+        {
+            var url = $"https://maneroproductsfunction.azurewebsites.net/api/DeleteProduct/{cartId}/Product/{productId}?code=hFIsbk07UUFZqUjZQa7Br9hkfJyrYXpkce7jqVraB8srAzFuGsTd_A%3D%3D";
+            var response = await _httpClient.DeleteAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var updatedCart = await response.Content.ReadFromJsonAsync<Cart>();
+                return updatedCart!;
+            }
+            return null!;
+        }
     }
 }
+

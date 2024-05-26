@@ -9,8 +9,21 @@
             text-decoration: none;
             color: black;
         }
-        i{
-            color: var(--color-text);
+        .shoppingCart{
+            display: flex;
+            i{
+                color: var(--color-text);
+                font-size: 24px;
+
+            }
+            .circle{
+                background-color: var(--color-accent);
+                color: var(--color-white);
+                border-radius: 50%;
+                height: auto;
+                width: auto;
+                padding: 5px;
+            }
         }
     }
 }
