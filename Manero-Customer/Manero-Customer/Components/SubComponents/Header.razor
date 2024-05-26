@@ -1,4 +1,7 @@
-﻿<section class="header">
+﻿@inject CartService cartService
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+<section class="header">
     <div class="container">
         <div class="not-active">
 
@@ -8,12 +11,43 @@
 
         <h1>MANERO</h1>
         </NavLink>
-        <div class="not-active">
-        <i class="fa-regular fa-shopping-bag not-active"></i>
-        </div>
+        <div>
 
+            @if (cart == null)
+            {
+                <i class="fa-duotone fa-bars "></i>
+            }
+            else
+            {
+                <i class="fa-regular fa-shopping-bag"></i>
+                <p>@cart.Products.Count</p>
+                @foreach (var prod in cart.Products)
+                {
+                    <p>@prod.ProductName</p>
+                    <p>@prod.Quantity</p>
+                }
+            }
+        </div>
     </div>
 </section>
 @code {
+    private Cart? cart;
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        var product = new Product
+            {
+                ProductName = "Opel",
+                ProductId = "1cb942eb-d4b3-49c4-9fb6-a41590cc501d",
+                Quantity = 2,
+                Price = 99
+            };
+
+        var test3 = "4f063da4-b64a-4478-ae76-3159858eb86c";
+        //cart = await cartService.GetCartList(test3);
+        var test = await cartService.AddToCart(product);
+        var deq = await cartService.DeqraeasproductQuantity(test3, product.ProductId);
+        cart = await cartService.GetCartList(test3);
+    }
 }
