@@ -1,19 +1,51 @@
-﻿<section class="header">
+﻿@inject CartService cartService
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+
+<section class="header">
     <div class="container">
         <div class="not-active">
-
-        <i class="fa-duotone fa-bars "></i>
+            <i class="fa-duotone fa-bars "></i>
         </div>
         <NavLink href="/">
-
-        <h1>MANERO</h1>
+            <h1>MANERO</h1>
         </NavLink>
-        <div class="not-active">
-        <i class="fa-regular fa-shopping-bag not-active"></i>
+        <div>
+            @if (@totalItems > 0)
+            {
+                <div class="shoppingCart">
+                    <div class="circle">@totalItems :-</div>    
+                    <i class="fa-regular fa-shopping-bag"></i>                
+                </div>
+            }
+            else
+            {
+                <i class="fa-regular fa-shopping-bag"></i>
+            }
         </div>
-
     </div>
 </section>
 @code {
+    private Cart? cart;
+    private int totalItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetList();      
+    }
+
+    public async Task GetList()
+    {
+        var UserId = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
+        var cart = await cartService.GetCartList(UserId);
+            if (cart != null)
+            {
+                totalItems = 0;
+                foreach (var prod in cart.Products)
+                {
+                    totalItems += prod.Price * prod.Quantity;
+                }
+            }
+    }
 
 }

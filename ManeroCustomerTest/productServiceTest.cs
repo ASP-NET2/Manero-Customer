@@ -52,8 +52,8 @@ namespace ManeroCustomerTest
             // Arrange
             var expectedProducts = new List<ProductCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = "20.00" }
+                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = 1000 },
+                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = 2000 }
             };
 
             _mockHttpMessageHandler.Protected()
@@ -107,15 +107,15 @@ namespace ManeroCustomerTest
             // Arrange
             var allProducts = new List<ProductCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = "20.00" },
-                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = "30.00" }
+                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = 10 },
+                new ProductCategoryModel { Title = "Product2", Category = "Category2", SubCategory = "SubCat2", Author = "Author2", Price = 20 },
+                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = 30 }
             };
 
             var filteredProducts = new List<ProductCategoryModel>
             {
-                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = "10.00" },
-                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = "30.00" }
+                new ProductCategoryModel { Title = "Product1", Category = "Category1", SubCategory = "SubCat1", Author = "Author1", Price = 10 },
+                new ProductCategoryModel { Title = "Product3", Category = "Category1", SubCategory = "SubCat3", Author = "Author3", Price = 30 }
             };
 
             _mockHttpMessageHandler.Protected()

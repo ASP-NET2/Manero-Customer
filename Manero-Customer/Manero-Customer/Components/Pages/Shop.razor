@@ -1,10 +1,13 @@
 ﻿@inject ProductService productService
-@inject HttpClient Http;
+@inject HttpClient Http
+@inject CartService cartService
 
 @page "/products/{subcategory}"
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
 @using Manero_Customer.Components.SubComponents
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
 
 
 <div class="container">
@@ -24,6 +27,7 @@
                     OnSale="@item.OnSale"
                     />
                 </NavLink>
+                <button @onclick="() => AddToCartAsync(item)">Push It</button>
             }
         </div>
     </div>
@@ -49,5 +53,10 @@
             // Logga felet eller visa ett felmeddelande
             Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
         }
+    }
+
+    private async Task AddToCartAsync(ProductModel Item)
+    {
+        await cartService.AddToCart(Item);
     }
 }
