@@ -18,6 +18,7 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject ApplicationDbContext DbContext
+@inject SignInService SignInService
 
 
 
@@ -90,62 +91,10 @@
 
     private EditContext? editContext;
 
-    //private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
-
-    public async Task RegisterUser(EditContext editContext)
+    public async Task RegisterUser()
     {
-        var user = new ApplicationUser
-            {
-                UserName = Form.Email,
-                Email = Form.Email,
-            };
-
-        var result = await UserManager.CreateAsync(user, Form.Password);
-
-        if (result.Succeeded)
-        {
-            // Skapa AccountUserEntity och spara till databasen
-            var accountUser = new AccountUserEntity
-                {
-                    UserId = user.Id,
-                    FirstName = Form.FirstName,
-                    LastName = Form.LastName
-                };
-
-            DbContext.AccountUser.Add(accountUser);
-            await DbContext.SaveChangesAsync();
-
-            if (UserManager.Options.SignIn.RequireConfirmedAccount)
-            {
-                NavigationManager.NavigateTo($"/Account/VerifyAccount?email={user.Email}");
-            }
-            else
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false);
-                NavigationManager.NavigateTo(ReturnUrl ?? "/");
-            }
-        }
-        else
-        {
-            var userAlreadyExistsError = result.Errors.FirstOrDefault(e => e.Code == "DuplicateUserName");
-            if (userAlreadyExistsError != null)
-            {
-                identityErrors = new List<IdentityError>
-            {
-                new IdentityError
-                {
-                    Code = userAlreadyExistsError.Code,
-                    Description = "User already exists."
-                }
-            };
-            }
-            else
-            {
-                identityErrors = result.Errors;
-            }
-        }
+        await SignInService.RegisterUser(Form, ReturnUrl);
     }
-
 
 }
