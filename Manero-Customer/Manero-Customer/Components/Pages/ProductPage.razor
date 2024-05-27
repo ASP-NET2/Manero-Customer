@@ -5,6 +5,7 @@
 @inject ProductDetailsService productDetailsService
 @inject ILogger<ProductPage> Logger
 @inject CartService cartService
+@inject CookieService cookieService
 @rendermode InteractiveServer
 
 <div class="container">
@@ -75,6 +76,7 @@
     }
     private async Task AddToCartAsync(ProductDetailsModel model)
     {
+        var userId = cookieService.GetSessionIdCookie();
         var prod = new Product
             {
                 ProductId = model.Id,
@@ -82,6 +84,6 @@
                 Quantity = model.Quantity,
                 Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
             };
-        await cartService.AddToCart(prod);
+        await cartService.AddToCart(prod, userId);
     }
 }

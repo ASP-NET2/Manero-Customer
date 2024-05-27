@@ -11,11 +11,11 @@ using static System.Net.WebRequestMethods;
 namespace Manero_Customer.Services
 {
           
-    public class CartService(HttpClient httpClient, IConfiguration configuration, CookieService cookieService)
+    public class CartService(HttpClient httpClient, IConfiguration configuration)
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly IConfiguration _configuration = configuration;
-        private readonly CookieService _cookieService = cookieService;
+        private readonly CookieService _cookieService;
         public event Action OnChange;
 
         protected void NotifyStateChanged() => OnChange?.Invoke();
@@ -56,11 +56,10 @@ namespace Manero_Customer.Services
             
         }
 
-        public async Task <Cart> AddToCart(Product prod)
+        public async Task <Cart> AddToCart(Product prod, string userId)
         {
             try
-            {
-                var userId = _cookieService.GetSessionIdCookie();
+            {                
                 var prodList = await GetCartList(userId);
                 if (prodList == null)
                 {
