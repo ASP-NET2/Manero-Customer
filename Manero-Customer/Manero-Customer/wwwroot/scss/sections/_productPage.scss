@@ -19,7 +19,8 @@
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
-    padding-top: 20px; /* Adds white space above the image */
+    padding-top: 20px;
+    position: relative;
 }
 
 .image-container {
@@ -28,6 +29,19 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
+}
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color:var(--color-onSale);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 1;
 }
 
 .product-image {
@@ -52,12 +66,19 @@
 
 .product-content p {
     margin: 5px 0;
+    color: #626262;
 }
 
 .product-content .price {
     font-size: 1.25rem;
     color: #333;
     margin: 10px 0;
+}
+
+.product-content .old-price {
+    text-decoration: line-through;
+    color: red;
+    margin-right: 10px;
 }
 
 .btn-theme {

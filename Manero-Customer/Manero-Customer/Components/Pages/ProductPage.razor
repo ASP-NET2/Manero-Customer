@@ -14,12 +14,23 @@
             {
                 <div class="image-container">
                     <img class="product-image" src="@product.ImageUrl" alt="produktbild" />
+                    @if (product.OnSale)
+                    {
+                        <div class="sale-badge">SALE</div>
+                    }
                 </div>
                 <div class="product-content">
                     <h3>@product.Title</h3>
                     <p>Författare: @product.Author</p>
                     <p>Format: @product.FormatName</p>
-                    <p class="price">@product.Price kr</p>
+                    @if (product.OnSale && product.DiscountPrice > 0)
+                    {
+                        <p class="price"><span class="old-price">@product.Price kr</span> @product.DiscountPrice kr</p>
+                    }
+                    else
+                    {
+                        <p class="price">@product.Price kr</p>
+                    }
                     <h5>Beskrivning</h5>
                     <p>@product.ShortDescription</p>
                     <p>@product.LongDescription</p>
@@ -36,6 +47,7 @@
         }
     </section>
 </div>
+ 
 
 @code {
     [Parameter]
@@ -68,7 +80,8 @@
                 ProductId = model.Id,
                 ProductName = model.Title,
                 Quantity = model.Quantity,
-                Price = model.Price
+                
+                Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
             };
         await cartService.AddToCart(prod);
     }

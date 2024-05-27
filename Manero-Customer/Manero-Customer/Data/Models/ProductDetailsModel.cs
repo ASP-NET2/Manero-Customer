@@ -11,6 +11,7 @@
     public string ShortDescription { get; set; } = null!;
     public string LongDescription { get; set; } = null!;
     public string FormatName { get; set; } = null!;
-   
-   
+    public bool OnSale { get; set; } = false;
+    public int DiscountPrice { get; set; } = 0;
+
 }
