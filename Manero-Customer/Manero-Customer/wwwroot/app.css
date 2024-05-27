@@ -56,12 +56,14 @@
 }
 
 .containerCategoryDisplay {
-  display: flex;
+  display: grid;
   padding: 30px 0 20px 0;
+  grid-template-columns: auto auto auto;
   gap: 12px;
 }
 .containerCategoryDisplay .categoryDisplay {
   display: inline-block;
+  padding: 0 0 10px 0;
 }
 .containerCategoryDisplay .categoryDisplay a {
   border: 2px solid var(--color-secondary-text);

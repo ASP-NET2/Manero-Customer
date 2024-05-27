@@ -15,6 +15,9 @@ namespace Manero_Customer.Services
         private readonly HttpClient _httpClient = httpClient;
         private readonly IConfiguration _configuration = configuration;
 
+        public event Action OnChange;
+
+        protected void NotifyStateChanged() => OnChange?.Invoke();
         public async Task<Cart?> GetCartList(string id)
         {
             try
@@ -57,7 +60,7 @@ namespace Manero_Customer.Services
             try
             {
                 var userCart = new Cart();
-                var test3 = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
+                var test3 = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
                 var prodList = await GetCartList(test3);
                 if (prodList == null)
                 {
@@ -78,6 +81,7 @@ namespace Manero_Customer.Services
                 {
 
                     var upDatedCart = await response.Content.ReadFromJsonAsync<Cart>();
+                    NotifyStateChanged();
                     return upDatedCart!;
                 }
             }

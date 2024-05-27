@@ -2,6 +2,7 @@
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
 
+
 <section class="header">
     <div class="container">
         <div class="not-active">
@@ -31,12 +32,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        cartService.OnChange += StateChanged;
         await GetList();      
     }
 
     public async Task GetList()
     {
-        var UserId = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
+        var UserId = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
         var cart = await cartService.GetCartList(UserId);
             if (cart != null)
             {
@@ -46,6 +48,17 @@
                     totalItems += prod.Price * prod.Quantity;
                 }
             }
+    }
+
+    private async void StateChanged()
+    {
+        await GetList();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        cartService.OnChange -= StateChanged;
     }
 
 }

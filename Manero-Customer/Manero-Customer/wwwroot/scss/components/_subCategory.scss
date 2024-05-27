@@ -1,11 +1,12 @@
 .containerCategoryDisplay {
-    display: flex;
+    display: grid;
     padding: 30px 0 20px 0;
+    grid-template-columns: auto auto auto;
     gap: 12px;
 
     .categoryDisplay {
         display: inline-block;
-
+        padding: 0 0 10px 0;
         a {
             border: 2px solid var(--color-secondary-text);
             padding: 5px 20px;
@@ -13,6 +14,7 @@
             text-decoration: none;
             color: var(--color-main);
             font-weight: 600;
+            
         }
     }
 
