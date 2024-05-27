@@ -72,6 +72,7 @@
   text-decoration: none;
   color: var(--color-main);
   font-weight: 600;
+  white-space: nowrap;
 }
 .containerCategoryDisplay .categoryDisplay a.active {
   padding: 5px 20px;
