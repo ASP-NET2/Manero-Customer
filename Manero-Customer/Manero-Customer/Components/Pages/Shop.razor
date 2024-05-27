@@ -1,10 +1,13 @@
 ﻿@inject ProductService productService
-@inject HttpClient Http;
+@inject HttpClient Http
+@inject CartService cartService
 
 @page "/products/{subcategory}"
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
 @using Manero_Customer.Components.SubComponents
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
 
 
 <div class="container">
@@ -14,14 +17,18 @@
         <div class="productContainer">
             @foreach (var item in products)
             {
-                <NavLink href=@($"/products/{item.Title}")>                  
-                <_ShopProductCard 
-                    ImageUrl="@item.ImageUrl"
-                    Title="@item.Title"
-                    Price="@item.Price"
-                    DiscountPrice="@item.DiscountPrice"
+                <div class="pCard">
+                    <_ShopProductCard 
+                        id="@item.Id"
+                        ImageUrl="@item.ImageUrl"
+                        Title="@item.Title"
+                        Price="@item.Price"
+                        DiscountPrice="@item.DiscountPrice"
+                        Rating="@item.Rating"
+                        OnSale="@item.OnSale"
                     />
-                </NavLink>
+                </div>
+                //<button @onclick="() => AddToCartAsync(item)">Push It</button>
             }
         </div>
     </div>
@@ -48,4 +55,9 @@
             Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
         }
     }
+
+    // private async Task AddToCartAsync(ProductModel Item)
+    // {
+    //     await cartService.AddToCart(Item);
+    // }
 }

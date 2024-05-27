@@ -6,6 +6,13 @@
     .productContainer{
         display: flex;
         gap: 10px;
+        a{
+
+            text-decoration: none;
+            p.card{
+                position: relative;
+            }
+        }
 
     }
 }

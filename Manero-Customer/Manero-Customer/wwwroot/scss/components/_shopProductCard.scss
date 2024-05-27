@@ -1,38 +1,78 @@
 ﻿.shopProductCard {
-    height: 248px;
-    width: 160px;
     display: grid;
     gap: 10px;
+    //border: 1px solid var(--color-main);
+    //border-radius: 8px;
+    padding: 10px;
 
-    img {
-        max-width: 100%;
-        height: auto;
-        aspect-ratio: 9/12;
-        object-fit: contain;
+    .imageContainer{
+        position: relative;
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .onSale{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding: 6px;
+            color: var(--color-white);
+            background: var(--color-onSale);
+            font-weight: bold;
+        }
+
+        .icons{
+            display: grid;
+            gap: 16px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--color-text);
+            font-size: 1.5em;
+            .icon {
+                &:hover{
+                    color: var(--color-white);
+                }
+            }
+        }
     }
 
     p {
-        font: 14px;
+        font-size: 14px;
         color: var(--color-text);
         margin: 0;
-        padding-left: 10px; 
+    }
 
+    .star-rating {
+        display: flex;
+        width: 100px; /* bredden på hela stjärnrankingen */
+        height: 20px; /* höjden på stjärnorna */
+    }
+
+    .filled-star {
+        color: var(--color-star);
+    }
+
+    .empty-star {
+        color: var(--color-star);
     }
 
     .priceContainer {
         display: flex;
         gap: 10px;
 
-        .price{
+        .price {
             font-weight: 600;
             color: var(--color-main);
         }
 
-        .regPrice{
+        .regPrice {
             text-decoration: line-through;
         }
 
-        .discPrice{
+        .discPrice {
             color: var(--color-accent);
             font-weight: 600;
         }

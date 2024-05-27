@@ -8,7 +8,7 @@ namespace Manero_Customer.Data.Models
         public string? Category { get; set; }
         public string? SubCategory { get; set; } 
         public string? Author { get; set; }
-        public string? Price { get; set; }
+        public int? Price { get; set; }
         public string? DiscountPrice { get; set; }
         public string? Image {  get; set; }
     }

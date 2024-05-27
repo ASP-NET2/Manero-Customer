@@ -1,4 +1,5 @@
 using Azure.Messaging.ServiceBus;
+using Blazored.SessionStorage;
 using Manero_Customer.Components;
 using Manero_Customer.Components.Account;
 using Manero_Customer.Data;
@@ -27,6 +28,9 @@ builder.Services.AddSingleton<SharesDataService> ();
 builder.Services.AddScoped<ConfirmAccountService> ();
 builder.Services.AddScoped<SignInService>();
 builder.Services.AddScoped<VerifyAccountService> ();
+builder.Services.AddScoped<ProductDetailsService>();
+builder.Services.AddScoped<CartService> ();
+builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<UserService> ();
 builder.Services.AddHttpContextAccessor();
 

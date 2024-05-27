@@ -1,22 +1,90 @@
-﻿
-<div class="shopProductCard">
-    <img src="@ImageUrl"/>
+﻿@page "/product"
+
+@using System.Globalization
+@using System.Diagnostics
+@inject NavigationManager NavigationManager
+
+<div class="shopProductCard" @onclick="NavigateToProductPage">
+    <div class="imageContainer">
+
+    <img src="@ImageUrl" />
+    @if (OnSale == true)
+    {
+        <span class="onSale">SALE</span>
+    }
+        <div class="icons ">
+            <div class="icon not-active">
+                <div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+            </div>
+            <div class="icon not-active" >
+                <button @onclick="handleShop" style="z-index: 10">
+                    <i class="fa-regular fa-shopping-bag"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @if (Rating != null)
+    {
+        <div class="star-rating">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <i class="@(GetStarClass(i, Rating))"></i>
+            }
+        </div>
+    }
     <p>@Title</p>
     <div class="priceContainer">
         @if (@DiscountPrice == "0" || DiscountPrice == null)
         {
-        <p class="price">@Price :-</p>
-        } 
-        else {
+            <p class="price">@Price :-</p>
+        }
+        else
+        {
             <p class="regPrice">@Price :-</p>
             <p class="discPrice">@DiscountPrice :-</p>
         }
     </div>
+
 </div>
 
 @code {
+    [Parameter] public string? Id { get; set; }
     [Parameter] public string? Title { get; set; }
-    [Parameter] public string? Price { get; set; }
+    [Parameter] public int Price { get; set; }
     [Parameter] public string? ImageUrl { get; set; }
     [Parameter] public string? DiscountPrice { get; set; }
+    [Parameter] public string? Rating { get; set; }
+    [Parameter] public bool? OnSale { get; set; }
+
+    public void handleShop()
+    {
+        Debug.WriteLine($"Shoppen online {Id}");
+        // Denna funktionen finns inte än, problem att få Iconen att ta emot då den går på länken istället
+
+    }
+
+    public void NavigateToProductPage()
+    {
+        Debug.WriteLine("Navigera");
+        NavigationManager.NavigateTo($"/product/{Title}");
+    }
+
+    private string GetStarClass(int starNumber, string? rating)
+    {
+        if (decimal.TryParse(rating?.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var ratingValue))
+        {
+            if (ratingValue >= starNumber)
+            {
+                return "fas fa-star filled-star";
+            }
+            else if (ratingValue >= starNumber - 0.5m)
+            {
+                return "fas fa-star-half-alt filled-star";
+            }
+        }
+        return "far fa-star empty-star";
+    }
 }
