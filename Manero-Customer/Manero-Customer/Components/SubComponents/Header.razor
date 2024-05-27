@@ -1,6 +1,8 @@
 ﻿@inject CartService cartService
+@inject CookieService cookieService
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
+
 @rendermode InteractiveServer
 
 <section class="header">
@@ -38,8 +40,9 @@
 
     public async Task GetList()
     {
-        var UserId = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
-        var cart = await cartService.GetCartList(UserId);
+
+        var sessionId = cookieService.GetSessionIdCookie();
+        var cart = await cartService.GetCartList(sessionId);
         if (cart != null)
         {
             totalItems = 0;
@@ -61,3 +64,5 @@
         cartService.OnChange -= StateChanged;
     }
 }
+
+

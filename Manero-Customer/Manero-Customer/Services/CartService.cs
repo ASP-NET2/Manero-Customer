@@ -7,14 +7,15 @@ using Microsoft.Identity.Client;
 using System.Net.Http.Json;
 using static System.Net.WebRequestMethods;
 
+
 namespace Manero_Customer.Services
 {
           
-    public class CartService(HttpClient httpClient, IConfiguration configuration)
+    public class CartService(HttpClient httpClient, IConfiguration configuration, CookieService cookieService)
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly IConfiguration _configuration = configuration;
-
+        private readonly CookieService _cookieService = cookieService;
         public event Action OnChange;
 
         protected void NotifyStateChanged() => OnChange?.Invoke();
@@ -59,15 +60,12 @@ namespace Manero_Customer.Services
         {
             try
             {
-                var userCart = new Cart();
-                var test3 = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
-                var prodList = await GetCartList(test3);
+                var userId = _cookieService.GetSessionIdCookie();
+                var prodList = await GetCartList(userId);
                 if (prodList == null)
                 {
-                    userCart = await CreateCustomerCart(GetGuid());
+                    prodList = await CreateCustomerCart(userId);
                 }
-
-                var userId = prodList!.Id ?? userCart.Id;
                 var payLoad = new Product
                 {
                     ProductName = prod.ProductName,
@@ -106,7 +104,6 @@ namespace Manero_Customer.Services
             }
             return null!;
         }
-
         public async Task <Cart> DeleteProductFromCart(string cartId, string productId)
         {
             var url = $"https://maneroproductsfunction.azurewebsites.net/api/DeleteProduct/{cartId}/Product/{productId}?code=hFIsbk07UUFZqUjZQa7Br9hkfJyrYXpkce7jqVraB8srAzFuGsTd_A%3D%3D";

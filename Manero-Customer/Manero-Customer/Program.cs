@@ -33,6 +33,7 @@ builder.Services.AddScoped<CartService> ();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<UserService> ();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CookieService> ();
 
 
 
