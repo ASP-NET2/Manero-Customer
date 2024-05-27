@@ -1,19 +1,63 @@
-﻿<section class="header">
+﻿@inject CartService cartService
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@rendermode InteractiveServer
+
+<section class="header">
     <div class="container">
         <div class="not-active">
-
-        <i class="fa-duotone fa-bars "></i>
+            <i class="fa-duotone fa-bars "></i>
         </div>
         <NavLink href="/">
-
-        <h1>MANERO</h1>
+            <h1>MANERO</h1>
         </NavLink>
-        <div class="not-active">
-        <i class="fa-regular fa-shopping-bag not-active"></i>
+        <div>
+            @if (@totalItems > 0)
+            {
+                <div class="shoppingCart">
+                    <div class="circle">@totalItems :-</div>    
+                    <i class="fa-regular fa-shopping-bag"></i>                
+                </div>
+            }
+            else
+            {
+                <i class="fa-regular fa-shopping-bag"></i>
+            }
         </div>
-
     </div>
 </section>
 @code {
+    private Cart? cart;
+    private int totalItems;
 
+    protected override async Task OnInitializedAsync()
+    {
+        cartService.OnChange += StateChanged;
+        await GetList();      
+    }
+
+    public async Task GetList()
+    {
+        var UserId = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
+        var cart = await cartService.GetCartList(UserId);
+        if (cart != null)
+        {
+            totalItems = 0;
+            foreach (var prod in cart.Products)
+            {
+                totalItems += prod.Price * prod.Quantity;
+            }
+        }
+    }
+
+    private async void StateChanged()
+    {
+        await GetList();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        cartService.OnChange -= StateChanged;
+    }
 }

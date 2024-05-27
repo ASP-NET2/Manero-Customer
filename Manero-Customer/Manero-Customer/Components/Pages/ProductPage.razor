@@ -1,24 +1,88 @@
-﻿@page "/product"
+﻿@page "/product/{title}"
+@using Manero_Customer.Services
+@using Manero_Customer.Data.Models
+@inject NavigationManager Navigation
+@inject ProductDetailsService productDetailsService
+@inject ILogger<ProductPage> Logger
+@inject CartService cartService
+@rendermode InteractiveServer
 
-<h3>ProductPage</h3>
-
-<section class="ProductPage">
-    <div class="container">
-        
-        <img class="product-image" src="scss/images/testproduct.jpg" alt="book image" />
-        
-        <div class="product-content">
-        <h3>Title:</h3>
-        <p>Author:</p>
-        <p>Price:</p>
-        <h5>Description</h5>
-            <p>Amet amet Lorem eu consectetur in deserunt nostrud dolor culpa ad sint amet. Nostrud deserunt consectetur culpa minim mollit veniam aliquip pariatur exercitation ullamco ea voluptate et. Pariatur ipsum mollit magna proident nisi ipsum.</p>
+<div class="container">
+    <section class="ProductPage">
+        <div class="product-container">
+            @if (product != null)
+            {
+                <div class="image-container">
+                    <img class="product-image" src="@product.ImageUrl" alt="produktbild" />
+                    @if (product.OnSale)
+                    {
+                        <div class="sale-badge">SALE</div>
+                    }
+                </div>
+                <div class="product-content">
+                    <h3>@product.Title</h3>
+                    <p>Författare: @product.Author</p>
+                    <p>Format: @product.FormatName</p>
+                    @if (product.OnSale && product.DiscountPrice > 0)
+                    {
+                        <p class="price"><span class="old-price">@product.Price kr</span> @product.DiscountPrice kr</p>
+                    }
+                    else
+                    {
+                        <p class="price">@product.Price kr</p>
+                    }
+                    <h5>Beskrivning</h5>
+                    <p>@product.ShortDescription</p>
+                    <p>@product.LongDescription</p>
+                </div>
+            }
+            else
+            {
+                <p>Produkten kunde inte hittas.</p>
+            }
         </div>
-
-        <button class="btn-theme">+ ADD TO CART</button>
-    </div>
-</section>
+        @if (product != null)
+        {
+            <button class="btn-theme" @onclick="() => AddToCartAsync(product)">+ LÄGG TILL I KUNDVAGNEN</button>
+        }
+    </section>
+</div>
+ 
 
 @code {
-    
+    [Parameter]
+    public string? Title { get; set; }
+
+    private ProductDetailsModel? product;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(Title))
+        {
+            try
+            {
+                Logger.LogInformation("Loading product details for title: {Title}", Title);
+                var products = await productDetailsService.MatchProductsByTitleAsync(Title);
+                product = products.FirstOrDefault();
+                Logger.LogInformation("Product loaded: {Product}", product?.Title);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error loading product details for title: {Title}", Title);
+                product = null;
+            }
+        }
+    }
+    private async Task AddToCartAsync(ProductDetailsModel model)
+    {
+        var prod = new Product
+            {
+                ProductId = model.Id,
+                ProductName = model.Title,
+                Quantity = model.Quantity,
+                
+                Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
+            };
+        await cartService.AddToCart(prod);
+    }
 }
