@@ -19,6 +19,7 @@
 @inject IdentityRedirectManager RedirectManager
 @inject ApplicationDbContext DbContext
 @inject SignInService SignInService
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
 
 
 
@@ -30,7 +31,7 @@
 
             <EditForm Model="Form" EditContext="editContext" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="SignUp">
                 <DataAnnotationsValidator />
-
+                
                 <ValidationSummary class="text-danger" role="alert" />
 
                 <div class="input-group">
