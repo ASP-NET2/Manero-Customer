@@ -55,7 +55,7 @@ namespace Manero_Customer.Services
             
         }
 
-        public async Task <Cart> AddToCart(ProductModel prod)
+        public async Task <Cart> AddToCart(Product prod)
         {
             try
             {
@@ -70,8 +70,8 @@ namespace Manero_Customer.Services
                 var userId = prodList!.Id ?? userCart.Id;
                 var payLoad = new Product
                 {
-                    ProductName = prod.Title,
-                    ProductId = prod.Id,
+                    ProductName = prod.ProductName,
+                    ProductId = prod.ProductId,
                     Quantity = 1,
                     Price = prod.Price,
                 };
@@ -79,7 +79,6 @@ namespace Manero_Customer.Services
                 var response = await _httpClient.PostAsJsonAsync(url, payLoad);
                 if (response.IsSuccessStatusCode)
                 {
-
                     var upDatedCart = await response.Content.ReadFromJsonAsync<Cart>();
                     NotifyStateChanged();
                     return upDatedCart!;

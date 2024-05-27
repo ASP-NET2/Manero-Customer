@@ -1,8 +1,10 @@
 ﻿@page "/product"
 
 @using System.Globalization
+@using System.Diagnostics
+@inject NavigationManager NavigationManager
 
-<div class="shopProductCard">
+<div class="shopProductCard" @onclick="NavigateToProductPage">
     <div class="imageContainer">
 
     <img src="@ImageUrl" />
@@ -12,10 +14,14 @@
     }
         <div class="icons ">
             <div class="icon not-active">
-                <i class="fa-regular fa-heart"></i>
+                <div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
             </div>
-            <div class="icon not-active" @onclick="handleShop">
-                <i class="fa-regular fa-shopping-bag"></i>
+            <div class="icon not-active" >
+                <button @onclick="handleShop" style="z-index: 10">
+                    <i class="fa-regular fa-shopping-bag"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -45,6 +51,7 @@
 </div>
 
 @code {
+    [Parameter] public string? Id { get; set; }
     [Parameter] public string? Title { get; set; }
     [Parameter] public int Price { get; set; }
     [Parameter] public string? ImageUrl { get; set; }
@@ -54,9 +61,15 @@
 
     public void handleShop()
     {
-        Console.WriteLine("Shoppen online");
+        Debug.WriteLine($"Shoppen online {Id}");
         // Denna funktionen finns inte än, problem att få Iconen att ta emot då den går på länken istället
 
+    }
+
+    public void NavigateToProductPage()
+    {
+        Debug.WriteLine("Navigera");
+        NavigationManager.NavigateTo($"/product/{Title}");
     }
 
     private string GetStarClass(int starNumber, string? rating)

@@ -175,6 +175,9 @@
 .shop .productContainer a {
   text-decoration: none;
 }
+.shop .productContainer a p.card {
+  position: relative;
+}
 
 body {
   margin: 0;

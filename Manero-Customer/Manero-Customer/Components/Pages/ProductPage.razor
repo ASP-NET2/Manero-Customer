@@ -4,6 +4,8 @@
 @inject NavigationManager Navigation
 @inject ProductDetailsService productDetailsService
 @inject ILogger<ProductPage> Logger
+@inject CartService cartService
+@rendermode InteractiveServer
 
 <div class="container">
     <section class="ProductPage">
@@ -30,7 +32,7 @@
         </div>
         @if (product != null)
         {
-            <button class="btn-theme">+ LÄGG TILL I KUNDVAGNEN</button>
+            <button class="btn-theme" @onclick="() => AddToCartAsync(product)">+ LÄGG TILL I KUNDVAGNEN</button>
         }
     </section>
 </div>
@@ -58,5 +60,16 @@
                 product = null;
             }
         }
+    }
+    private async Task AddToCartAsync(ProductDetailsModel model)
+    {
+        var prod = new Product
+            {
+                ProductId = model.Id,
+                ProductName = model.Title,
+                Quantity = model.Quantity,
+                Price = model.Price
+            };
+        await cartService.AddToCart(prod);
     }
 }

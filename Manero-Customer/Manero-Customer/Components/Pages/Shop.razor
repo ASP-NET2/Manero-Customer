@@ -17,17 +17,18 @@
         <div class="productContainer">
             @foreach (var item in products)
             {
-                <NavLink href=@($"/product/{item.Title}")>                  
-                <_ShopProductCard 
-                    ImageUrl="@item.ImageUrl"
-                    Title="@item.Title"
-                    Price="@item.Price"
-                    DiscountPrice="@item.DiscountPrice"
-                    Rating="@item.Rating"
-                    OnSale="@item.OnSale"
+                <div class="pCard">
+                    <_ShopProductCard 
+                        id="@item.Id"
+                        ImageUrl="@item.ImageUrl"
+                        Title="@item.Title"
+                        Price="@item.Price"
+                        DiscountPrice="@item.DiscountPrice"
+                        Rating="@item.Rating"
+                        OnSale="@item.OnSale"
                     />
-                </NavLink>
-                <button @onclick="() => AddToCartAsync(item)">Push It</button>
+                </div>
+                //<button @onclick="() => AddToCartAsync(item)">Push It</button>
             }
         </div>
     </div>
@@ -55,8 +56,8 @@
         }
     }
 
-    private async Task AddToCartAsync(ProductModel Item)
-    {
-        await cartService.AddToCart(Item);
-    }
+    // private async Task AddToCartAsync(ProductModel Item)
+    // {
+    //     await cartService.AddToCart(Item);
+    // }
 }

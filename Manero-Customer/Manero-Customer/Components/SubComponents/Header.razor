@@ -1,7 +1,7 @@
 ﻿@inject CartService cartService
 @using Manero_Customer.Data.Models
 @using Manero_Customer.Services
-
+@rendermode InteractiveServer
 
 <section class="header">
     <div class="container">
@@ -40,14 +40,14 @@
     {
         var UserId = "c7c730b4-40f5-48a3-8784-e2a2ced92d8c";
         var cart = await cartService.GetCartList(UserId);
-            if (cart != null)
+        if (cart != null)
+        {
+            totalItems = 0;
+            foreach (var prod in cart.Products)
             {
-                totalItems = 0;
-                foreach (var prod in cart.Products)
-                {
-                    totalItems += prod.Price * prod.Quantity;
-                }
+                totalItems += prod.Price * prod.Quantity;
             }
+        }
     }
 
     private async void StateChanged()
@@ -60,5 +60,4 @@
     {
         cartService.OnChange -= StateChanged;
     }
-
 }
