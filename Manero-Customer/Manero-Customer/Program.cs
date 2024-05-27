@@ -27,6 +27,8 @@ builder.Services.AddSingleton<SharesDataService> ();
 builder.Services.AddScoped<ConfirmAccountService> ();
 builder.Services.AddScoped<SignInService>();
 builder.Services.AddScoped<VerifyAccountService> ();
+builder.Services.AddScoped<UserService> ();
+builder.Services.AddHttpContextAccessor();
 
 
 
@@ -82,6 +84,12 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseAntiforgery();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseMiddleware<SessionIdMiddleware>();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
