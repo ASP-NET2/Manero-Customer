@@ -38,10 +38,10 @@
             </div>
             <div class="profile-actions">
                 <ul>
-                    <li<a @onclick="NavigateToEditProfile">EditProfile</a></li>
+                    <li><a @onclick="NavigateToEditProfile">EditProfile</a></li>
                     <li><a href="/order-history">Order history</a></li>
                     <li><a href="/payment-method">Payment method</a></li>
-                    <li><a href="/address">My address</a></li>
+                    <li><a @onclick="NavigateToAddress">My Address</a></li>
                     <li><a href="/promocodes">My promocodes</a></li>
                     <li><button @onclick="SignOut">Sign out</button></li>
                 </ul>
@@ -70,6 +70,18 @@
             message = "Error retrieving user profile.";
         }
 
+    }
+    public void NavigateToAddress()
+    {
+        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.IdentityUserId}");
+        if (string.IsNullOrEmpty(User.IdentityUserId))
+        {
+            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/Address?userId={User.IdentityUserId}");
+        }
     }
 
 

@@ -21,6 +21,7 @@
         <h1>Welcome Back!</h1>
         <h4>Sign in to continue</h4>
         <EditForm Model="Form" method="post" OnValidSubmit="LoginUser" FormName="login">
+            <AntiforgeryToken />
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
 

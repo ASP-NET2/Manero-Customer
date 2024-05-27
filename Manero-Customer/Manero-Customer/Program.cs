@@ -33,6 +33,10 @@ builder.Services.AddScoped<CartService> ();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<UserService> ();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-CSRF-TOKEN";
+});
 
 
 
@@ -87,10 +91,10 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAntiforgery();
-app.UseAntiforgery();
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAntiforgery();
 
 app.UseMiddleware<SessionIdMiddleware>();
 
