@@ -80,7 +80,6 @@
                 ProductId = model.Id,
                 ProductName = model.Title,
                 Quantity = model.Quantity,
-                
                 Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
             };
         await cartService.AddToCart(prod);
