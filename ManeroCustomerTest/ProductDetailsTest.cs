@@ -46,8 +46,8 @@ namespace ManeroCustomerTest
             var title = "TestTitle";
             var expectedProducts = new List<ProductDetailsModel>
             {
-                new ProductDetailsModel { Title = "Product1", Author = "Author1", Price = "10.00", ImageUrl = "http://example.com/image1.jpg", ShortDescription = "Short Description 1", LongDescription = "Long Description 1", FormatName = "Format1" },
-                new ProductDetailsModel { Title = "Product2", Author = "Author2", Price = "20.00", ImageUrl = "http://example.com/image2.jpg", ShortDescription = "Short Description 2", LongDescription = "Long Description 2", FormatName = "Format2" }
+                new ProductDetailsModel { Title = "Product1", Author = "Author1", Price = 10, ImageUrl = "http://example.com/image1.jpg", ShortDescription = "Short Description 1", LongDescription = "Long Description 1", FormatName = "Format1" },
+                new ProductDetailsModel { Title = "Product2", Author = "Author2", Price = 20, ImageUrl = "http://example.com/image2.jpg", ShortDescription = "Short Description 2", LongDescription = "Long Description 2", FormatName = "Format2" }
             };
 
             _mockHttpMessageHandler.Protected()
