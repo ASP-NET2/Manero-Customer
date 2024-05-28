@@ -219,6 +219,40 @@
   padding: 1em;
 }
 
+.containerCart {
+  display: flex;
+  justify-content: space-around;
+}
+.containerCart .imgContainer img {
+  height: 100px;
+  width: 100px;
+}
+.containerCart .containerText {
+  flex: 1;
+  padding: 10px;
+}
+.containerCart .containerText .price {
+  display: flex;
+}
+.containerCart .containerText .price .normPrice {
+  font-weight: 600;
+}
+.containerCart .containerText .price .regPrice {
+  color: var(--color-text);
+  text-decoration: line-through;
+}
+.containerCart .containerText .price .discPrice {
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+}
+
 body {
   margin: 0;
   padding: 0;

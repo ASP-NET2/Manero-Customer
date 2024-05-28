@@ -4,6 +4,7 @@
 @using System.Diagnostics
 @inject CartService cartService
 @inject CookieService cookieService
+@inject ProductService productService
 
 @if (isLoading)
 {
@@ -15,13 +16,28 @@ else if (cart == null )
 }
 else
 {
-    <p>Jäklar vad du shoppat</p>
-    @* Här kan du lägga till mer logik för att visa kundvagnens innehåll *@
+    <div class="container">
+
+    @foreach ( var item in models)
+    {        
+        <_CartProductItem
+            Title="@item.Title"
+            Price="@item.Price"
+            DiscountPrice="@item.DiscountPrice"
+            Quantity="@item.Quantity"
+            ImgUrl="@item.ImgUrl"
+            Format="@item.Format"
+            />
+    }
+    <p>Total Price: </p>
+    </div>
 }
 
 @code {
     public Cart? cart;
     private bool isLoading = true;
+    public List<TestModel> models = new ();
+    
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,6 +50,37 @@ else
 
             var userId = cookieService.GetSessionIdCookie();
             cart = await cartService.GetCartList(userId);
+            if (cart != null)
+            {
+
+                foreach (var prod in cart.Products)
+                {
+                    var mindel = new TestModel
+                        {
+                            Quantity = prod.Quantity
+                        };
+                    var test = new Dictionary<string, string>
+                    {
+                        {"Id", prod.ProductId }
+                    };
+                    var model = await productService.FilterSingleProduct(test);
+                    if (model != null)
+                    {
+                        mindel.Format = model.FormatName;
+                        mindel.Price = model.Price;
+                        if (int.TryParse(model.DiscountPrice, out int discountPrice))
+                        {
+                            mindel.DiscountPrice = discountPrice;
+                        }
+                        mindel.Title = model.Title;
+                        mindel.ImgUrl = model.ImageUrl;
+
+                        models.Add(mindel);
+                    }
+                    Debug.WriteLine(model);
+
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -46,3 +93,5 @@ else
         }
     }
 }
+
+       
