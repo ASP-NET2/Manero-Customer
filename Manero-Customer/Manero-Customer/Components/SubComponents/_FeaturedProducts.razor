@@ -1,26 +1,26 @@
 ﻿@page "/featured-products"
-@using Manero_Customer.Data.Models
 @using Manero_Customer.Services
+@using Manero_Customer.Data.Models
 @inject ProductService productService
 
-<div class="container">
-    <div class="featuredprod">
-        <h3>Featured Products</h3>
-        <a href="/all-featured-products" class="view-all">view all</a>
-        <div class="featuredContainer home-featured-container">
-            @foreach (var item in products.Take(4))
-            {
-                <NavLink class="p-Card" href="@GenerateProductLink(item.Title)">
-                    <_ShopProductCard id="@item.Id"
+<div class="featuredprod">
+    <h3>Featured Products</h3>
+    <a href="/all-featured-products" class="view-all">View all</a>
+    <div class="featuredContainer">
+        @foreach (var item in products.Take(4))
+        {
+            <div class="fCard">
+                <a class="product-link" href="@GenerateProductLink(item.Title)">
+                    <_ShopProductCard Id="@item.Id"
                                       ImageUrl="@item.ImageUrl"
                                       Title="@item.Title"
                                       Price="@item.Price"
                                       DiscountPrice="@item.DiscountPrice"
                                       Rating="@item.Rating"
                                       OnSale="@item.OnSale" />
-                </NavLink>
-            }
-        </div>
+                </a>
+            </div>
+        }
     </div>
 </div>
 
@@ -39,8 +39,7 @@
         }
         catch (Exception ex)
         {
-            
-            Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
+            Console.Error.WriteLine($"Error fetching product data: {ex.Message}");
         }
     }
 

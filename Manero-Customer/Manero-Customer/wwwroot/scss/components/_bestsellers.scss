@@ -1,4 +1,4 @@
-﻿ .featuredprod, .all-featured-products {
+﻿.bestsellers, .all-bestsellers {
     display: grid;
     gap: 10px;
     padding: 10px;
@@ -84,15 +84,15 @@
     a {
         text-decoration: none; 
         color: inherit; 
-    }
+      }
 }
 
- .featuredContainer {
+.bestsellerContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
     gap: 20px;
 
-    .fCard {
+    .bCard {
         box-sizing: border-box;
         border: 1px solid #ddd;
         border-radius: 8px;
