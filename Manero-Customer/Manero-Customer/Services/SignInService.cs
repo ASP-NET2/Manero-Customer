@@ -64,7 +64,7 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
                 LastName = form.LastName
             };
 
-            var response = await _httpClient.PostAsJsonAsync("http://localhost:7096/api/CreateUser", accountUser);
+            var response = await _httpClient.PostAsJsonAsync("https://userprovider-manero.azurewebsites.net/api/CreateUser?code=60bfhfHdyI12AfdqC96uPisNf7MriujfOywPJal9TgeGAzFuUcCdKg%3D%3D", accountUser);
 
             if (response.IsSuccessStatusCode)
             {
@@ -86,6 +86,21 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
         else
         {
             _logger.LogError("Error creating identity user.");
+        }
+    }
+
+    public async Task SignOutAsync()
+    {
+        try
+        {
+            _logger.LogInformation("Starting to signout");
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User signout successfully");
+
+            _navigationManager.NavigateTo("/Account/SignIn", true);
+        }catch(Exception ex) 
+        {
+            _logger.LogError(ex, "An error has occured while signing out");
         }
     }
 

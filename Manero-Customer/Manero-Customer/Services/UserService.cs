@@ -2,6 +2,7 @@
 using Manero_Customer.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using static System.Net.WebRequestMethods;
 
 namespace Manero_Customer.Services;
 
@@ -16,7 +17,7 @@ public class UserService
     public UserService(HttpClient http, ILogger<UserService> logger, UserManager<ApplicationUser> userManager, AuthenticationStateProvider authenticationStateProvider)
     {
         _http = http;
-        _baseUrl = "http://localhost:7096";
+      //  _baseUrl = "http://localhost:7096";
         _logger = logger;
         _userManager = userManager;
         _authenticationStateProvider = authenticationStateProvider;
@@ -24,7 +25,7 @@ public class UserService
 
     public async Task<ProfileModel> GetUserProfileAsync(string id)
     {
-        var url = $"{_baseUrl}/api/GetUserFunction/{id}";
+        var url = $"https://userprovider-manero.azurewebsites.net/api/GetUserFunction/{id}?code=6MvHEEIkcl3GlREG0UF6Ql0TvWYGjAwuxMNG6JG7v22aAzFue3OluA%3D%3D";
         _logger.LogInformation($"Fetching user profile from URL: {url}");
 
         try
@@ -48,7 +49,7 @@ public class UserService
 
     public async Task UpdateUserProfileAsync(string id, ProfileModel model)
     {
-        var url = $"{_baseUrl}/api/UpdateUserFunction/{id}";
+        var url = $"https://userprovider-manero.azurewebsites.net/api/UpdateUserFunction/{id}?code=am_rEPAEf1CpsWB0gHRoLRWKQ3rvhvwCU1EYELc3n_c7AzFu5QUdGA%3D%3D";
         _logger.LogInformation($"Updating user profile from URL: {url}");
 
         try
@@ -149,7 +150,7 @@ public class UserService
 
         try
         {
-            var profileUrl = $"{_baseUrl}/api/DeleteUserFunction/{id}";
+            var profileUrl = $"https://userprovider-manero.azurewebsites.net/api/DeleteUserFunction/{id}?code=QRfVThVl8tAeFNEPL9OfUHA28SbUOdsUNBaqlMe4yBSVAzFu86zlOQ%3D%3D";
             var profileResponse = await _http.DeleteAsync(profileUrl);
             if (!profileResponse.IsSuccessStatusCode)
             {

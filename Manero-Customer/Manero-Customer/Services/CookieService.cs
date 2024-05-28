@@ -15,7 +15,7 @@ public class CookieService
         {
             Expires = DateTime.Now.AddHours(24),
             HttpOnly = true,
-            Secure = true 
+            Secure = true
         };
 
         _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", sessionId, options);

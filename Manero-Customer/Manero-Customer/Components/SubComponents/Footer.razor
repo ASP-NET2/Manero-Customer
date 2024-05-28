@@ -32,13 +32,26 @@
     
     <div class="nav-item">
 
-    <NavLink href="/Account/SignIn" >
-            <i class="fa-regular fa-arrow-right-to-bracket"></i>
-            </NavLink>
-     
-            <NavLink href="/Account/SignUp">
-            <i class="fa-regular fa-user"></i>
-        </NavLink>
+        <AuthorizeView>
+            <Authorized>
+                <NavLink href="/Account/Profile">
+                    <i class="fa-regular fa-user"></i>
+                </NavLink>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item">
+
+                    <NavLink href="/Account/login">
+                        <i class="fa-regular fa-arrow-right-to-bracket"></i>
+                    </NavLink>
+
+                    <NavLink href="/Account/SignUp">
+                        <i class="fa-regular fa-user"></i>
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+
     </div>
    
         

@@ -33,9 +33,7 @@ builder.Services.AddScoped<CartService> ();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<UserService> ();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<CookieService> ();
-
-
+builder.Services.AddScoped<CookieService>();
 
 builder.Services.AddAuthentication(options =>
     {
@@ -71,6 +69,7 @@ builder.Services.AddSingleton<ServiceBusSender>(sp =>
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -89,11 +88,13 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseMiddleware<SessionIdMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 
-app.UseMiddleware<SessionIdMiddleware>();
+
 
 
 app.MapRazorComponents<App>()

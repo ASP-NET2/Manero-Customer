@@ -1,4 +1,4 @@
-﻿@page "/Account/SignIn"
+﻿@page "/Account/login"
 
 @using System.ComponentModel.DataAnnotations
 @using Manero_Customer.Data.Models
@@ -17,14 +17,12 @@
 
 <section class="signin">
     <div class="container">
-        
         <h1>Welcome Back!</h1>
         <h4>Sign in to continue</h4>
+        <div class="text-danger">@statusMessage</div>
         <EditForm Model="Form" method="post" OnValidSubmit="LoginUser" FormName="login">
-            <AntiforgeryToken />
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
-
             <div class="input-group">
                 <label for="email">EMAIL</label>
                 <InputText class="input-box" @bind-Value="Form.Email" aria-required="true" placeholder="name@example.com" />
@@ -57,7 +55,7 @@
 </section>
 
 @code {
-    public string? errorMessage;
+    public string? statusMessage;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -67,7 +65,7 @@
 
     public async Task LoginUser()
     {
-        errorMessage = await SignInService.SignInUserAsync(Form);
+        statusMessage = await SignInService.SignInUserAsync(Form);
     }
 
 }

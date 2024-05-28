@@ -18,6 +18,7 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject UserService UserService
+@inject SignInService SignInService
 
 
 
@@ -27,7 +28,7 @@
     <div class="container">
         <div class="profile">
             <div class="profile-picture">
-                <img src="profile-placeholder.png" alt="Profile Picture" />
+                <img src="profile-placeholder.png" />
             </div>
             <div class="profile-details">
                 <div class="first-lastname">
@@ -43,7 +44,8 @@
                     <li><a href="/payment-method">Payment method</a></li>
                     <li><a @onclick="NavigateToAddress">My Address</a></li>
                     <li><a href="/promocodes">My promocodes</a></li>
-                    <li><button @onclick="SignOut">Sign out</button></li>
+                    <li><button class="btn-theme" @onclick="SignOut">Sign out</button></li>
+
                 </ul>
             </div>
         </div>
@@ -101,7 +103,7 @@
 
     public async Task SignOut()
     {
-        await SignInManager.SignOutAsync();
-        NavigationManager.NavigateTo("/");
+        await SignInService.SignOutAsync();
+
     }
 }
