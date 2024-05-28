@@ -1,15 +1,17 @@
-﻿@page "/all-featured-products"
+﻿@page "/bestsellers"
 @using Manero_Customer.Services
 @using Manero_Customer.Data.Models
 @inject ProductService productService
+@inject NavigationManager Navigation
 
-<div class="all-featured-products">
-    <h3>All Featured Products</h3>
-    <div class="all-featuredContainer">
-        @foreach (var item in products)
+<div class="bestsellers">
+    <h3>Bestsellers</h3>
+    <a href="/all-bestsellers" class="view-all">View All</a>
+    <div class="bestsellerContainer">
+        @foreach (var item in bestsellers.Take(4))
         {
-            <div class="fCard">
-                <a class="product-link" href="@GenerateProductLink(item.Title)">
+            <div class="bCard">
+                <a class="product-link" href="@($"/product/{item.Title.Replace(" ", "%20")}")">
                     <_ShopProductCard Id="@item.Id"
                                       ImageUrl="@item.ImageUrl"
                                       Title="@item.Title"
@@ -24,7 +26,7 @@
 </div>
 
 @code {
-    List<ProductModel> products = new();
+    private List<ProductModel> bestsellers = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -32,18 +34,14 @@
         {
             var filters = new Dictionary<string, string>
             {
-                { "featuredProduct", "true" }
+                { "BestSeller", "true" }
             };
-            products = await productService.FilterProduct(filters);
+            bestsellers = await productService.FilterProduct(filters);
         }
         catch (Exception ex)
         {
+            // Log the error or display an error message
             Console.Error.WriteLine($"Error fetching product data: {ex.Message}");
         }
-    }
-
-    private string GenerateProductLink(string productName)
-    {
-        return $"/product/{Uri.EscapeDataString(productName)}";
     }
 }
