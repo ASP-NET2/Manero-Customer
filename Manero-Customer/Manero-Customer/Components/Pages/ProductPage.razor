@@ -1,12 +1,14 @@
 ﻿@page "/product/{title}"
 @using Manero_Customer.Services
 @using Manero_Customer.Data.Models
+@using System.Diagnostics
 @inject NavigationManager Navigation
 @inject ProductDetailsService productDetailsService
 @inject ILogger<ProductPage> Logger
 @inject CartService cartService
 @inject CookieService cookieService
 @rendermode InteractiveServer
+
 
 <div class="container">
     <section class="ProductPage">
@@ -76,7 +78,9 @@
     }
     private async Task AddToCartAsync(ProductDetailsModel model)
     {
-        var userId = cookieService.GetSessionIdCookie();
+        Debug.WriteLine("Navigera");
+        // var userId = cookieService.GetSessionIdCookie();
+        var userId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
         var prod = new Product
             {
                 ProductId = model.Id,
@@ -85,5 +89,6 @@
                 Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
             };
         await cartService.AddToCart(prod, userId);
+        
     }
 }

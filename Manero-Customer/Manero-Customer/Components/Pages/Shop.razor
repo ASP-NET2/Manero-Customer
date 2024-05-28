@@ -27,7 +27,6 @@
                         OnSale="@item.OnSale"
                     />
                 </div>
-                //<button @onclick="() => AddToCartAsync(item)">Push It</button>
             }
         </div>
     </div>
@@ -54,9 +53,4 @@
             Console.Error.WriteLine($"Fel vid hämtning av produktdata: {ex.Message}");
         }
     }
-
-    // private async Task AddToCartAsync(ProductModel Item)
-    // {
-    //     await cartService.AddToCart(Item);
-    // }
 }
