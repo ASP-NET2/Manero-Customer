@@ -89,7 +89,7 @@
                 ProductId = model.Id,
                 ProductName = model.Title,
                 Quantity = model.Quantity,
-                Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
+                Price = model.OnSale && model.DiscountPrice.HasValue && model.DiscountPrice.Value > 0 ? model.DiscountPrice.Value : model.Price
             };
         await cartService.AddToCart(prod, userId);
         
