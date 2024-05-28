@@ -18,5 +18,11 @@
     background-color: var(--color-main);
     color: var(--color-white);
     border: 1px solid var(--color-main);   
+}
 
+.btn-test-th{
+    @include button;
+    background-color: var(--color-main);
+    color: var(--color-white);
+    border-radius: 30px;
 }

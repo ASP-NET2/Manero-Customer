@@ -40,8 +40,8 @@
     public async Task GetList()
     {
 
-        //var sessionId = cookieService.GetSessionIdCookie();
-        var sessionId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
+        var sessionId = cookieService.GetSessionIdCookie();
+        //var sessionId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
         var cart = await cartService.GetCartList(sessionId);
         if (cart != null)
         {

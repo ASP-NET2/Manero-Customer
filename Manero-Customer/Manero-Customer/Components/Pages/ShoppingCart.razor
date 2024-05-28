@@ -1,0 +1,48 @@
+﻿@page "/shoppingCart"
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using System.Diagnostics
+@inject CartService cartService
+@inject CookieService cookieService
+
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (cart == null )
+{
+    <EmptyCart/>    
+}
+else
+{
+    <p>Jäklar vad du shoppat</p>
+    @* Här kan du lägga till mer logik för att visa kundvagnens innehåll *@
+}
+
+@code {
+    public Cart? cart;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (cartService == null || cookieService == null)
+            {
+                throw new InvalidOperationException("Services are not available.");
+            }
+
+            var userId = cookieService.GetSessionIdCookie();
+            cart = await cartService.GetCartList(userId);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error fetching cart: {ex.Message}");
+            // Handle error (e.g., show error message to the user)
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
