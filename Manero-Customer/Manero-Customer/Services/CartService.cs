@@ -99,6 +99,7 @@ namespace Manero_Customer.Services
             if (response.IsSuccessStatusCode)
             {
                 var updatedCart = await response.Content.ReadFromJsonAsync<Cart>();
+                NotifyStateChanged();
                 return updatedCart!;
             }
             return null!;

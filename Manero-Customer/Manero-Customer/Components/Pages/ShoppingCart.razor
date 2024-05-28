@@ -5,6 +5,7 @@
 @inject CartService cartService
 @inject CookieService cookieService
 @inject ProductService productService
+@rendermode InteractiveServer
 
 @if (isLoading)
 {
@@ -27,6 +28,8 @@ else
             Quantity="@item.Quantity"
             ImgUrl="@item.ImgUrl"
             Format="@item.Format"
+            Id="@item.Id"
+            UserId ="@item.UserId"
             />
     }
     <p>Total Price: </p>
@@ -37,9 +40,17 @@ else
     public Cart? cart;
     private bool isLoading = true;
     public List<TestModel> models = new ();
-    
+
 
     protected override async Task OnInitializedAsync()
+    {
+        cartService.OnChange += StateChanged;
+        await GetList();
+
+
+    }
+
+    private async Task GetList()
     {
         try
         {
@@ -48,6 +59,7 @@ else
                 throw new InvalidOperationException("Services are not available.");
             }
 
+            models.Clear();
             var userId = cookieService.GetSessionIdCookie();
             cart = await cartService.GetCartList(userId);
             if (cart != null)
@@ -74,6 +86,8 @@ else
                         }
                         mindel.Title = model.Title;
                         mindel.ImgUrl = model.ImageUrl;
+                        mindel.Id = model.Id;
+                        mindel.UserId = userId;
 
                         models.Add(mindel);
                     }
@@ -91,6 +105,17 @@ else
         {
             isLoading = false;
         }
+    }
+
+    private async void StateChanged()
+    {
+        await GetList();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        cartService.OnChange -= StateChanged;
     }
 }
 
