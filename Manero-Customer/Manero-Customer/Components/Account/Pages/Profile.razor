@@ -1,0 +1,107 @@
+﻿@page "/Account/Profile"
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+@using Manero_Customer.Data
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Factories
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Authorization
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IdentityRedirectManager RedirectManager
+@inject ILogger<Profile> Logger
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserService UserService
+
+
+
+<PageTitle>Profile</PageTitle>
+
+<section class="account-profile">
+    <div class="container">
+        <div class="profile">
+            <div class="profile-picture">
+                <img src="profile-placeholder.png" alt="Profile Picture" />
+            </div>
+            <div class="profile-details">
+                <div class="first-lastname">
+                    <h4 class="firstname">@User.FirstName</h4>
+                    <h4 class="lastname">@User.LastName</h4>
+                </div>  
+                <h4 class="email">@User.Email</h4>
+            </div>
+            <div class="profile-actions">
+                <ul>
+                    <li><a @onclick="NavigateToEditProfile">EditProfile</a></li>
+                    <li><a href="/order-history">Order history</a></li>
+                    <li><a href="/payment-method">Payment method</a></li>
+                    <li><a @onclick="NavigateToAddress">My Address</a></li>
+                    <li><a href="/promocodes">My promocodes</a></li>
+                    <li><button @onclick="SignOut">Sign out</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    private string? message;
+    public ProfileModel User { get; set; } = new();
+
+    public string Email { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userProfile = await UserService.GetAuthenticatedUserProfileAsync();
+        if (userProfile != null)
+        {
+            UserProfileFactory.UpdateUserProfile(userProfile, User);
+        }
+        else
+        {
+            Logger.LogError("Error retrieving user profile.");
+            message = "Error retrieving user profile.";
+        }
+
+    }
+    public void NavigateToAddress()
+    {
+        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.IdentityUserId}");
+        if (string.IsNullOrEmpty(User.IdentityUserId))
+        {
+            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/Address?userId={User.IdentityUserId}");
+        }
+    }
+
+
+    public void NavigateToEditProfile()
+    {
+        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.IdentityUserId}");
+        if (string.IsNullOrEmpty(User.IdentityUserId))
+        {
+            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/EditProfile?userId={User.IdentityUserId}");
+        }
+    }
+
+
+    public async Task SignOut()
+    {
+        await SignInManager.SignOutAsync();
+        NavigationManager.NavigateTo("/");
+    }
+}

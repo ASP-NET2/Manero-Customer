@@ -1,0 +1,158 @@
+﻿@page "/Account/EditProfile"
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+@using Manero_Customer.Data
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Authorization
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ILogger<EditProfile> Logger
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserService UserService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit Profile</PageTitle>
+
+<section class="profile-edit">
+    <div class="container">
+        <div class="edit-profile">
+            <div class="profile-picture">
+                <img src="profile-placeholder.png" alt="Profile Picture" />
+            </div>
+            <EditForm Model="UserForm" method="post" OnValidSubmit="SaveChanges" FormName="UserForm">
+                <div class="profile-details">
+                    <div class="input-group">
+                        <label>First name</label>
+                        <InputText class="input-box" @bind-Value="UserForm.FirstName" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Last name</label>
+                        <InputText class="input-box" @bind-Value="UserForm.LastName" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <InputText class="input-box" @bind-Value="UserForm.PhoneNumber" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Location</label>
+                        <InputText class="input-box" @bind-Value="UserForm.Location" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>UserId</label>
+                        <InputText hiide class="input-box" @bind-Value="UserForm.IdentityUserId" />
+                    </div>
+
+                </div>
+                <div class="account-btn">
+                    <button class="btn-theme" type="submit">Save Changes</button>
+                    <button class="btn-delete" type="submit" @onclick="DeleteAccount"> Delete</button>
+                </div>
+
+            </EditForm>
+
+        </div>
+    </div>
+</section>
+
+
+
+@code {
+
+    private string? message;
+    private ProfileModel UserForm { get; set; } = new ProfileModel();
+    private EditContext? editContext;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "userId")]
+    public string UserId { get; set; } = null!;
+
+    [Parameter]
+    public string Email { get; set; } = null!;
+
+    private bool isDataLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"IdentityUserId from query string: {UserId}");
+
+        if (isDataLoaded)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(UserId))
+        {
+            try
+            {
+                var userProfile = await UserService.GetUserProfileAsync(UserId);
+
+                if (userProfile != null)
+                {
+                    UserForm = userProfile;
+                    isDataLoaded = true;
+                }
+            }
+
+            catch (HttpRequestException ex)
+            {
+                Logger.LogError(ex, "Error fetching user profile from API.");
+                message = "Error retrieving user profile.";
+            }
+        }
+        else
+        {
+            Logger.LogError("User ID is not provided in the query string.");
+            message = "User ID is not provided.";
+        }
+
+    }
+
+
+
+    public async Task SaveChanges()
+    {
+        await UserService.SaveUserProfileChangesAsync(UserForm);
+    }
+
+
+    public async Task DeleteAccount()
+    {
+        if (!string.IsNullOrEmpty(UserId))
+        {
+            try
+            {
+                var result = await UserService.DeleteUserAsync(UserId);
+                if (result)
+                {
+                    NavigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    Logger.LogError("Failed to delete user account.");
+                    message = "Failed to delete user account.";
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Logger.LogError(ex, "Error deleting user profile from API.");
+                message = "Error deleting user profile.";
+            }
+        }
+        else
+        {
+            Logger.LogError("User ID is not provided.");
+            message = "User ID is not provided.";
+        }
+
+    }
+}

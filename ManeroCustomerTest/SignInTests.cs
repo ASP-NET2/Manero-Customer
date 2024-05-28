@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ManeroCustomerTest;
 
@@ -17,6 +18,9 @@ public class SignInTests
 {
     private readonly Mock<SignInManager<ApplicationUser>> _signInManagerMock;
     private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
+    private readonly Mock<ILogger<SignInService>> _loggerMock;
+    private readonly Mock<HttpClient> _httpClientMock;
+    private readonly Mock<NavigationManager> _navigationManagerMock;
     private readonly SignInService _signInService;
 
     public SignInTests()
@@ -30,7 +34,17 @@ public class SignInTests
         _signInManagerMock = new Mock<SignInManager<ApplicationUser>>(
             _userManagerMock.Object, contextAccessorMock.Object, userPrincipalFactoryMock.Object, null!, null!, null!, null!);
 
-        _signInService = new SignInService(_signInManagerMock.Object, _userManagerMock.Object, null!);
+        _loggerMock = new Mock<ILogger<SignInService>>();
+        _httpClientMock = new Mock<HttpClient>();
+        _navigationManagerMock = new Mock<NavigationManager>();
+
+        _signInService = new SignInService(
+            _signInManagerMock.Object,
+            _userManagerMock.Object,
+            _navigationManagerMock.Object,
+            _loggerMock.Object,
+            _httpClientMock.Object
+        );
     }
 
     [Fact]
@@ -38,7 +52,7 @@ public class SignInTests
     {
         // Arrange
         var model = new SignInModel { Email = "test@example.com", Password = "Password123", RememberMe = false };
-        _userManagerMock.Setup(um => um.FindByEmailAsync(model.Email)).ReturnsAsync((ApplicationUser?)null);
+        _userManagerMock.Setup(um => um.FindByEmailAsync(model.Email)).ReturnsAsync((ApplicationUser)null!);
 
         // Act
         var result = await _signInService.SignInUserAsync(model);

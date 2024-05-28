@@ -31,6 +31,9 @@ builder.Services.AddScoped<VerifyAccountService> ();
 builder.Services.AddScoped<ProductDetailsService>();
 builder.Services.AddScoped<CartService> ();
 builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddScoped<UserService> ();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CookieService> ();
 
 
 
@@ -85,7 +88,13 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseAntiforgery();
+
+app.UseMiddleware<SessionIdMiddleware>();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

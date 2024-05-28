@@ -30,7 +30,7 @@
             <p>Before you login you need to verify your email address</p>
         </div>
         <EditForm FormName="VerificationModel" Model="VerificationModel" class="verifyform" Method="post" OnValidSubmit="SendVerificationCodeAsync">
-            <InputText  @bind-Value="VerificationModel.Email">@Email</InputText>
+            <InputText hidden @bind-Value="VerificationModel.Email">@Email</InputText>
             <button type="submit" class="btn-theme">SEND CODE</button>
         </EditForm>
     </div>

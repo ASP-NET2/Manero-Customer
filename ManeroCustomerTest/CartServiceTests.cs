@@ -112,8 +112,8 @@ public class CartServiceTests
     //{
     //    // Uppdatera detta testet när jag har en SessionId 
     //    // Arrange
-    //    var cartId = "test-id";
-    //    var product = new ProductModel { Id = "prod-1", Title = "Product 1", Price = 10 };
+    //    var cartId = Guid.NewGuid().ToString(); ;
+    //    var product = new Product { ProductId = "prod-1", ProductName = "Product 1", Price = 10, Quantity = 1 };
     //    var cart = new Cart { Id = cartId };
     //    _httpMessageHandlerMock.Protected()
     //        .Setup<Task<HttpResponseMessage>>(
@@ -127,7 +127,7 @@ public class CartServiceTests
     //        });
 
     //    // Act
-    //    var result = await _cartService.AddToCart(product);
+    //    var result = await _cartService.AddToCart(product, cartId);
 
     //    // Assert
     //    Assert.NotNull(result);
