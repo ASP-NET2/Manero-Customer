@@ -1,0 +1,25 @@
+﻿@page "/Logout"
+
+@using System.Text
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using Manero_Customer.Data
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityRedirectManager RedirectManager
+@inject NavigationManager NavigationManager
+
+
+@code {
+    [Parameter]
+    public string ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SignInManager.SignOutAsync();
+        var redirectUrl = ReturnUrl ?? "/";
+        NavigationManager.NavigateTo(redirectUrl);
+    }
+}
+
