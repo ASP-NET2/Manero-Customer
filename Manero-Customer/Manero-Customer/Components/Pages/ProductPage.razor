@@ -26,14 +26,17 @@
                     <h3>@product.Title</h3>
                     <p>Författare: @product.Author</p>
                     <p>Format: @product.FormatName</p>
-                    @if (product.OnSale && product.DiscountPrice > 0)
-                    {
-                        <p class="price"><span class="old-price">@product.Price kr</span> @product.DiscountPrice kr</p>
-                    }
-                    else
-                    {
-                        <p class="price">@product.Price kr</p>
-                    }
+                    <div class="priceContainer">
+                        @if (product.DiscountPrice == null || product.DiscountPrice == 0)
+                        {
+                            <p class="price">@product.Price :-</p>
+                        }
+                        else
+                        {
+                            <p class="regPrice">@product.Price :-</p>
+                            <p class="discPrice">@product.DiscountPrice :-</p>
+                        }
+                    </div>
                     <h5>Beskrivning</h5>
                     <p>@product.ShortDescription</p>
                     <p>@product.LongDescription</p>
@@ -50,7 +53,6 @@
         }
     </section>
 </div>
- 
 
 @code {
     [Parameter]
@@ -76,6 +78,7 @@
             }
         }
     }
+
     private async Task AddToCartAsync(ProductDetailsModel model)
     {
         Debug.WriteLine("Navigera");
@@ -86,7 +89,7 @@
                 ProductId = model.Id,
                 ProductName = model.Title,
                 Quantity = model.Quantity,
-                Price = model.OnSale && model.DiscountPrice > 0 ? model.DiscountPrice : model.Price
+                Price = model.OnSale && model.DiscountPrice.HasValue && model.DiscountPrice.Value > 0 ? model.DiscountPrice.Value : model.Price
             };
         await cartService.AddToCart(prod, userId);
         

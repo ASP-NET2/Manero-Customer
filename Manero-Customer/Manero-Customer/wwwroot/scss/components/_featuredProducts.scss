@@ -1,0 +1,125 @@
+﻿ .featuredprod, .all-featured-products {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+
+    .imageContainer {
+        position: relative;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .onSale {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding: 6px;
+            color: var(--color-white);
+            background: var(--color-onSale);
+            font-weight: bold;
+        }
+
+        .icons {
+            display: grid;
+            gap: 16px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--color-text);
+            font-size: 1.5em;
+
+            .icon {
+                &:hover {
+                    color: var(--color-white);
+                }
+            }
+        }
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--color-text);
+        margin: 0;
+        text-decoration: none;
+    }
+
+    .star-rating {
+        display: flex;
+        width: 100px;
+        height: 20px;
+    }
+
+    .filled-star {
+        color: var(--color-star);
+    }
+
+    .empty-star {
+        color: var(--color-star);
+    }
+
+    .priceContainer {
+        display: flex;
+        gap: 10px;
+
+        .price {
+            font-weight: 600;
+            color: var(--color-main);
+            text-decoration: none; 
+        }
+
+        .regPrice {
+            text-decoration: line-through;
+        }
+
+        .discPrice {
+            color: var(--color-accent);
+            font-weight: 600;
+            text-decoration: none; 
+        }
+    }
+
+    a {
+        text-decoration: none; 
+        color: inherit; 
+    }
+}
+
+ .featuredContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+
+    .fCard {
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .product-image {
+            width: 100%;
+            height: 200px; 
+            object-fit: cover; 
+            margin-bottom: 10px;
+        }
+
+        .priceContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.view-all {
+    text-decoration: none; 
+    color: var(--color-main); 
+}

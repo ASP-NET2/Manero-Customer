@@ -6,7 +6,7 @@
     background-color: #f8f9fa;
     min-height: 100vh;
     box-sizing: border-box;
-}
+
 
 .product-container {
     display: flex;
@@ -36,7 +36,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color:var(--color-onSale);
+    background-color: green;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -69,17 +69,26 @@
     color: #626262;
 }
 
-.product-content .price {
-    font-size: 1.25rem;
-    color: #333;
-    margin: 10px 0;
+.priceContainer {
+    display: flex;
+    align-items: center;
+
+
+.price {
+    font-weight: 600;
+    color: var(--color-main);
 }
 
-.product-content .old-price {
+.regPrice {
     text-decoration: line-through;
-    color: red;
-    margin-right: 10px;
 }
+
+.discPrice {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+}
+
 
 .btn-theme {
     width: 100%;
@@ -92,4 +101,5 @@
     font-size: 1rem;
     border-radius: 5px;
     text-align: center;
+ }
 }

@@ -18,11 +18,13 @@ public class SessionIdMiddleware
             {
                 Expires = DateTime.Now.AddHours(24),
                 HttpOnly = true,
-                Secure = context.Request.IsHttps 
+                Secure = context.Request.IsHttps
             });
-            Console.WriteLine($"SessionId cookie set: {sessionId}"); 
+            Console.WriteLine($"SessionId cookie set: {sessionId}");
         }
 
         await _next(context);
     }
 }
+
+
