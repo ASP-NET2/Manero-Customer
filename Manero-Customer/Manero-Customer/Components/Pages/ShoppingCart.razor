@@ -1,0 +1,122 @@
+﻿@page "/shoppingCart"
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using System.Diagnostics
+@inject CartService cartService
+@inject CookieService cookieService
+@inject ProductService productService
+@rendermode InteractiveServer
+
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (cart == null )
+{
+    <EmptyCart/>    
+}
+else
+{
+    <div class="container">
+
+    @foreach ( var item in models)
+    {        
+        <_CartProductItem
+            Title="@item.Title"
+            Price="@item.Price"
+            DiscountPrice="@item.DiscountPrice"
+            Quantity="@item.Quantity"
+            ImgUrl="@item.ImgUrl"
+            Format="@item.Format"
+            Id="@item.Id"
+            UserId ="@item.UserId"
+            />
+    }
+    <p>Total Price: </p>
+    </div>
+}
+
+@code {
+    public Cart? cart;
+    private bool isLoading = true;
+    public List<TestModel> models = new ();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        cartService.OnChange += StateChanged;
+        await GetList();
+
+
+    }
+
+    private async Task GetList()
+    {
+        try
+        {
+            if (cartService == null || cookieService == null)
+            {
+                throw new InvalidOperationException("Services are not available.");
+            }
+
+            models.Clear();
+            var userId = cookieService.GetSessionIdCookie();
+            cart = await cartService.GetCartList(userId);
+            if (cart != null)
+            {
+
+                foreach (var prod in cart.Products)
+                {
+                    var mindel = new TestModel
+                        {
+                            Quantity = prod.Quantity
+                        };
+                    var test = new Dictionary<string, string>
+                    {
+                        {"Id", prod.ProductId }
+                    };
+                    var model = await productService.FilterSingleProduct(test);
+                    if (model != null)
+                    {
+                        mindel.Format = model.FormatName;
+                        mindel.Price = model.Price;
+                        if (int.TryParse(model.DiscountPrice, out int discountPrice))
+                        {
+                            mindel.DiscountPrice = discountPrice;
+                        }
+                        mindel.Title = model.Title;
+                        mindel.ImgUrl = model.ImageUrl;
+                        mindel.Id = model.Id;
+                        mindel.UserId = userId;
+
+                        models.Add(mindel);
+                    }
+                    Debug.WriteLine(model);
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error fetching cart: {ex.Message}");
+            // Handle error (e.g., show error message to the user)
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async void StateChanged()
+    {
+        await GetList();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        cartService.OnChange -= StateChanged;
+    }
+}
+
+       

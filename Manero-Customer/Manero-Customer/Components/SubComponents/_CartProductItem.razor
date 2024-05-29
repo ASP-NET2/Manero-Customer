@@ -1,0 +1,62 @@
+﻿@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using System.Diagnostics
+@inject CartService cartService
+@rendermode InteractiveServer
+
+    <div class="containerCart">
+        <div class="imgContainer">
+            <img src=@ImgUrl alt="Alternate Text" />
+        </div>
+        <div class="containerText">
+            <p>@Title</p>
+            <div class="price">
+                    @if (@DiscountPrice <= 0)
+                    {
+                        <p class="normPrice">@Price:-</p>
+                    }
+                    else
+                    {
+                        <p class="regPrice">@Price:-</p>
+                        <p class="discPrice">@DiscountPrice:-</p>
+                    }
+            </div>
+            <p>@Format</p>
+        </div>
+        <div class="counter">
+            <button @onclick="AddToCarttest" >+</button>
+            <p>@Quantity</p>
+            <button @onclick="RemoveFromCart">-</button>
+        </div>
+    </div>
+
+
+@code {
+    [Parameter] public string Title { get; set; } = null!;
+    [Parameter] public string ImgUrl { get; set; } = null!;
+    [Parameter] public string Format { get; set; } = null!;
+    [Parameter] public int Price { get; set; }
+    [Parameter] public int DiscountPrice { get; set; }
+    [Parameter] public int Quantity { get; set; }
+    [Parameter] public string Id { get; set; } = null!;
+    [Parameter] public string userId { get; set; } = null!;
+
+
+    private async Task AddToCarttest()
+    {
+        Product product = new Product
+            {
+                ProductName = Title,
+                Quantity = Quantity,
+                Price = Price,
+                ProductId = Id,
+            };
+        await cartService.AddToCart(product, userId);
+        
+    }
+
+    private async Task RemoveFromCart()
+    { 
+        await cartService.DeqraeasproductQuantity(userId, Id);
+    }
+}

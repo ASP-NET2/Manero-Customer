@@ -1,0 +1,37 @@
+
+    .containerCart{
+
+    display: flex;
+    justify-content: space-around;
+
+    .imgContainer{
+        img{
+            height: 100px;
+            width: 100px;
+        }
+    }
+    .containerText{
+        flex: 1;
+        padding: 10px;
+        .price{
+            display: flex;
+            .normPrice{
+                font-weight: 600;
+            }
+            .regPrice{
+                color: var(--color-text);
+                text-decoration: line-through;
+            }
+            .discPrice{
+                color: var(--color-accent);
+                font-weight: 600;
+                margin-left: 10px;
+            }
+        }
+    }
+    }
+    p{
+        margin:0;
+        padding:0;
+        color: var(--color-text);
+    }

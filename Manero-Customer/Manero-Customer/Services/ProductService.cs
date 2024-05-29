@@ -53,5 +53,28 @@ namespace Manero_Customer.Services
             }
         }
 
+        public async Task<ProductModel?> FilterSingleProduct(Dictionary<string, string> filters)
+        {
+            try
+            {
+                var baseUrl = "https://maneroproductsfunction.azurewebsites.net/api/SortProduct";
+                var query = string.Join("&", filters.Select(filter => $"{Uri.EscapeDataString(filter.Key)}={Uri.EscapeDataString(filter.Value)}&code=DDouJB2A89tIcTmyQLA60nUafk_PqQDmkWjWA8d_ZAH0AzFueERmlQ%3D%3D"));
+
+                var builder = new UriBuilder(baseUrl)
+                {
+                    Query = query
+                };
+
+                var url = builder.ToString();
+                var result = await _httpClient.GetFromJsonAsync<List<ProductModel>>(url);
+                return result?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error filtering single product.");
+                return null;
+            }
+        }
+
     }
 }

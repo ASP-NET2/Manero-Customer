@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="Components\Pages\EmptyCart.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +36,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="Components\SubComponents\EmptyCart.razor" />
   </ItemGroup>
 
 </Project>

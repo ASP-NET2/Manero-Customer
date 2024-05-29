@@ -1,0 +1,25 @@
+.container{
+    .containerEmptyCart{
+        img{
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            padding-top: 1.4em;
+            padding-bottom: 50px;
+        }
+        a{
+            width: 80%;
+        }
+        h2{
+            margin: 0;
+            padding:0;
+        }
+        p{
+            color: var(--color-text);
+            padding: 1em;
+        }
+        display: grid;
+        justify-items: center;
+        text-align: center;
+    }
+}

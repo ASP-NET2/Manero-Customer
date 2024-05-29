@@ -82,8 +82,8 @@
     private async Task AddToCartAsync(ProductDetailsModel model)
     {
         Debug.WriteLine("Navigera");
-        // var userId = cookieService.GetSessionIdCookie();
-        var userId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
+        var userId = cookieService.GetSessionIdCookie();
+        //var userId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
         var prod = new Product
             {
                 ProductId = model.Id,

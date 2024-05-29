@@ -14,6 +14,21 @@
   border: 1px solid var(--color-main);
 }
 
+.btn-test-th {
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 16px 35px;
+  gap: 10px;
+  text-decoration: none;
+  transition: all 0.12s ease-in-out;
+  outline: none;
+  background-color: var(--color-main);
+  color: var(--color-white);
+  border-radius: 30px;
+}
+
 .wrapper {
   height: 100vh;
   display: grid;
@@ -180,6 +195,64 @@
   position: relative;
 }
 
+
+.container .containerEmptyCart {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+.container .containerEmptyCart img {
+  width: 50%;
+  height: auto;
+  border-radius: 10px;
+  padding-top: 1.4em;
+  padding-bottom: 50px;
+}
+.container .containerEmptyCart a {
+  width: 80%;
+}
+.container .containerEmptyCart h2 {
+  margin: 0;
+  padding: 0;
+}
+.container .containerEmptyCart p {
+  color: var(--color-text);
+  padding: 1em;
+}
+
+.containerCart {
+  display: flex;
+  justify-content: space-around;
+}
+.containerCart .imgContainer img {
+  height: 100px;
+  width: 100px;
+}
+.containerCart .containerText {
+  flex: 1;
+  padding: 10px;
+}
+.containerCart .containerText .price {
+  display: flex;
+}
+.containerCart .containerText .price .normPrice {
+  font-weight: 600;
+}
+.containerCart .containerText .price .regPrice {
+  color: var(--color-text);
+  text-decoration: line-through;
+}
+.containerCart .containerText .price .discPrice {
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text);
+=======
 .featuredprod, .all-featured-products {
   display: grid;
   gap: 10px;
