@@ -15,14 +15,20 @@
         <div>
             @if (@totalItems > 0)
             {
+                <NavLink href="shoppingCart">
+
                 <div class="shoppingCart">
                     <div class="circle">@totalItems :-</div>    
                     <i class="fa-regular fa-shopping-bag"></i>                
                 </div>
+                </NavLink>
             }
             else
             {
+                <NavLink href="shoppingCart">
+
                 <i class="fa-regular fa-shopping-bag"></i>
+                </NavLink>
             }
         </div>
     </div>
