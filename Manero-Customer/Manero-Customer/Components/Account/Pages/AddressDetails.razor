@@ -1,0 +1,72 @@
+﻿@page "/Account/AddressDetails"
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+
+
+<section class="address-details">
+    <div class="add-address">
+        <h1>Add a new address</h1>
+        <EditForm Model="Form" method="post" OnValidSubmit="CreateAddress">
+            <AntiforgeryToken />
+            <DataAnnotationsValidator />
+
+            <ValidationSummary class="text-danger" role="alert" />
+            <div class="profile-details">
+                <div class="input-group">
+                    <label>Address title</label>
+                    <InputText class="input-box" @bind-Value="Form.AddressTitle" />
+                </div>
+
+                <div class="input-group">
+                    <label>Address line</label>
+                    <InputText class="input-box" @bind-Value="Form.AddressLine_1" />
+                </div>
+
+                <div class="input-group">
+                    <label>Postal code</label>
+                    <InputText class="input-box" @bind-Value="Form.PostalCode" />
+                </div>
+
+
+
+                <div class="input-group">
+                    <label>City</label>
+                    <InputText class="input-box" @bind-Value="Form.City" />
+                </div>
+
+                <div class="input-group">
+                    <label>UserId</label>
+                    <label class="input-box">@AccountId</label>
+                </div>
+
+            </div>
+            <div class="account-btn">
+                <button class="btn-theme" type="submit">Save Changes</button>
+            </div>
+
+        </EditForm>
+    </div>
+</section>
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "userId")]
+    public int AccountId { get; set; }
+
+    public AddressModel Form { get; set; } = new AddressModel();
+
+    protected override void OnInitialized()
+    {
+        Form.AccountId = AccountId;
+    }
+
+    public async Task CreateAddress()
+    {
+        Form.AccountId = AccountId;
+        await AddressService.AddAddressAsync(Form);
+        NavigationManager.NavigateTo("/Account/Profile");
+
+    }
+
+}

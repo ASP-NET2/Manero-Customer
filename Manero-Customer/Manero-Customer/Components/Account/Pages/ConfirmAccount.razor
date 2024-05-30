@@ -2,23 +2,6 @@
 @rendermode InteractiveServer
 
 
-@using System.Text
-@using Azure.Messaging.ServiceBus
-@using Manero_Customer.Data
-@using Manero_Customer.Data.Models
-@using Manero_Customer.Services
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.WebUtilities
-@using Newtonsoft.Json
-
-@inject UserManager<ApplicationUser> UserManager
-@inject IdentityRedirectManager RedirectManager
-@inject NavigationManager Navigation
-@inject ApplicationDbContext DbContext
-@inject ServiceBusSender _sender
-@inject NavigationManager NavigationManager
-@inject ConfirmAccountService ConfirmAccountService
-@inject VerifyAccountService VerifyAccountService
 
 <PageTitle>Confirm email</PageTitle>
 

@@ -1,0 +1,96 @@
+﻿@page "/Account/AddressUpdate"
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+
+@if (address == null)
+{
+    <p>Loading ....</p>
+}
+else
+{
+    <section class="address-update">
+        <div class="address-details">
+            <h1>Update address</h1>
+            <EditForm Model="Form" method="post" OnValidSubmit="UpdateAddress">
+                <AntiforgeryToken />
+                <DataAnnotationsValidator />
+
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="profile-details">
+                    <div class="input-group">
+                        <label>Address title</label>
+                        <InputText class="input-box" @bind-Value="Form.AddressTitle">@address.AddressTitle</InputText>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Address line</label>
+                        <InputText class="input-box" @bind-Value="Form.AddressLine_1">@address.AddressLine_1</InputText>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Postal code</label>
+                        <InputText class="input-box" @bind-Value="Form.PostalCode">@address.PostalCode</InputText>
+                    </div>
+
+                    <div class="input-group">
+                        <label>City</label>
+                        <InputText class="input-box" @bind-Value="Form.City">@address.City</InputText>
+                    </div>
+
+                    <div class="input-group">
+                        <label>UserId</label>
+                        <label class="input-box">@AddressId</label>
+                    </div>
+
+                </div>
+                <div class="account-btn">
+                    <button class="btn-theme" type="submit">Save Changes</button>
+                    <button @onclick="DeleteAddress" class="btn-delete" type="submit">Delete Address</button>
+                </div>
+
+            </EditForm>
+        </div>
+    </section>
+}
+
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "addressId")]
+    public int AddressId { get; set; }
+
+    public UpdateAddressModel Form { get; set; } = new UpdateAddressModel();
+    private AddressModel? address;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation($"Loading address with ID: {AddressId}");
+        address = await AddressService.GetAddressByIdAsync(AddressId);
+
+        if (address != null)
+        {
+            Form.AddressTitle = address.AddressTitle;
+            Form.AddressLine_1 = address.AddressLine_1;
+            Form.PostalCode = address.PostalCode;
+            Form.City = address.City;
+        }
+
+    }
+
+    public async Task UpdateAddress()
+    {
+        Logger.LogInformation($"Address updating {AddressId}");
+        await AddressService.UpdateAddressAsync(AddressId, Form);
+
+        NavigationManager.NavigateTo("/Account/Profile");
+    }
+
+    public async Task DeleteAddress()
+    {
+        Logger.LogInformation($"Address that you are trying to remove{AddressId}");
+        await AddressService.DeleteAddressAsync(AddressId);
+
+        NavigationManager.NavigateTo("/Account/Profile");
+    }
+}

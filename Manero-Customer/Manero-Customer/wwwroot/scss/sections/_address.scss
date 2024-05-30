@@ -1,0 +1,73 @@
+﻿.all-addresses {
+    .my-address {
+        padding: 16px;
+        background-color: #fff;
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .address-list {
+            .address-item {
+                display: flex;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid #e0e0e0;
+
+                .icon {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
+
+                    &.home {
+                        background: url('/icons/home.svg') no-repeat center center;
+                        background-size: contain;
+                    }
+
+                    &.work {
+                        background: url('/icons/work.svg') no-repeat center center;
+                        background-size: contain;
+                    }
+
+                    &.other {
+                        background: url('/icons/other.svg') no-repeat center center;
+                        background-size: contain;
+                    }
+                }
+
+                .address-details {
+                    flex: 1;
+
+                    p {
+                        margin: 0;
+
+                        &:first-child {
+                            font-weight: bold;
+                        }
+                    }
+                }
+
+                .edit-button {
+                    background: none;
+                    border: none;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .add-address {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 16px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+}

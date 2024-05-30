@@ -2,20 +2,6 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-@using Manero_Customer.Data
-@using Manero_Customer.Data.Models
-@using Manero_Customer.Services
-@using Microsoft.AspNetCore.Authorization
-@using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.Identity
-
-
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@inject ILogger<EditProfile> Logger
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject UserService UserService
-@inject NavigationManager NavigationManager
 
 <PageTitle>Edit Profile</PageTitle>
 

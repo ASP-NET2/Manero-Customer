@@ -1,17 +1,6 @@
 ﻿@page "/Account/login"
 
-@using System.ComponentModel.DataAnnotations
-@using Manero_Customer.Data.Models
-@using Manero_Customer.Services
-@using Microsoft.AspNetCore.Authentication
-@using Microsoft.AspNetCore.Identity
-@using Manero_Customer.Data
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject ILogger<SignIn> Logger
-@inject NavigationManager NavigationManager
-@inject IdentityRedirectManager RedirectManager
-@inject SignInService SignInService
 
 <PageTitle>Log in</PageTitle>
 

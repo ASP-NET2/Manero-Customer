@@ -34,6 +34,8 @@ builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<UserService> ();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CookieService>();
+builder.Services.AddScoped<ImageService> ();
+builder.Services.AddScoped<AddressService> ();
 
 builder.Services.AddAuthentication(options =>
     {

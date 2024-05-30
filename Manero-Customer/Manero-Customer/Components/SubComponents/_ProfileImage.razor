@@ -1,0 +1,64 @@
+﻿@inject ImageService ImageService
+@inject ILogger<_ProfileImage> Logger
+@inject HttpClient HttpClient
+
+
+<EditForm Model="@uploadModel" OnValidSubmit="@HandleValidSubmit">
+    <InputFile OnChange="@HandleFileSelected" />
+    <ValidationMessage For="@(() => uploadModel.File)" />
+    <button type="submit">Upload Picture</button>
+</EditForm>
+<p>@uploadStatus</p>
+
+@if (!string.IsNullOrEmpty(uploadedImageUrl))
+{
+    <img src="@uploadedImageUrl." alt="Uploaded Image" style="max-width: 200px; max-height: 200px;" />
+}
+
+@code {
+    private string uploadStatus = string.Empty;
+    private string uploadedImageUrl;
+    private UploadModel uploadModel = new();
+
+    [Parameter]
+    public EventCallback<string> OnUploadSuccess { get; set; }
+
+    private async Task HandleValidSubmit()
+    {
+        if (uploadModel.File != null)
+        {
+            try
+            {
+                var imageUrl = await ImageService.UploadImageAsync(uploadModel.File);
+
+                if (!string.IsNullOrEmpty(imageUrl))
+                {
+                    uploadStatus = $"Image uploaded: {imageUrl}";
+                    await OnUploadSuccess.InvokeAsync(imageUrl);
+                }
+                else
+                {
+                    uploadStatus = "Error uploading image.";
+                }
+            }
+            catch (Exception ex)
+            {
+                uploadStatus = $"Exception: {ex.Message}";
+            }
+        }
+        else
+        {
+            uploadStatus = "No file selected.";
+        }
+    }
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        uploadModel.File = e.File;
+    }
+
+    private class UploadModel
+    {
+        public IBrowserFile File { get; set; }
+    }
+}

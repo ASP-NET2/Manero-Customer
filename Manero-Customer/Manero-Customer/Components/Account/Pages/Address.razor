@@ -1,9 +1,91 @@
-﻿@page "/Account/Address"
+﻿@page "/Account/ListAddresses"
 @rendermode InteractiveServer
+@attribute [Authorize]
 
-<PageTitle>Invalid password reset</PageTitle>
 
-<h1>Invalid password reset</h1>
-<p>
-    The password reset link is invalid.
-</p>
+
+@if (addresses == null)
+{
+    <div class="add-new-address">
+        <p>No addresses found for this user.</p>
+        <button @onclick="NavigateToAddressDetails" class="add-address">Add a new address</button>
+    </div>
+
+}
+
+else
+{
+    <section class="all-addresses">
+        <div class="my-addresses">
+            <h1>My address</h1>
+            <div class="address-list">
+                <div class="address-list">
+                    @foreach (var address in addresses)
+                    {
+                        <div class="address-item">
+                            <div class="icon @address"></div>
+                            <div class="address-details">
+                                <p>@address.AccountId</p>
+                                <p>@address.AddressTitle</p>
+                                <p>@address.AddressLine_1</p>
+                                <p>Postal Code: @address.PostalCode</p>
+                                <p>City: @address.City</p>
+                            </div>
+                            <button @onclick="() => NavigateToAddressUpdate(address.AddressId)" class="edit-button" type="submit">✎</button>
+                        </div>
+                    }
+                </div>
+                <button @onclick="NavigateToAddressDetails" class="add-address">Add a new address</button>
+            </div>
+        </div>
+    </section>
+}
+
+
+@code {
+    [SupplyParameterFromQuery]
+    public int userId { get; set; }
+
+    private List<AddressModel>? addresses;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (userId != 0)
+            {
+                addresses = await AddressService.GetAddressesByUserAsync(userId);
+                Logger.LogInformation($"Addresses loaded for userId: {userId}");
+            }
+            else
+            {
+                Logger.LogError("userId is 0 or not supplied.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, $"An error occurred: {ex.Message}");
+        }
+    }
+
+    public void NavigateToAddressDetails()
+    {
+        Logger.LogInformation($"Navigating to AddressDetails with userId: {userId}");
+        if (userId == 0)
+        {
+            Logger.LogError("AccountId is null or empty, cannot navigate");
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/AddressDetails?userId={userId}");
+        }
+    }
+
+
+    public void NavigateToAddressUpdate(int addressId)
+    {
+        Logger.LogInformation($"Navigating to AddressDetails with userId: {addressId}");
+        NavigationManager.NavigateTo($"/Account/AddressUpdate?addressId={addressId}");
+
+    }
+}

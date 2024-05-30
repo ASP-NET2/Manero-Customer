@@ -917,15 +917,19 @@ h1:focus {
 }
 
 .account-profile .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  display: grid;
+  justify-items: center;
+  padding: 20px;
 }
 .account-profile .container .profile {
   display: grid;
   justify-items: center;
-  margin-top: 20px;
+}
+.account-profile .container .profile label {
+  z-index: 100;
+}
+.account-profile .container .profile label .image-input {
+  z-index: 1000;
 }
 .account-profile .container .profile .profile-picture {
   position: relative;
@@ -939,47 +943,103 @@ h1:focus {
   margin-bottom: 20px;
 }
 .account-profile .container .profile .profile-picture img {
-  display: block;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 .account-profile .container .profile .profile-details {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 .account-profile .container .profile .profile-details .first-lastname {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   gap: 10px;
 }
-.account-profile .container .profile .profile-details .firstname, .account-profile .container .profile .profile-details .lastname, .account-profile .container .profile .profile-details .email {
-  margin: 5px 0;
+.account-profile .container .profile .profile-details h4 {
+  margin: 10px 0 5px;
+  font-size: 18px;
 }
-.account-profile .container .profile-actions ul {
-  list-style: none;
-  padding: 0;
-}
-.account-profile .container .profile-actions ul li {
-  margin: 10px 0;
-  position: relative;
+.account-profile .container .profile .profile-actions {
   display: flex;
   justify-content: center;
+  width: 100%;
+  max-width: 400px;
 }
-.account-profile .container .profile-actions ul li a, .account-profile .container .profile-actions ul li button {
+.account-profile .container .profile .profile-actions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.account-profile .container .profile .profile-actions ul li {
+  margin: 10px 0;
+}
+.account-profile .container .profile .profile-actions ul li a, .account-profile .container .profile .profile-actions ul li button {
   text-decoration: none;
-  color: #000;
-  padding: 10px 20px;
-  border-top: 1px solid #000;
+  color: black;
+  border-top: 1px solid black;
   width: 100%;
-  max-width: 300px;
-  background-color: #fff;
-  position: relative;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
 }
-.account-profile .container .profile-actions ul li a:before, .account-profile .container .profile-actions ul li button:before {
-  position: absolute;
-  top: 50%;
-  left: 0;
+
+.all-addresses .my-address {
+  padding: 16px;
+  background-color: #fff;
+}
+.all-addresses .my-address h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.all-addresses .my-address .address-list .address-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.all-addresses .my-address .address-list .address-item .icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+}
+.all-addresses .my-address .address-list .address-item .icon.home {
+  background: url("/icons/home.svg") no-repeat center center;
+  background-size: contain;
+}
+.all-addresses .my-address .address-list .address-item .icon.work {
+  background: url("/icons/work.svg") no-repeat center center;
+  background-size: contain;
+}
+.all-addresses .my-address .address-list .address-item .icon.other {
+  background: url("/icons/other.svg") no-repeat center center;
+  background-size: contain;
+}
+.all-addresses .my-address .address-list .address-item .address-details {
+  flex: 1;
+}
+.all-addresses .my-address .address-list .address-item .address-details p {
+  margin: 0;
+}
+.all-addresses .my-address .address-list .address-item .address-details p:first-child {
+  font-weight: bold;
+}
+.all-addresses .my-address .address-list .address-item .edit-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.all-addresses .my-address .add-address {
+  display: block;
   width: 100%;
-  border-top: 1px solid #000;
-  transform: translateY(-50%);
-  z-index: -1;
+  padding: 12px;
+  margin-top: 16px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
 }

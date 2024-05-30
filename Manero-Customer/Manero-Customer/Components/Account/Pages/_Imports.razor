@@ -1,2 +1,48 @@
 ﻿@using Manero_Customer.Components.Account.Shared
+@using Microsoft.AspNetCore.Authorization
+@using System.Text
+@using Manero_Customer.Data
+@using Manero_Customer.Data.Models
+@using Manero_Customer.Services
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using System.ComponentModel.DataAnnotations
+@using Newtonsoft.Json
+@using Azure.Messaging.ServiceBus
+@using Manero_Customer.Factories
+@using Microsoft.AspNetCore.Authentication
+@using System.Text.Encodings.Web
+@using Manero_Customer.Data.Entity
+@using Azure
+@using System.Diagnostics
+
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityRedirectManager RedirectManager
+@inject ServiceBusSender _sender
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IUserStore<ApplicationUser> UserStore
+
+
+@inject AddressService AddressService
+@inject UserService UserService
+@inject ConfirmAccountService ConfirmAccountService
+@inject VerifyAccountService VerifyAccountService
+@inject ApplicationDbContext DbContext
+@inject SignInService SignInService
+@inject ILogger<SignUp> Logger
+@inject VerifyAccountService VerifyAccountService
+@inject HttpClient HttpClient
+
+@inject ILogger<Address> Logger
+@inject ILogger<EditProfile> Logger
+@inject ILogger<AddressUpdate> Logger
+@inject ILogger<Profile> Logger
+@inject ILogger<SignIn> Logger
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
+
 @layout AccountLayout
+
+
+

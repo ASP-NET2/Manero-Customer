@@ -2,67 +2,61 @@
 @rendermode InteractiveServer
 @attribute [Authorize]
 
-@using Manero_Customer.Data
-@using Manero_Customer.Data.Models
-@using Manero_Customer.Factories
-@using Manero_Customer.Services
-@using Microsoft.AspNetCore.Authorization
-@using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.Identity
-
-
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@inject IdentityRedirectManager RedirectManager
-@inject ILogger<Profile> Logger
-@inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject UserService UserService
-@inject SignInService SignInService
-
-
-
 <PageTitle>Profile</PageTitle>
 
 <section class="account-profile">
     <div class="container">
         <div class="profile">
-            <div class="profile-picture">
-                <img src="profile-placeholder.png" />
+           
+          <div class="profile-picture">
+                <_ProfileImage OnUploadSuccess="HandleUploadSuccess" />
+                @if (!string.IsNullOrEmpty(uploadedImageUrl))
+                {
+                    <img src="@uploadedImageUrl" alt="Profile Image" style="max-width: 200px; max-height: 200px;" />
+                }
+
+                @if (!string.IsNullOrEmpty(User.ImageUrl))
+                {
+                    <img src="@User.ImageUrl" alt="Profile Image" style="max-width: 200px; max-height: 200px;" />
+                }
             </div>
             <div class="profile-details">
                 <div class="first-lastname">
                     <h4 class="firstname">@User.FirstName</h4>
                     <h4 class="lastname">@User.LastName</h4>
                 </div>  
-                <h4 class="email">@User.Email</h4>
             </div>
             <div class="profile-actions">
                 <ul>
-                    <li><a @onclick="NavigateToEditProfile">EditProfile</a></li>
-                    <li><a @onclick="NavigateToAddress">My Address</a></li>
+                    <li> <a @onclick="NavigateToEditProfile">EditProfile</a></li>
+                    <li><a href="/order-history">Order history</a></li>
+                    <li><a href="/payment-method">Payment method</a></li>
+                    <li><a @onclick="NavigateToAddress">My address</a></li>
+                    <li><a href="/promocodes">My promocodes</a></li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/Logout">Sign out</NavLink>
                     </li>
-
                 </ul>
             </div>
         </div>
     </div>
 </section>
 
-
 @code {
+    public SaveImageRequest Image { get; set; } = new();
     private string? message;
-    public ProfileModel User { get; set; } = new();
+    public ProfileModel User { get; set; } = new ();
+    private string uploadedImageUrl;
 
     public string Email { get; set; } = null!;
+
 
     protected override async Task OnInitializedAsync()
     {
         var userProfile = await UserService.GetAuthenticatedUserProfileAsync();
         if (userProfile != null)
         {
+            Logger.LogInformation($"User profile loaded: {userProfile.Id}, {userProfile.FirstName}, {userProfile.LastName},{userProfile.ImageUrl}");
             UserProfileFactory.UpdateUserProfile(userProfile, User);
         }
         else
@@ -70,23 +64,40 @@
             Logger.LogError("Error retrieving user profile.");
             message = "Error retrieving user profile.";
         }
-
     }
-    public void NavigateToAddress()
+
+    private string uploadStatus { get; set; }
+
+  
+    private async Task HandleUploadSuccess(string imageUrl)
     {
-        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.IdentityUserId}");
-        if (string.IsNullOrEmpty(User.IdentityUserId))
+        try
         {
-            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+            var accountId = User.Id;
+            var response = await HttpClient.PostAsJsonAsync("http://localhost:7096/api/save-image-url", new SaveImageRequest
+                {
+                    AccountId = accountId,
+                    ImageUrl = imageUrl
+                });
+
+            if (response.IsSuccessStatusCode)
+            {
+                Logger.LogInformation("Image URL saved to database.");
+            }
+            else
+            {
+                Logger.LogError("Error saving image URL to database.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            NavigationManager.NavigateTo($"/Account/Address?userId={User.IdentityUserId}");
+            Logger.LogError($"Exception: {ex.Message}");
         }
     }
 
-
-    public void NavigateToEditProfile()
+   
+ 
+      public void NavigateToEditProfile()
     {
         Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.IdentityUserId}");
         if (string.IsNullOrEmpty(User.IdentityUserId))
@@ -99,10 +110,19 @@
         }
     }
 
-
-    public async Task SignOut()
+    public void NavigateToAddress()
     {
-        await SignInService.SignOutAsync();
-
+        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.Id}");
+        if (User.Id == 0)
+        {
+            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/ListAddresses?userId={User.Id}");
+        }
     }
+
+    
+
 }
