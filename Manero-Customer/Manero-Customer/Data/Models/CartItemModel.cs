@@ -1,6 +1,6 @@
 ﻿namespace Manero_Customer.Data.Models;
 
-public class TestModel
+public class CartItemModel
 {
     public string Id { get; set; } = null!;
     public string Title { get; set; } = null!;
