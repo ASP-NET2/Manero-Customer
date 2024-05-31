@@ -71,6 +71,7 @@ namespace Manero_Customer.Services
                     ProductId = prod.ProductId,
                     Quantity = 1,
                     Price = prod.Price,
+                    DiscountPrice = prod.DiscountPrice,
                 };
                 var url = $"https://maneroproductsfunction.azurewebsites.net/api/AddProdToCart/{userId}?code=hPdhi5Dyr3U8Il5Lh9c6QSNfTG_8AlPeedbYRVUbV4joAzFuWsspUg%3D%3D";
                 var response = await _httpClient.PostAsJsonAsync(url, payLoad);

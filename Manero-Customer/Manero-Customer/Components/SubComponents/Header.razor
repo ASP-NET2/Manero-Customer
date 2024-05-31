@@ -1,7 +1,10 @@
 ﻿@inject CartService cartService
 @inject CookieService cookieService
+@inject AddToCartFactory addToCartFactory
 @using Manero_Customer.Data.Models
+@using Manero_Customer.Factories
 @using Manero_Customer.Services
+@using System.Diagnostics
 @rendermode InteractiveServer
 
 <section class="header">
@@ -36,6 +39,7 @@
 @code {
     private Cart? cart;
     private int totalItems;
+    private List<CartItemModel> cartList = new List<CartItemModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,18 +49,32 @@
 
     public async Task GetList()
     {
-
+        cartList.Clear();
+        totalItems = 0;
         var sessionId = cookieService.GetSessionIdCookie();
         //var sessionId = "1e687f27-4b3b-4c70-9a35-d6b0f4b8a41f";
         var cart = await cartService.GetCartList(sessionId);
         if (cart != null)
-        {
-            totalItems = 0;
+
             foreach (var prod in cart.Products)
             {
-                totalItems += prod.Price * prod.Quantity;
+                cartList.Add(await addToCartFactory.SingleProduct(prod, sessionId));
+            }
+        if (cartList != null && cartList.Count >0)
+        {
+            foreach( var prod in cartList)
+            {
+                if (prod.DiscountPrice > 0)
+                {
+                    totalItems += prod.DiscountPrice * prod.Quantity;
+                }
+                else
+                {
+                    totalItems += prod.Price * prod.Quantity;
+                }
             }
         }
+            
     }
 
     private async void StateChanged()

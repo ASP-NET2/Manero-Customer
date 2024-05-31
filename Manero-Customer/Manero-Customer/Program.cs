@@ -3,6 +3,7 @@ using Blazored.SessionStorage;
 using Manero_Customer.Components;
 using Manero_Customer.Components.Account;
 using Manero_Customer.Data;
+using Manero_Customer.Factories;
 using Manero_Customer.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CookieService>();
 builder.Services.AddScoped<ImageService> ();
 builder.Services.AddScoped<AddressService> ();
+builder.Services.AddScoped<AddToCartFactory>();
 
 builder.Services.AddAuthentication(options =>
     {
