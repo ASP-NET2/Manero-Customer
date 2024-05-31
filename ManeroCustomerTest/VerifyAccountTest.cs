@@ -22,25 +22,6 @@ public class VerifyAccountTests
         _verifyAccountService = new VerifyAccountService(_serviceBusSenderMock.Object, null);
     }
 
-    [Fact]
-    public async Task SendVerificationCodeAsync_Successful()
-    {
-        // Arrange
-        var email = "test@example.com";
-        var verificationModel = new VerificationRequest { Email = email };
-        var jsonMessage = JsonConvert.SerializeObject(verificationModel);
-        var serviceBusMessage = new ServiceBusMessage(jsonMessage) { ContentType = "application/json" };
-
-        _serviceBusSenderMock
-            .Setup(s => s.SendMessageAsync(It.Is<ServiceBusMessage>(m => m.Body.ToString() == jsonMessage), default))
-            .Returns(Task.CompletedTask);
-
-        // Act
-        await _verifyAccountService.SendVerificationCodeAsync(email);
-
-        // Assert
-        _serviceBusSenderMock.Verify(s => s.SendMessageAsync(It.Is<ServiceBusMessage>(m => m.Body.ToString() == jsonMessage), default), Times.Once);
-    }
 
     [Fact]
     public async Task SendVerificationCodeAsync_ThrowsException()

@@ -24,15 +24,13 @@
                 <div class="first-lastname">
                     <h4 class="firstname">@User.FirstName</h4>
                     <h4 class="lastname">@User.LastName</h4>
+                    <h4>@User.AccountId</h4>
                 </div>  
             </div>
             <div class="profile-actions">
                 <ul>
                     <li> <a @onclick="NavigateToEditProfile">EditProfile</a></li>
-                    <li><a href="/order-history">Order history</a></li>
-                    <li><a href="/payment-method">Payment method</a></li>
                     <li><a @onclick="NavigateToAddress">My address</a></li>
-                    <li><a href="/promocodes">My promocodes</a></li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/Logout">Sign out</NavLink>
                     </li>
@@ -46,7 +44,7 @@
     public SaveImageRequest Image { get; set; } = new();
     private string? message;
     public ProfileModel User { get; set; } = new ();
-    private string uploadedImageUrl;
+    private string? uploadedImageUrl;
 
     public string Email { get; set; } = null!;
 
@@ -56,7 +54,7 @@
         var userProfile = await UserService.GetAuthenticatedUserProfileAsync();
         if (userProfile != null)
         {
-            Logger.LogInformation($"User profile loaded: {userProfile.Id}, {userProfile.FirstName}, {userProfile.LastName},{userProfile.ImageUrl}");
+            Logger.LogInformation($"User profile loaded: {userProfile.AccountId}, {userProfile.FirstName}, {userProfile.LastName},{userProfile.ImageUrl}");
             UserProfileFactory.UpdateUserProfile(userProfile, User);
         }
         else
@@ -66,15 +64,14 @@
         }
     }
 
-    private string uploadStatus { get; set; }
-
-  
+    private string? uploadStatus { get; set; }
+    
     private async Task HandleUploadSuccess(string imageUrl)
     {
         try
         {
-            var accountId = User.Id;
-            var response = await HttpClient.PostAsJsonAsync("http://localhost:7096/api/save-image-url", new SaveImageRequest
+            var accountId = User.AccountId;
+            var response = await HttpClient.PostAsJsonAsync("https://manerouserprovider.azurewebsites.net/api/save-image-url?code=03fGT1n7ja2sdW-HIJjiPO6bmNpGn3gZcsLh-vnvviFPAzFuwEJzag%3D%3D", new SaveImageRequest
                 {
                     AccountId = accountId,
                     ImageUrl = imageUrl
@@ -94,8 +91,6 @@
             Logger.LogError($"Exception: {ex.Message}");
         }
     }
-
-   
  
       public void NavigateToEditProfile()
     {
@@ -112,14 +107,14 @@
 
     public void NavigateToAddress()
     {
-        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.Id}");
-        if (User.Id == 0)
+        Logger.LogInformation($"Navigating to EditProfile with IdentityUserId: {User.AccountId}");
+        if (User.AccountId == 0)
         {
-            Logger.LogError("IdentityUserId is null or empty, cannot navigate");
+            Logger.LogError("AccountId is null or empty, cannot navigate");
         }
         else
         {
-            NavigationManager.NavigateTo($"/Account/ListAddresses?userId={User.Id}");
+            NavigationManager.NavigateTo($"/Account/ListAddresses?userId={User.AccountId}");
         }
     }
 

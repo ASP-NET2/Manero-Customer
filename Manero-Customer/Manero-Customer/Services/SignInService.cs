@@ -43,7 +43,7 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
 
         if (result.IsLockedOut)
         {
-            _navigationManager.NavigateTo("Account/Lockout");
+            _navigationManager.NavigateTo("/");
             return "User account locked out.";
         }
 
@@ -64,7 +64,7 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
                 LastName = form.LastName
             };
 
-            var response = await _httpClient.PostAsJsonAsync("https://userprovider-manero.azurewebsites.net/api/CreateUser?code=60bfhfHdyI12AfdqC96uPisNf7MriujfOywPJal9TgeGAzFuUcCdKg%3D%3D", accountUser);
+            var response = await _httpClient.PostAsJsonAsync("http://localhost:7096/api/CreateUser", accountUser);
 
             if (response.IsSuccessStatusCode)
             {
@@ -87,6 +87,7 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
         {
             _logger.LogError("Error creating identity user.");
         }
+
     }
 
     public async Task SignOutAsync()

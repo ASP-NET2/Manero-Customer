@@ -18,12 +18,12 @@ public class CookieService
             Secure = true
         };
 
-        _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", sessionId, options);
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append("SessionId", sessionId, options);
     }
 
     public string GetSessionIdCookie()
     {
-        _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SessionId", out string sessionId);
+        _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("SessionId", out string? sessionId);
         return sessionId;
     }
 }

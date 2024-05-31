@@ -39,7 +39,7 @@ public class ConfirmAccountService(HttpClient httpClient, UserManager<Applicatio
                 await _dbContext.SaveChangesAsync();
             }
 
-            _navigation.NavigateTo("/Account/signIn");
+            _navigation.NavigateTo("/Account/login");
             return "Success";
         }
         else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)

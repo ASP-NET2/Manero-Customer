@@ -1,4 +1,5 @@
 ﻿using Manero_Customer.Data.Models;
+using Microsoft.Extensions.Azure;
 
 namespace Manero_Customer.Factories;
 
@@ -12,6 +13,8 @@ public class UserProfileFactory
         user.IdentityUserId = userProfile.IdentityUserId;
         user.PhoneNumber = userProfile.PhoneNumber;
         user.Location = userProfile.Location;
+        user.AccountId = userProfile.AccountId;
+        user.ImageUrl = userProfile.ImageUrl;
 
         if (userProfile == null || user == null)
         {

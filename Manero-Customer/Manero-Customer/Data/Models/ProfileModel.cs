@@ -4,7 +4,7 @@ namespace Manero_Customer.Data.Models;
 
 public class ProfileModel
 {
-    public int Id { get; set; }
+    public int AccountId { get; set; }
 
     [Required]
     public string FirstName { get; set; } = null!;

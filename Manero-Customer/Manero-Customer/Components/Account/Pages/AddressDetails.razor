@@ -28,8 +28,6 @@
                     <InputText class="input-box" @bind-Value="Form.PostalCode" />
                 </div>
 
-
-
                 <div class="input-group">
                     <label>City</label>
                     <InputText class="input-box" @bind-Value="Form.City" />
@@ -51,7 +49,7 @@
 
 @code {
 
-    [SupplyParameterFromQuery(Name = "userId")]
+    [SupplyParameterFromQuery(Name = "AccountId")]
     public int AccountId { get; set; }
 
     public AddressModel Form { get; set; } = new AddressModel();

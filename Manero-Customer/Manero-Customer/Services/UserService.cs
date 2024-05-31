@@ -9,7 +9,6 @@ namespace Manero_Customer.Services;
 public class UserService
 {
     private readonly HttpClient _http;
-    private readonly string _baseUrl;
     private readonly ILogger<UserService> _logger;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
@@ -17,7 +16,6 @@ public class UserService
     public UserService(HttpClient http, ILogger<UserService> logger, UserManager<ApplicationUser> userManager, AuthenticationStateProvider authenticationStateProvider)
     {
         _http = http;
-      //  _baseUrl = "http://localhost:7096";
         _logger = logger;
         _userManager = userManager;
         _authenticationStateProvider = authenticationStateProvider;
@@ -25,7 +23,8 @@ public class UserService
 
     public async Task<ProfileModel> GetUserProfileAsync(string id)
     {
-        var url = $"https://userprovider-manero.azurewebsites.net/api/GetUserFunction/{id}?code=6MvHEEIkcl3GlREG0UF6Ql0TvWYGjAwuxMNG6JG7v22aAzFue3OluA%3D%3D";
+        //var url = $"http://localhost:7247/api/GetUserFunction/{id}";
+        var url = $"https://manerouserprovider.azurewebsites.net/api/GetUserFunction/{id}?code=Ry_Tr3kWZxm8TgDJbIPhKbHJyo1HqTVLz6dBsbDP3W-KAzFuiFNPFw%3D%3D";
         _logger.LogInformation($"Fetching user profile from URL: {url}");
 
         try
@@ -49,7 +48,7 @@ public class UserService
 
     public async Task UpdateUserProfileAsync(string id, ProfileModel model)
     {
-        var url = $"https://userprovider-manero.azurewebsites.net/api/UpdateUserFunction/{id}?code=am_rEPAEf1CpsWB0gHRoLRWKQ3rvhvwCU1EYELc3n_c7AzFu5QUdGA%3D%3D";
+        var url = $"https://manerouserprovider.azurewebsites.net/api/UpdateUserFunction/{id}?code=kFu-wQD2Y8Blt7wbTJ_xwNcA3XQUMM55urhn6r-hbrkuAzFuOInniQ%3D%3D";
         _logger.LogInformation($"Updating user profile from URL: {url}");
 
         try
@@ -150,7 +149,8 @@ public class UserService
 
         try
         {
-            var profileUrl = $"https://userprovider-manero.azurewebsites.net/api/DeleteUserFunction/{id}?code=QRfVThVl8tAeFNEPL9OfUHA28SbUOdsUNBaqlMe4yBSVAzFu86zlOQ%3D%3D";
+            var profileUrl = $"https://manerouserprovider.azurewebsites.net/api/DeleteUserFunction/{id}?code=9N9Mbe3CYA7NGwd6s29TPw6-7iRcA_IHBHcVLfN2sIUVAzFuy9PSXw%3D%3D";
+          
             var profileResponse = await _http.DeleteAsync(profileUrl);
             if (!profileResponse.IsSuccessStatusCode)
             {

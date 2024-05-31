@@ -2,6 +2,7 @@
 using Manero_Customer.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
 
 namespace Manero_Customer.Services;
 
@@ -12,7 +13,6 @@ public class AddressService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-    private readonly string _baseUrl = "http://localhost:7039";
 
     public AddressService(HttpClient http, ILogger<AddressService> logger, UserManager<ApplicationUser> userManager, AuthenticationStateProvider authenticationStateProvider)
     {
@@ -25,7 +25,7 @@ public class AddressService
     public async Task<AddressModel> GetAddressByIdAsync(int addressId)
     {
         _logger.LogInformation($"Getting address with Id: {addressId}");
-        var response = await _http.GetFromJsonAsync<AddressModel>($"http://localhost:7039/api/addresses/{addressId}");
+        var response = await _http.GetFromJsonAsync<AddressModel>($"https://addressprovidermanero.azurewebsites.net/api/addresses/{addressId}?code=t5rPM61neLc2cp-zLwAQcr9xaU529vItod0RCNklg0ftAzFu2m73MQ%3D%3D");
 
         if (response == null)
         {
@@ -35,10 +35,10 @@ public class AddressService
         return response ?? new AddressModel();
     }
 
-    public async Task<List<AddressModel>> GetAddressesByUserAsync(int AccountId)
+    public async Task<List<AddressModel>> GetAddressesByUserAsync(int accountId)
     {
-        var url = $"{_baseUrl}/api/user/{AccountId}/addresses";
-        _logger.LogInformation($"Fetching addresses for user ID: {AccountId} from URL: {url}");
+        var url = $"https://addressprovidermanero.azurewebsites.net/api/user/{accountId}/addresses?code=k7zE91OGmhvQCAauCE8qdYO_mQQGa_ZL02NHP4QHQCQ0AzFuPveOOA%3D%3D";
+        _logger.LogInformation($"Fetching addresses for user ID: {accountId} from URL: {url}");
 
         try
         {
@@ -55,7 +55,7 @@ public class AddressService
 
     public async Task AddAddressAsync(AddressModel model)
     {
-        var url = $"http://localhost:7039/api/addresses";
+        var url = $"https://addressprovidermanero.azurewebsites.net/api/addresses?code=U2iO9Q7CZvQkzEtM5aJhfwAaHPvkKnFJoTL7BUlu6sdZAzFu614sJw%3D%3D";
         // _logger.LogInformation($"Adding address for user ID: {AccountId} from URL: {url}");
 
         try
@@ -79,7 +79,7 @@ public class AddressService
 
     public async Task UpdateAddressAsync(int addressId, UpdateAddressModel model)
     {
-        var url = $"http://localhost:7039/api/addresses/{addressId}";
+        var url = $"https://addressprovidermanero.azurewebsites.net/api/addresses/{addressId}?code=-wt53LQPBqY7fJFebnkVnsUAw3sio_lTPzWOxu1yKyJEAzFu1vqQ1A%3D%3D";
         _logger.LogInformation($"Updating address ID: {addressId} from URL: {url}");
 
         try
@@ -96,7 +96,7 @@ public class AddressService
 
     public async Task DeleteAddressAsync(int addressId)
     {
-        var url = $"http://localhost:7039/api/addresses/{addressId}";
+        var url = $"https://addressprovidermanero.azurewebsites.net/api/addresses/{addressId}?code=2uUaBW9XAWs4FoA-J_pvePJgL3xrcU95Sq1SAmm5W94nAzFuqK3Wlg%3D%3D";
         _logger.LogInformation($"Deleting address ID: {addressId} from URL: {url}");
 
         try

@@ -44,7 +44,7 @@ else
 
 @code {
     [SupplyParameterFromQuery]
-    public int userId { get; set; }
+    public int AccountId { get; set; }
 
     private List<AddressModel>? addresses;
 
@@ -52,10 +52,10 @@ else
     {
         try
         {
-            if (userId != 0)
+            if (AccountId != 0)
             {
-                addresses = await AddressService.GetAddressesByUserAsync(userId);
-                Logger.LogInformation($"Addresses loaded for userId: {userId}");
+                addresses = await AddressService.GetAddressesByUserAsync(AccountId);
+                Logger.LogInformation($"Addresses loaded for userId: {AccountId}");
             }
             else
             {
@@ -70,14 +70,14 @@ else
 
     public void NavigateToAddressDetails()
     {
-        Logger.LogInformation($"Navigating to AddressDetails with userId: {userId}");
-        if (userId == 0)
+        Logger.LogInformation($"Navigating to AddressDetails with userId: {AccountId}");
+        if (AccountId == 0)
         {
             Logger.LogError("AccountId is null or empty, cannot navigate");
         }
         else
         {
-            NavigationManager.NavigateTo($"/Account/AddressDetails?userId={userId}");
+            NavigationManager.NavigateTo($"/Account/AddressDetails?userId={AccountId}");
         }
     }
 
