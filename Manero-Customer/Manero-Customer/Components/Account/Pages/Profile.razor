@@ -29,9 +29,18 @@
             </div>
             <div class="profile-actions">
                 <ul>
-                    <li> <a @onclick="NavigateToEditProfile">EditProfile</a></li>
-                    <li><a @onclick="NavigateToAddress">My address</a></li>
+                    <li>
+                    <a @onclick="NavigateToEditProfile">
+                        <i class="fa-regular fa-pen"></i> EditProfile
+                    </a>
+                    </li>
+                    <li>
+                    <a @onclick="NavigateToAddress">
+                        <i class="fa-regular fa-location-dot"></i>My address
+                    </a>
+                    </li>
                     <li class="nav-item">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <NavLink class="nav-link" href="/Logout">Sign out</NavLink>
                     </li>
                 </ul>
@@ -65,7 +74,7 @@
     }
 
     private string? uploadStatus { get; set; }
-    
+
     private async Task HandleUploadSuccess(string imageUrl)
     {
         try
@@ -80,6 +89,12 @@
             if (response.IsSuccessStatusCode)
             {
                 Logger.LogInformation("Image URL saved to database.");
+                var userProfile = await UserService.GetAuthenticatedUserProfileAsync();
+                if (userProfile != null)
+                {
+                    Logger.LogInformation($"User profile loaded: {userProfile.AccountId}, {userProfile.FirstName}, {userProfile.LastName},{userProfile.ImageUrl}");
+                    UserProfileFactory.UpdateUserProfile(userProfile, User);
+                }
             }
             else
             {

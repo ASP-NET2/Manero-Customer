@@ -16,6 +16,7 @@
 else
 {
     <section class="all-addresses">
+        <div class="container">
         <div class="my-addresses">
             <h1>My address</h1>
             <div class="address-list">
@@ -25,25 +26,31 @@ else
                         <div class="address-item">
                             <div class="icon @address"></div>
                             <div class="address-details">
-                                <p>@address.AccountId</p>
-                                <p>@address.AddressTitle</p>
-                                <p>@address.AddressLine_1</p>
-                                <p>Postal Code: @address.PostalCode</p>
-                                <p>City: @address.City</p>
+                                <p class="address-title">@address.AddressTitle</p>
+                                <div class="addreses">
+                                    <p>@address.AddressLine_1</p>
+                                    <p>Postal Code: @address.PostalCode</p>
+                                    <p>City: @address.City</p>
+                                </div>
                             </div>
                             <button @onclick="() => NavigateToAddressUpdate(address.AddressId)" class="edit-button" type="submit">✎</button>
                         </div>
                     }
                 </div>
-                <button @onclick="NavigateToAddressDetails" class="add-address">Add a new address</button>
+                <div class="btn-placement">
+                    <button @onclick="NavigateToAddressDetails" class="add-address">+</button>
+                    <p class="add-new">Add a  new address</p>
+                </div>
             </div>
+        </div>
         </div>
     </section>
 }
 
 
 @code {
-    [SupplyParameterFromQuery]
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "userId")]
     public int AccountId { get; set; }
 
     private List<AddressModel>? addresses;
@@ -59,7 +66,7 @@ else
             }
             else
             {
-                Logger.LogError("userId is 0 or not supplied.");
+                Logger.LogError("AccountId is 0 or not supplied.");
             }
         }
         catch (Exception ex)

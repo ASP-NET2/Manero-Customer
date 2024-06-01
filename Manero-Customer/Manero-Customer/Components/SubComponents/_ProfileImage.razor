@@ -2,17 +2,22 @@
 @inject ILogger<_ProfileImage> Logger
 @inject HttpClient HttpClient
 
-
 <EditForm Model="@uploadModel" OnValidSubmit="@HandleValidSubmit">
-    <InputFile OnChange="@HandleFileSelected" />
+    <div class="input-file">
+        <InputFile OnChange="@HandleFileSelected" id="fileInput" />
+        <label for="fileInput"></label>
+    </div>
+    <div class="upload-button">
+        <button type="submit">Upload</button>
+    </div>
     <ValidationMessage For="@(() => uploadModel.File)" />
-    <button type="submit">Upload Picture</button>
 </EditForm>
-<p>@uploadStatus</p>
+
+
 
 @if (!string.IsNullOrEmpty(uploadedImageUrl))
 {
-    <img src="@uploadedImageUrl." alt="Uploaded Image" style="max-width: 200px; max-height: 200px;" />
+    <img src="@uploadedImageUrl." alt="Uploaded Image" style="max-width: 250px; max-height: 250px;" />
 }
 
 @code {

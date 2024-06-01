@@ -482,6 +482,57 @@ p {
   color: var(--color-main);
 }
 
+.upload-container {
+  position: relative;
+  width: 130px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.input-file {
+  position: absolute;
+  top: 0;
+  left: 49%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.input-file input[type=file] {
+  display: none;
+}
+.input-file label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.input-file label:hover {
+  border-color: #777;
+}
+.input-file label::after {
+  content: "📷";
+  font-size: 24px;
+}
+
+.upload-button {
+  margin-top: 200px;
+  text-align: center;
+}
+
+.uploaded-image {
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -932,6 +983,7 @@ h1:focus {
   z-index: 1000;
 }
 .account-profile .container .profile .profile-picture {
+  padding: 10px;
   position: relative;
   width: 100px;
   height: 100px;
@@ -943,11 +995,14 @@ h1:focus {
   margin-bottom: 20px;
 }
 .account-profile .container .profile .profile-picture img {
+  position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
 .account-profile .container .profile .profile-details {
+  margin-top: 25px;
+  padding: 10px;
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -972,9 +1027,8 @@ h1:focus {
   margin: 0;
 }
 .account-profile .container .profile .profile-actions ul li {
-  margin: 10px 0;
-}
-.account-profile .container .profile .profile-actions ul li a, .account-profile .container .profile .profile-actions ul li button {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: black;
   border-top: 1px solid black;
@@ -982,64 +1036,157 @@ h1:focus {
   background: none;
   font-size: 16px;
   cursor: pointer;
-  padding: 0;
 }
-
-.all-addresses .my-address {
-  padding: 16px;
-  background-color: #fff;
-}
-.all-addresses .my-address h1 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-.all-addresses .my-address .address-list .address-item {
+.account-profile .container .profile .profile-actions ul li a {
   display: flex;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
+  text-decoration: none;
+  color: black;
+  margin: 8px 0;
 }
-.all-addresses .my-address .address-list .address-item .icon {
+.account-profile .container .profile .profile-actions ul li i {
+  font-size: 24px;
+  margin-right: 8px;
+}
+.account-profile .container .profile .profile-actions ul li:hover {
+  color: #777;
+}
+
+.all-addresses {
+  display: flex;
+}
+.all-addresses .container .my-address {
+  text-align: center;
+}
+.all-addresses .container .my-address h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.all-addresses .container .my-address .address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 1px solid black;
+}
+.all-addresses .container .my-address .address-list .address-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid black;
+}
+.all-addresses .container .my-address .address-list .address-item .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
-  margin-right: 12px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
 }
-.all-addresses .my-address .address-list .address-item .icon.home {
-  background: url("/icons/home.svg") no-repeat center center;
-  background-size: contain;
+.all-addresses .container .my-address .address-list .address-item .address-details {
+  flex-grow: 1;
+  margin-left: 10px;
 }
-.all-addresses .my-address .address-list .address-item .icon.work {
-  background: url("/icons/work.svg") no-repeat center center;
-  background-size: contain;
-}
-.all-addresses .my-address .address-list .address-item .icon.other {
-  background: url("/icons/other.svg") no-repeat center center;
-  background-size: contain;
-}
-.all-addresses .my-address .address-list .address-item .address-details {
-  flex: 1;
-}
-.all-addresses .my-address .address-list .address-item .address-details p {
+.all-addresses .container .my-address .address-list .address-item .address-details p {
   margin: 0;
 }
-.all-addresses .my-address .address-list .address-item .address-details p:first-child {
+.all-addresses .container .my-address .address-list .address-item .address-details p:first-child {
   font-weight: bold;
 }
-.all-addresses .my-address .address-list .address-item .edit-button {
+.all-addresses .container .my-address .address-list .address-item .edit-button {
   background: none;
   border: none;
-  font-size: 16px;
+  color: #007bff;
   cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.all-addresses .my-address .add-address {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin-top: 16px;
-  border: 1px solid #007bff;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-  text-align: center;
+.all-addresses .container .my-address .address-list .address-item .edit-button:hover {
+  color: #0056b3;
+}
+.all-addresses .container .my-address .address-list .address-item .btn-placement {
+  display: flex;
+}
+.all-addresses .container .my-address .add-address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  color: #007bff;
   cursor: pointer;
+  margin-top: 20px;
+}
+.all-addresses .container .my-address .add-address .add-address i {
+  margin-right: 5px;
+}
+
+.address-details {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+.address-details .container .add-address .profile-details {
+  display: grid;
+  justify-content: center;
+}
+.address-details .container .add-address .profile-details h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.address-details .container .add-address .profile-details .input-group {
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.address-details .container .add-address .profile-details .input-group label {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  padding: 0 5px;
+  background-color: white;
+  z-index: 1;
+  font-size: 14px;
+  color: var(--color-text);
+}
+.address-details .container .add-address .profile-details .input-group .input-box {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border-radius: 8px;
+  border: var(--color-text) 1px solid;
+  box-sizing: border-box;
+  position: relative;
+}
+.address-details .container .add-address .profile-details .checkbox-group {
+  margin: 15px 0;
+}
+.address-details .container .add-address .profile-details .btn-theme {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--btn-background-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.address-details .container .add-address .profile-details .btn-theme:hover {
+  background-color: var(--btn-hover-background-color);
+}
+.address-details .container .add-address .profile-details p {
+  margin-top: 20px;
+  text-align: center;
 }

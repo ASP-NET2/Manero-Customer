@@ -1,1 +1,73 @@
-﻿
+﻿.address-details {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-top: 50px;
+
+    .container {
+        .add-address {
+            .profile-details {
+                display: grid;
+                justify-content: center;
+
+                h1 {
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+
+                .input-group {
+                    position: relative;
+                    margin-bottom: 20px;
+                    margin-top: 25px;
+
+                    label {
+                        position: absolute;
+                        top: -10px;
+                        left: -10px;
+                        padding: 0 5px;
+                        background-color: white;
+                        z-index: 1;
+                        font-size: 14px;
+                        color: var(--color-text);
+                    }
+
+                    .input-box {
+                        width: 100%;
+                        padding: 10px;
+                        height: 40px;
+                        border-radius: 8px;
+                        border: var(--color-text) 1px solid;
+                        box-sizing: border-box;
+                        position: relative;
+                    }
+                }
+
+                .checkbox-group {
+                    margin: 15px 0;
+                }
+
+                .btn-theme {
+                    width: 100%;
+                    padding: 10px;
+                    background-color: var(--btn-background-color);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: var(--btn-hover-background-color);
+                    }
+                }
+
+                p {
+                    margin-top: 20px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

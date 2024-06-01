@@ -1,73 +1,99 @@
 ﻿.all-addresses {
-    .my-address {
-        padding: 16px;
-        background-color: #fff;
+    display: flex;
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 16px;
-        }
+    .container {
+        .my-address {
+            text-align: center;
 
-        .address-list {
-            .address-item {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .address-list {
                 display: flex;
-                align-items: center;
-                padding: 12px 0;
-                border-bottom: 1px solid #e0e0e0;
+                flex-direction: column;
+                gap: 20px;
+                border-bottom: 1px solid black;
 
-                .icon {
-                    width: 40px;
-                    height: 40px;
-                    margin-right: 12px;
+                .address-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    border: 1px solid #ddd;
+                    border-radius: 10px;
+                    padding: 10px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    border-bottom: 1px solid black;
 
-                    &.home {
-                        background: url('/icons/home.svg') no-repeat center center;
-                        background-size: contain;
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        background-color: #f0f0f0;
                     }
 
-                    &.work {
-                        background: url('/icons/work.svg') no-repeat center center;
-                        background-size: contain;
-                    }
+                    .address-details {
+                        flex-grow: 1;
+                        margin-left: 10px;
 
-                    &.other {
-                        background: url('/icons/other.svg') no-repeat center center;
-                        background-size: contain;
-                    }
-                }
 
-                .address-details {
-                    flex: 1;
+                        .address-title {
+                        }
 
-                    p {
-                        margin: 0;
+                        .addreses {
+                        }
 
-                        &:first-child {
-                            font-weight: bold;
+                        p {
+                            margin: 0;
+
+                            &:first-child {
+                                font-weight: bold;
+                            }
                         }
                     }
-                }
 
-                .edit-button {
-                    background: none;
-                    border: none;
-                    font-size: 16px;
-                    cursor: pointer;
+                    .edit-button {
+                        background: none;
+                        border: none;
+                        color: #007bff;
+                        cursor: pointer;
+                        font-size: 18px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        &:hover {
+                            color: #0056b3;
+                        }
+                    }
+
+                    .btn-placement {
+                        display: flex;
+                    }
                 }
             }
-        }
 
-        .add-address {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 16px;
-            border: 1px solid #007bff;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-            cursor: pointer;
+            .add-address {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f8f9fa;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px;
+                color: #007bff;
+                cursor: pointer;
+                margin-top: 20px;
+
+                .add-address i {
+                    margin-right: 5px;
+                }
+            }
         }
     }
 }
