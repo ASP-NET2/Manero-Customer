@@ -1052,82 +1052,29 @@ h1:focus {
   color: #777;
 }
 
-.all-addresses {
-  display: flex;
-}
-.all-addresses .container .my-address {
-  text-align: center;
-}
-.all-addresses .container .my-address h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-.all-addresses .container .my-address .address-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-bottom: 1px solid black;
-}
-.all-addresses .container .my-address .address-list .address-item {
+.all-addresses .container .my-addresses .address-list .address-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid black;
 }
-.all-addresses .container .my-address .address-list .address-item .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
+.all-addresses .container .my-addresses .address-list .address-item .address-detail {
+  display: grid;
+  margin-bottom: 30px;
 }
-.all-addresses .container .my-address .address-list .address-item .address-details {
-  flex-grow: 1;
-  margin-left: 10px;
-}
-.all-addresses .container .my-address .address-list .address-item .address-details p {
-  margin: 0;
-}
-.all-addresses .container .my-address .address-list .address-item .address-details p:first-child {
+.all-addresses .container .my-addresses .address-list .address-item .address-detail .address-title {
   font-weight: bold;
 }
-.all-addresses .container .my-address .address-list .address-item .edit-button {
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
+.all-addresses .container .my-addresses .address-list .btn-placement {
+  display: grid;
   justify-content: center;
+  justify-items: center;
 }
-.all-addresses .container .my-address .address-list .address-item .edit-button:hover {
-  color: #0056b3;
-}
-.all-addresses .container .my-address .address-list .address-item .btn-placement {
-  display: flex;
-}
-.all-addresses .container .my-address .add-address {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  color: #007bff;
-  cursor: pointer;
-  margin-top: 20px;
-}
-.all-addresses .container .my-address .add-address .add-address i {
-  margin-right: 5px;
+.all-addresses .container .my-addresses .address-list .btn-placement .add-address {
+  border-radius: 50%;
+  border: 1px solid;
+  border-color: var(--color-text);
+  width: 25px;
+  height: 25px;
 }
 
 .address-details {
@@ -1189,4 +1136,33 @@ h1:focus {
 .address-details .container .add-address .profile-details p {
   margin-top: 20px;
   text-align: center;
+}
+
+.address-update .container .details-address {
+  display: grid;
+  justify-content: center;
+}
+.address-update .container .details-address .profile-details .input-group {
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.address-update .container .details-address .profile-details .input-group label {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  padding: 0 5px;
+  background-color: white;
+  z-index: 1;
+  font-size: 14px;
+  color: var(--color-text);
+}
+.address-update .container .details-address .profile-details .input-group .input-box {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border-radius: 8px;
+  border: var(--color-text) 1px solid;
+  box-sizing: border-box;
+  position: relative;
 }

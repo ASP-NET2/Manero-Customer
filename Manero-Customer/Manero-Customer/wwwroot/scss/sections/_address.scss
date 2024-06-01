@@ -1,97 +1,41 @@
 ﻿.all-addresses {
-    display: flex;
-
     .container {
-        .my-address {
-            text-align: center;
-
-            h1 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-
+        .my-addresses {
             .address-list {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-                border-bottom: 1px solid black;
-
                 .address-item {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    border: 1px solid #ddd;
-                    border-radius: 10px;
-                    padding: 10px;
-                    background-color: #fff;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                    border-bottom: 1px solid black;
 
-                    .icon {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        background-color: #f0f0f0;
-                    }
-
-                    .address-details {
-                        flex-grow: 1;
-                        margin-left: 10px;
-
+                    .address-detail {
+                        display: grid;
+                        margin-bottom: 30px;
 
                         .address-title {
+                            font-weight: bold;
                         }
 
                         .addreses {
-                        }
-
-                        p {
-                            margin: 0;
-
-                            &:first-child {
-                                font-weight: bold;
-                            }
+                            // margin-right: 57px;
                         }
                     }
 
-                    .edit-button {
-                        background: none;
-                        border: none;
-                        color: #007bff;
-                        cursor: pointer;
-                        font-size: 18px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        &:hover {
-                            color: #0056b3;
-                        }
-                    }
-
-                    .btn-placement {
-                        display: flex;
+                    .edit-btn {
                     }
                 }
-            }
 
-            .add-address {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: #f8f9fa;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                padding: 10px;
-                color: #007bff;
-                cursor: pointer;
-                margin-top: 20px;
+                .btn-placement {
+                    display: grid;
+                    justify-content: center;
+                    justify-items: center;
 
-                .add-address i {
-                    margin-right: 5px;
+                    .add-address {
+                        border-radius: 50%;
+                        border: 1px solid;
+                        border-color: var(--color-text);
+                        width: 25px;
+                        height: 25px;
+                    }
                 }
             }
         }

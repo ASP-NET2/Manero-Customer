@@ -24,8 +24,7 @@ else
                     @foreach (var address in addresses)
                     {
                         <div class="address-item">
-                            <div class="icon @address"></div>
-                            <div class="address-details">
+                            <div class="address-detail">
                                 <p class="address-title">@address.AddressTitle</p>
                                 <div class="addreses">
                                     <p>@address.AddressLine_1</p>
@@ -33,8 +32,10 @@ else
                                     <p>City: @address.City</p>
                                 </div>
                             </div>
-                            <button @onclick="() => NavigateToAddressUpdate(address.AddressId)" class="edit-button" type="submit">✎</button>
-                        </div>
+                            <div class="edit-btn">
+                                    <button @onclick="() => NavigateToAddressUpdate(address.AddressId)" class="edit-button" type="submit">✎</button>
+                                </div>
+                            </div>    
                     }
                 </div>
                 <div class="btn-placement">

@@ -10,7 +10,8 @@
 else
 {
     <section class="address-update">
-        <div class="address-details">
+        <div class="container">
+        <div class="details-address">
             <h1>Update address</h1>
             <EditForm Model="Form" method="post" OnValidSubmit="UpdateAddress">
                 <AntiforgeryToken />
@@ -38,11 +39,6 @@ else
                         <InputText class="input-box" @bind-Value="Form.City">@address.City</InputText>
                     </div>
 
-                    <div class="input-group">
-                        <label>UserId</label>
-                        <label class="input-box">@AddressId</label>
-                    </div>
-
                 </div>
                 <div class="account-btn">
                     <button class="btn-theme" type="submit">Save Changes</button>
@@ -50,6 +46,7 @@ else
                 </div>
 
             </EditForm>
+        </div>
         </div>
     </section>
 }
