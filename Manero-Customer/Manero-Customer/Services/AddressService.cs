@@ -3,6 +3,8 @@ using Manero_Customer.Data.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
+using System.Text.Json;
+
 
 namespace Manero_Customer.Services;
 
@@ -43,8 +45,9 @@ public class AddressService
         try
         {
             var response = await _http.GetFromJsonAsync<List<AddressModel>>(url);
-            _logger.LogInformation("Successfully fetched addresses from API.");
-            return response ?? new List<AddressModel>();
+            _logger.LogInformation($"Successfully fetched addresses from API. Response: {JsonSerializer.Serialize(response)}");
+
+            return response ?? new List<AddressModel>() ;
         }
         catch (HttpRequestException ex)
         {
