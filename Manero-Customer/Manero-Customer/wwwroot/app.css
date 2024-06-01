@@ -1056,10 +1056,12 @@ h1:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px dashed;
+  border-color: var(--color-text);
 }
 .all-addresses .container .my-addresses .address-list .address-item .address-detail {
   display: grid;
-  margin-bottom: 30px;
+  margin: 20px 0;
 }
 .all-addresses .container .my-addresses .address-list .address-item .address-detail .address-title {
   font-weight: bold;
@@ -1068,6 +1070,7 @@ h1:focus {
   display: grid;
   justify-content: center;
   justify-items: center;
+  margin-top: 15px;
 }
 .all-addresses .container .my-addresses .address-list .btn-placement .add-address {
   border-radius: 50%;

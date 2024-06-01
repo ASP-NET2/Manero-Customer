@@ -2,14 +2,16 @@
     .container {
         .my-addresses {
             .address-list {
+
                 .address-item {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-
+                    border-bottom: 1px dashed;
+                    border-color: var(--color-text);
                     .address-detail {
                         display: grid;
-                        margin-bottom: 30px;
+                        margin: 20px 0;
 
                         .address-title {
                             font-weight: bold;
@@ -28,7 +30,7 @@
                     display: grid;
                     justify-content: center;
                     justify-items: center;
-
+                    margin-top: 15px;
                     .add-address {
                         border-radius: 50%;
                         border: 1px solid;
