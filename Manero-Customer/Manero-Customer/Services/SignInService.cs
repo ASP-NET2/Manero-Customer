@@ -64,7 +64,7 @@ public class SignInService(SignInManager<ApplicationUser> signInManager, UserMan
                 LastName = form.LastName
             };
 
-            var response = await _httpClient.PostAsJsonAsync("http://localhost:7096/api/CreateUser", accountUser);
+            var response = await _httpClient.PostAsJsonAsync("https://manerouserprovider.azurewebsites.net/api/CreateUserFunction?code=oVzKPWeOBYaoXpctFmppf7_6LzLBbF6WlktmnQWhfbWuAzFuW0pc1g%3D%3D", accountUser);
 
             if (response.IsSuccessStatusCode)
             {

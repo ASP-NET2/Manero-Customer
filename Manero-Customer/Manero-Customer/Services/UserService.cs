@@ -23,7 +23,6 @@ public class UserService
 
     public async Task<ProfileModel> GetUserProfileAsync(string id)
     {
-        //var url = $"http://localhost:7247/api/GetUserFunction/{id}";
         var url = $"https://manerouserprovider.azurewebsites.net/api/GetUserFunction/{id}?code=Ry_Tr3kWZxm8TgDJbIPhKbHJyo1HqTVLz6dBsbDP3W-KAzFuiFNPFw%3D%3D";
         _logger.LogInformation($"Fetching user profile from URL: {url}");
 
@@ -53,7 +52,7 @@ public class UserService
 
         try
         {
-            var response = await _http.PostAsJsonAsync(url, model);
+            var response = await _http.PutAsJsonAsync(url, model);
             response.EnsureSuccessStatusCode();
 
         }
