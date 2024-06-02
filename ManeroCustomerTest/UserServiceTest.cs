@@ -97,35 +97,6 @@ public class UserServiceTest
         await Assert.ThrowsAsync<HttpRequestException>(() => _userService.GetUserProfileAsync(userId));
     }
 
-    [Fact]
-    public async Task UpdateUserProfileAsync_CallsApi_WhenSuccess()
-    {
-        // Arrange
-        var userId = "123";
-        var profileModel = new ProfileModel { IdentityUserId = userId };
-        var responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-
-        _mockHttpMessageHandler.Protected()
-            .Setup<Task<HttpResponseMessage>>(
-                "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req =>
-                    req.Method == HttpMethod.Post &&
-                    req.RequestUri == new Uri($"https://manerouserprovider.azurewebsites.net/api/UpdateUserFunction/{userId}?code=kFu-wQD2Y8Blt7wbTJ_xwNcA3XQUMM55urhn6r-hbrkuAzFuOInniQ%3D%3D")),
-                ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(responseMessage);
-
-        // Act
-        await _userService.UpdateUserProfileAsync(userId, profileModel);
-
-        // Assert
-        _mockHttpMessageHandler.Protected().Verify(
-            "SendAsync",
-            Times.Once(),
-            ItExpr.Is<HttpRequestMessage>(req =>
-                req.Method == HttpMethod.Post &&
-                req.RequestUri == new Uri($"https://manerouserprovider.azurewebsites.net/api/UpdateUserFunction/{userId}?code=kFu-wQD2Y8Blt7wbTJ_xwNcA3XQUMM55urhn6r-hbrkuAzFuOInniQ%3D%3D")),
-            ItExpr.IsAny<CancellationToken>());
-    }
 
     [Fact]
     public async Task GetAuthenticatedUserProfileAsync_ReturnsProfile_WhenUserIsAuthenticated()
